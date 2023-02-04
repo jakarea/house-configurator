@@ -1,0 +1,17 @@
+{
+    "name": "house-configurator/house-configurator",
+    "description": "A powerful and user-friendly plugin for estimating the cost of building a house",
+    "type": "project",
+    "license": "GPL-3.0",
+    "authors": [
+        {
+            "name": "Md Arif",
+            "email": "arifypp@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {"Inc\\": "./inc"}
+    }
+}
