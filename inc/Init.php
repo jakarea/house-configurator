@@ -15,7 +15,9 @@ final class Init
 		return [
 			Pages\Admin::class,
 			Base\Enqueue::class,
-			Base\SettingsLinks::class
+			Base\SettingsLinks::class,
+			Base\LevelsController::class,
+			Base\ShortcodeController::class,
 		];
 	}
 

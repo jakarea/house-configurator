@@ -42,10 +42,10 @@ class Admin extends BaseController
 	{
 		$this->pages = array(
 			array(
-				'page_title' => 'Alecaddd Plugin', 
-				'menu_title' => 'Alecaddd', 
+				'page_title' => 'House Configurator Plugin', 
+				'menu_title' => 'House Configurator', 
 				'capability' => 'manage_options', 
-				'menu_slug' => 'alecaddd_plugin', 
+				'menu_slug' => 'house_configurator', 
 				'callback' => array( $this->callbacks, 'adminDashboard' ), 
 				'icon_url' => 'dashicons-store', 
 				'position' => 110
@@ -57,28 +57,20 @@ class Admin extends BaseController
 	{
 		$this->subpages = array(
 			array(
-				'parent_slug' => 'alecaddd_plugin', 
-				'page_title' => 'Custom Post Types', 
-				'menu_title' => 'CPT', 
+				'parent_slug' => 'house_configurator', 
+				'page_title' => 'Level Settings', 
+				'menu_title' => 'Levels', 
 				'capability' => 'manage_options', 
-				'menu_slug' => 'alecaddd_cpt', 
-				'callback' => array( $this->callbacks, 'adminCpt' )
+				'menu_slug' => 'house_config_levels', 
+				'callback' => array( $this->callbacks, 'adminLevels' )
 			),
 			array(
-				'parent_slug' => 'alecaddd_plugin', 
-				'page_title' => 'Custom Taxonomies', 
-				'menu_title' => 'Taxonomies', 
+				'parent_slug' => 'house_configurator', 
+				'page_title' => 'Features Settings', 
+				'menu_title' => 'Features', 
 				'capability' => 'manage_options', 
-				'menu_slug' => 'alecaddd_taxonomies', 
-				'callback' => array( $this->callbacks, 'adminTaxonomy' )
-			),
-			array(
-				'parent_slug' => 'alecaddd_plugin', 
-				'page_title' => 'Custom Widgets', 
-				'menu_title' => 'Widgets', 
-				'capability' => 'manage_options', 
-				'menu_slug' => 'alecaddd_widgets', 
-				'callback' => array( $this->callbacks, 'adminWidget' )
+				'menu_slug' => 'house_config_features', 
+				'callback' => array( $this->callbacks, 'adminFeatures' )
 			)
 		);
 	}
@@ -87,13 +79,19 @@ class Admin extends BaseController
 	{
 		$args = array(
 			array(
-				'option_group' => 'alecaddd_options_group',
-				'option_name' => 'text_example',
+				'option_group' => 'house_configurator_options_group',
+				'option_name' => 'ds_feet',
 				'callback' => array( $this->callbacks, 'alecadddOptionsGroup' )
 			),
 			array(
-				'option_group' => 'alecaddd_options_group',
-				'option_name' => 'first_name'
+				'option_group' => 'house_configurator_options_group',
+				'option_name' => 'house_configure_price',
+				'callback' => array( $this->callbacks, 'alecadddOptionsGroup' )
+			),
+			array(
+				'option_group' => 'house_configurator_options_group',
+				'option_name' => 'house_configure_description',
+				'callback' => array( $this->callbacks, 'alecadddOptionsGroup' )
 			)
 		);
 
@@ -107,7 +105,7 @@ class Admin extends BaseController
 				'id' => 'alecaddd_admin_index',
 				'title' => 'Settings',
 				'callback' => array( $this->callbacks, 'alecadddAdminSection' ),
-				'page' => 'alecaddd_plugin'
+				'page' => 'house_configurator'
 			)
 		);
 
@@ -118,24 +116,35 @@ class Admin extends BaseController
 	{
 		$args = array(
 			array(
-				'id' => 'text_example',
-				'title' => 'Text Example',
-				'callback' => array( $this->callbacks, 'alecadddTextExample' ),
-				'page' => 'alecaddd_plugin',
+				'id' => 'ds_feet',
+				'title' => 'Default Square Feet',
+				'callback' => array( $this->callbacks, 'houseConfigure_ds_feet' ),
+				'page' => 'house_configurator',
 				'section' => 'alecaddd_admin_index',
 				'args' => array(
-					'label_for' => 'text_example',
+					'label_for' => 'ds_feet',
 					'class' => 'example-class'
 				)
 			),
 			array(
-				'id' => 'first_name',
-				'title' => 'First Name',
-				'callback' => array( $this->callbacks, 'alecadddFirstName' ),
-				'page' => 'alecaddd_plugin',
+				'id' => 'house_configure_price',
+				'title' => 'Per Square Feet Price',
+				'callback' => array( $this->callbacks, 'houseConfigure_price' ),
+				'page' => 'house_configurator',
 				'section' => 'alecaddd_admin_index',
 				'args' => array(
-					'label_for' => 'first_name',
+					'label_for' => 'house_configure_price',
+					'class' => 'example-class'
+				)
+			),
+			array(
+				'id' => 'house_configure_description',
+				'title' => 'Description',
+				'callback' => array( $this->callbacks, 'houseConfigure_description' ),
+				'page' => 'house_configurator',
+				'section' => 'alecaddd_admin_index',
+				'args' => array(
+					'label_for' => 'house_configure_description',
 					'class' => 'example-class'
 				)
 			)

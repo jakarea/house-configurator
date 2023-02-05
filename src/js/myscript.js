@@ -22,4 +22,18 @@ window.addEventListener("load", function() {
 
 	}
 
+	// If form on change then alert value
+	document.getElementById("calculate_01").onchange = function() {
+		// get value of square_meters
+		var square_meters = document.getElementById("square_meters").value;
+		// if square_meters is empty and less then 20 then add error class with next input field and show error message also if square_meters is not empty and greater then 20 then remove error class with next input field and hide error message
+		if (square_meters == "" || square_meters < 20) {
+			alert("Please enter a value greater than 20");
+		}
+		else {
+			alert("Thank you for entering a value greater than 20");
+		}
+		// get value of square_feet
+	};
+
 });

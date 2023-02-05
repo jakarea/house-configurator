@@ -13,19 +13,14 @@ class AdminCallbacks extends BaseController
 		return require_once( "$this->plugin_path/templates/admin.php" );
 	}
 
-	public function adminCpt()
+	public function adminLevels()
 	{
-		return require_once( "$this->plugin_path/templates/cpt.php" );
+		return require_once( "$this->plugin_path/templates/levels.php" );
 	}
 
-	public function adminTaxonomy()
+	public function adminFeatures()
 	{
-		return require_once( "$this->plugin_path/templates/taxonomy.php" );
-	}
-
-	public function adminWidget()
-	{
-		return require_once( "$this->plugin_path/templates/widget.php" );
+		return require_once( "$this->plugin_path/templates/features.php" );
 	}
 
 	public function alecadddOptionsGroup( $input )
@@ -35,18 +30,25 @@ class AdminCallbacks extends BaseController
 
 	public function alecadddAdminSection()
 	{
-		echo 'Check this beautiful section!';
+		// give some instruction to admin
+		echo 'House Configurator Plugin is a plugin that allows you to configure your house. You can add your house details here.';
 	}
 
-	public function alecadddTextExample()
+	public function houseConfigure_ds_feet()
 	{
-		$value = esc_attr( get_option( 'text_example' ) );
-		echo '<input type="text" class="regular-text" name="text_example" value="' . $value . '" placeholder="Write Something Here!">';
+		$value = esc_attr( get_option( 'ds_feet' ) );
+		echo '<input type="text" class="regular-text" name="ds_feet" value="' . $value . '" placeholder="Write Something Here!">';
 	}
 
-	public function alecadddFirstName()
+	public function houseConfigure_price()
 	{
-		$value = esc_attr( get_option( 'first_name' ) );
-		echo '<input type="text" class="regular-text" name="first_name" value="' . $value . '" placeholder="Write your First Name">';
+		$value = esc_attr( get_option( 'house_configure_price' ) );
+		echo '<input type="text" class="regular-text" name="house_configure_price" value="' . $value . '" placeholder="Write Price Here!">';
+	}
+
+	public function houseConfigure_description()
+	{
+		$value = esc_attr( get_option( 'house_configure_description' ) );
+		echo '<textarea class="regular-text" name="house_configure_description" placeholder="Write your description" rows="5" col="5">' . $value . '</textarea>';
 	}
 }

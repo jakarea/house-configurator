@@ -1,5 +1,5 @@
 <div class="wrap">
-	<h1>Alecaddd Plugin</h1>
+	<h1><?php echo esc_html('House Configurator Plugin', 'house-configurator'); ?></h1>
 	<?php settings_errors(); ?>
 
 	<ul class="nav nav-tabs">
@@ -13,8 +13,8 @@
 
 			<form method="post" action="options.php">
 				<?php 
-					settings_fields( 'alecaddd_options_group' );
-					do_settings_sections( 'alecaddd_plugin' );
+					settings_fields( 'house_configurator_options_group' );
+					do_settings_sections( 'house_configurator' );
 					submit_button();
 				?>
 			</form>
