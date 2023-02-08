@@ -77,7 +77,7 @@ class Levels extends BaseController
         $args = array(
             array(
                 'id' => 'house_config_levels_index',
-                'title' => 'Live Manager',
+                'title' => 'Levels Manager',
                 'callback' => array( $this->callbacks, 'LevelsAdminSection' ),
                 'page' => 'house_config_levels'
             )

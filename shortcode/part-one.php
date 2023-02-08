@@ -2,6 +2,18 @@
 /**
  * @package  HouseConfigurator
  */
+
+ global $wpdb;
+    // get all levels from database
+    $h_type = $wpdb->prefix . 'house_configurator_type';
+    $levels = $wpdb->get_results("SELECT * FROM $h_type");
+
+    // get all features from database
+    $h_feature = $wpdb->prefix . 'house_configurator_feature';
+    $features = $wpdb->get_results("SELECT * FROM $h_feature");
+
+    $house_configure_price = esc_attr( get_option( 'house_configure_price' ) );
+
 ?>
 <!-- add simple bootstrap card -->
 <div class="row">
@@ -14,53 +26,30 @@
                 <form action="#" method="post" id="calculate_01">
                     <div class="form-group mb-3">
                         <label for="square_meters">Surface area in square metres</label>
-                        <input type="number" class="form-control" id="square_meters" name="square_meters" placeholder="Enter square meters" value="20" required>
+                        <input type="number" class="form-control" id="square_meters" name="square_meters" placeholder="Enter square meters" value="<?php echo $house_configure_price; ?>" required>
                     </div>
                     <div class="form-group mb-3">
                         <label for="levels">All Levels</label>
                         <select class="form-control" id="levels" name="levels" required>
-                            <option value="basic">Basic</option>
-                            <option value="standard">Standard</option>
-                            <option value="premium">Premium</option>
+                        <?php
+                        foreach ($levels as $level) { 
+                            echo '<option value="'.$level->price.'" data-id="'.$level->id.'">'.$level->name.'</option>';
+                        }
+                        ?>
                         </select>
                     </div>
-                    <div class="form-group mb-3">
-                        <div class="form-check form-check-inline col-md-12">
-                            <input class="form-check-input" type="checkbox" name="feature_list[]" id="feature_1" >
-                            <label class="form-check-label" for="feature_1"> Wind and waterproof within 1 day</label>
-                        </div>
-                        <div class="form-check form-check-inline col-md-12">
-                            <input class="form-check-input" type="checkbox" name="feature_list[]" id="feature_2" >
-                            <label class="form-check-label" for="feature_2">Exterior finished</label>
-                        </div>
-                        <div class="form-check form-check-inline col-md-12">
-                            <input class="form-check-input" type="checkbox" name="feature_list[]" id="feature_3" >
-                            <label class="form-check-label" for="feature_3"> Hardwood or plastic frames</label>
-                        </div>
-                        <div class="form-check form-check-inline col-md-12">
-                            <input class="form-check-input" type="checkbox" name="feature_list[]" id="feature_4" >
-                            <label class="form-check-label" for="feature_4">Preparation electricity</label>
-                        </div>
-                        <div class="form-check form-check-inline col-md-12">
-                            <input class="form-check-input" type="checkbox" name="feature_list[]" id="feature_5" >
-                            <label class="form-check-label" for="feature_1"> Plumbing preparation</label>
-                        </div>
-                        <div class="form-check form-check-inline col-md-12">
-                            <input class="form-check-input" type="checkbox" name="feature_list[]" id="feature_6" >
-                            <label class="form-check-label" for="feature_2">Frames primed</label>
-                        </div>
-                        <div class="form-check form-check-inline col-md-12">
-                            <input class="form-check-input" type="checkbox" name="feature_list[]" id="feature_7" >
-                            <label class="form-check-label" for="feature_3"> Light partitions</label>
-                        </div>
-                        <div class="form-check form-check-inline col-md-12">
-                            <input class="form-check-input" type="checkbox" name="feature_list[]" id="feature_8" >
-                            <label class="form-check-label" for="feature_4">Wall sockets & light points</label>
-                        </div>
-                        <div class="form-check form-check-inline col-md-12">
-                            <input class="form-check-input" type="checkbox" name="feature_list[]" id="feature_9" >
-                            <label class="form-check-label" for="feature_9">Heating, toilet & sanitary</label>
-                        </div>
+                    <div id="features">
+                    <?php
+                    foreach($features as $feature){ ?>
+                    <div class="form-group">
+                        <?php
+                            echo '<div class="form-check form-check-inline">';
+                            echo '<input class="form-check-input" type="checkbox" id="feature_'.$feature->id.'" name="feature" value="'.$feature->price.'" data-type="'.$feature->type_id.'">';
+                            echo '<label class="form-check-label" for="feature_'.$feature->id.'">'.$feature->name.'</label>';
+                            echo '</div>';
+                        ?>                       
+                    </div>
+                    <?php } ?>
                     </div>
                 </form>
             </div>
@@ -71,7 +60,7 @@
                 <div class="card-title">
                     <h4 class="mb-3">Result</h4>
                 </div>
-                <div class="badge badge-primage bg-danger">
+                <div class="badge badge-primage bg-success">
                     <h3 class="mb-0 cal__result">0</h3>
                 </div>
             </div>
