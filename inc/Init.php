@@ -14,9 +14,9 @@ final class Init
 	{
 		return [
 			Pages\Admin::class,
+			Pages\Levels::class,
 			Base\Enqueue::class,
 			Base\SettingsLinks::class,
-			Base\LevelsController::class,
 			Base\ShortcodeController::class,
 		];
 	}
