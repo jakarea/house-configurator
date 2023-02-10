@@ -29,5 +29,10 @@ class Enqueue extends BaseController
 		wp_enqueue_script( 'jquery' );
 		// enqueue script
 		wp_enqueue_script( 'frontend_scripts', $this->plugin_url . 'assets/frontend.js', array( 'jquery' ), '1.0.0', true );
+		// enqueue style
+		wp_enqueue_style( 'frontend_style', $this->plugin_url . 'assets/frontend.css' );
+		// add bootstrap
+		wp_enqueue_style( 'bootstrap', 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css' );
+		wp_enqueue_script( 'bootstrap', 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js', array( 'jquery' ), '4.0.0', true );
 	}
 }

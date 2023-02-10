@@ -1,22 +1,6 @@
 <div class="wrap">
 	<h1><?php echo esc_html('Levels Settings', 'house-configurator'); ?></h1>
 	<?php settings_errors(); ?>
-	<!-- if wp_house_configurator_type store data and redirect to that show success message -->
-	<?php if (isset($_GET['message']) && $_GET['message'] == 1) : ?>
-		<div class="notice notice-success is-dismissible">
-			<p><?php _e('Feature added successfully!', 'house-configurator'); ?></p>
-		</div>
-	<?php endif; ?>
-	<?php if (isset($_GET['message']) && $_GET['message'] == 'update') : ?>
-		<div class="notice notice-success is-dismissible">
-			<p><?php _e('Feature Updated successfully!', 'house-configurator'); ?></p>
-		</div>
-	<?php endif; ?>
-	<?php if (isset($_GET['message']) && $_GET['message'] == 'delete') : ?>
-		<div class="notice notice-success is-dismissible">
-			<p><?php _e('Feature Deleted successfully!', 'house-configurator'); ?></p>
-		</div>
-	<?php endif; ?>
 	<ul class="nav nav-tabs">
 		<li class="active"><a href="#tab-1">Manage Levels</a></li>
 		<li><a href="#tab-2">Add New Level</a></li>

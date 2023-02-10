@@ -1,0 +1,104 @@
+/**
+* Add All Basic things for bootstrap
+*/
+a {
+    color: #333;
+    text-decoration: none;
+}
+button {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+button:hover {
+    background-color: #000;
+}
+button:focus {
+    outline: none;
+}
+button:active {
+    background-color: #000;
+}
+button:disabled {
+    background-color: #ccc;
+    color: #666;
+}
+button:disabled:hover {
+    background-color: #ccc;
+    color: #666;
+}
+button:disabled:focus {
+    background-color: #ccc;
+    color: #666;
+}
+button:disabled:active {
+    background-color: #ccc;
+    color: #666;
+}
+button:disabled:hover {
+    background-color: #ccc;
+    color: #666;
+}
+input[type="text"] {
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+}
+input[type="text"]:focus {
+    outline: none;
+}
+input[type="text"]:disabled {
+    background-color: #ccc;
+    color: #666;
+}
+input[type="text"]:disabled:focus {
+    background-color: #ccc;
+    color: #666;
+}
+input[type="text"]:disabled:hover {
+    background-color: #ccc;
+    color: #666;
+}
+input[type="text"]:disabled:active {
+    background-color: #ccc;
+    color: #666;
+}
+input[type="text"]:disabled:hover {
+    background-color: #ccc;
+    color: #666;
+}
+input[type="text"]:disabled:focus {
+    background-color: #ccc;
+    color: #666;
+}
+/* remove input and select outer color when select or click */
+input, select, textarea, :checked {
+    outline: none;
+}
+input:focus, select:focus, textarea:focus, :checked:focus {
+    outline: none;
+}
+input:hover, select:hover, textarea:hover, :checked:hover {
+    outline: none;
+}
+input:active, select:active, textarea:active, :checked:active {
+    outline: none;
+}
+input:disabled, select:disabled, textarea:disabled, :checked:disabled {
+    outline: none;
+}
+
+/*
+* Card Design for part 1
+*/
+
+/*
+* Card Design for part 2
+*/
+.h__card {
+    border-radius: 10px !important;
+    border-style: dashed !important;
+    border-color: #333 !important;
+}

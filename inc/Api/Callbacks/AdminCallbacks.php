@@ -13,14 +13,20 @@ class AdminCallbacks extends BaseController
 		return require_once( "$this->plugin_path/templates/admin.php" );
 	}
 
+	// part - 01
+	public function adminPartOne()
+	{
+		return require_once( "$this->plugin_path/templates/part/1/index.php" );
+	}
+
 	public function adminLevels()
 	{
-		return require_once( "$this->plugin_path/templates/levels.php" );
+		return require_once( "$this->plugin_path/templates/part/1/levels.php" );
 	}
 
 	public function adminFeatures()
 	{
-		return require_once( "$this->plugin_path/templates/features.php" );
+		return require_once( "$this->plugin_path/templates/part/1/features.php" );
 	}
 
 	public function alecadddOptionsGroup( $input )

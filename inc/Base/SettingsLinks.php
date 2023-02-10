@@ -15,8 +15,11 @@ class SettingsLinks extends BaseController
 
 	public function settings_link( $links ) 
 	{
-		$settings_link = '<a href="admin.php?page=house-configurator">Settings</a>';
+		$settings_link = '<a href="admin.php?page=house_configurator">Settings</a>';
+		$docs_link = '<a href="https://www.happyarif.com">Support Us</a>';
 		array_push( $links, $settings_link );
+		array_push( $links, $docs_link );
 		return $links;
 	}
+
 }

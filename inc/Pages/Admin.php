@@ -56,8 +56,17 @@ class Admin extends BaseController
 	public function setSubpages()
 	{
 		$this->subpages = array(
+			// part - 01
 			array(
 				'parent_slug' => 'house_configurator', 
+				'page_title' => 'Part 01 Settings', 
+				'menu_title' => 'Part 01 Settings', 
+				'capability' => 'manage_options', 
+				'menu_slug' => 'house_config_house_part_one', 
+				'callback' => array( $this->callbacks, 'adminPartOne' )
+			),
+			array(
+				'parent_slug' => 'house_config_house_part_one', 
 				'page_title' => 'Level Settings', 
 				'menu_title' => 'Levels', 
 				'capability' => 'manage_options', 
@@ -65,7 +74,7 @@ class Admin extends BaseController
 				'callback' => array( $this->callbacks, 'adminLevels' )
 			),
 			array(
-				'parent_slug' => 'house_configurator', 
+				'parent_slug' => 'house_config_house_part_one', 
 				'page_title' => 'Features Settings', 
 				'menu_title' => 'Features', 
 				'capability' => 'manage_options', 
