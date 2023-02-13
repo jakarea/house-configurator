@@ -7,7 +7,7 @@
 	</ul>
 
 	<div class="tab-content">
-		<div id="tab-1" class="tab-pane active">
+		<div id="feature_tab-1" class="tab-pane active">
 			<table class="table table-hover house_configurator_table">
 				<thead>
 					<tr>

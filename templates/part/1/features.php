@@ -8,10 +8,10 @@
     <?php settings_errors(); ?>
     <ul class="nav nav-tabs">
         <li class="active"><a href="#tab-1">Features</a></li>
-        <li><a href="#tab-2">Create Feature</a></li>
+        <li><a href="#feature_tab-2">Create Feature</a></li>
     </ul>
     <div class="tab-content">
-        <div id="tab-1" class="tab-pane active">
+        <div id="feature_tab-1" class="tab-pane active">
             <h3>Features List</h3>
             <!-- feature list table from wp table wp_house_configurator_feature with level name based on level id -->
             <table class="table table-hover house_configurator_table">
@@ -75,7 +75,7 @@
             <?php ediFeatureForm(); ?>
             <?php deleteFeature(); ?>
         </div>
-        <div id="tab-2" class="tab-pane">
+        <div id="feature_tab-2" class="tab-pane">
             <h3>Create Feature</h3>
             <?php createFeatureForm(); ?>
         </div>
