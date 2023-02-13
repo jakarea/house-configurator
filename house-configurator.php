@@ -38,6 +38,27 @@ defined( 'ABSPATH' ) or die( 'Hey, what are you doing here? You silly human!' );
 if ( file_exists( dirname( __FILE__ ) . '/vendor/autoload.php' ) ) {
 	require_once dirname( __FILE__ ) . '/vendor/autoload.php';
 }
+/**
+ * Create table when plugin is activated
+ */
+function house_configurator_install() {
+	// create table table for part 2 - part 2 with json data
+	global $wpdb;
+	$table_name = $wpdb->prefix . 'house_configurator_part_2';
+	$charset_collate = $wpdb->get_charset_collate();
+	$sql = "CREATE TABLE $table_name (
+		id mediumint(9) NOT NULL AUTO_INCREMENT,
+		name tinytext NOT NULL,
+		value json NOT NULL,
+		created_at datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
+		updated_at datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
+		UNIQUE KEY id (id)
+	) $charset_collate;";
+	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+	dbDelta( $sql );
+}
+register_activation_hook( __FILE__, 'house_configurator_install' );
+
 
 // include_once function.php
 include_once( 'inc/function.php' );

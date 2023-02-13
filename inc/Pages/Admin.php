@@ -80,12 +80,48 @@ class Admin extends BaseController
 				'capability' => 'manage_options', 
 				'menu_slug' => 'house_config_features', 
 				'callback' => array( $this->callbacks, 'adminFeatures' )
-			)
+			),
+			// part - 02
+			array(
+				'parent_slug' => 'house_configurator', 
+				'page_title' => 'Part 02 Settings', 
+				'menu_title' => 'Part 02 Settings', 
+				'capability' => 'manage_options', 
+				'menu_slug' => 'house_config_house_part_two', 
+				'callback' => array( $this->callbacks, 'adminPartTwo' )
+			),
+			array(
+				'parent_slug' => 'house_config_house_part_two', 
+				'page_title' => 'Construction Choice', 
+				'menu_title' => 'construction_choice', 
+				'capability' => 'manage_options', 
+				'menu_slug' => 'house_config_choices', 
+				'callback' => array( $this->callbacks, 'adminConstructionChoice' )
+			),
+			array(
+				'parent_slug' => 'house_config_house_part_two', 
+				'page_title' => 'Construction Choice 2', 
+				'menu_title' => 'construction_choice_2', 
+				'capability' => 'manage_options', 
+				'menu_slug' => 'house_config_roof_choices2', 
+				'callback' => array( $this->callbacks, 'adminConstructionChoice_2' )
+			),
+			array(
+				'parent_slug' => 'house_config_house_part_two', 
+				'page_title' => 'Construction Contact', 
+				'menu_title' => 'construction_contact', 
+				'capability' => 'manage_options', 
+				'menu_slug' => 'house_config_roof_contact', 
+				'callback' => array( $this->callbacks, 'adminConstructionContact' )
+			),
+			// End
+
 		);
 	}
 
 	public function setSettings()
 	{
+		// 
 		$args = array(
 			array(
 				'option_group' => 'house_configurator_options_group',
@@ -123,6 +159,7 @@ class Admin extends BaseController
 
 	public function setFields()
 	{
+		// 
 		$args = array(
 			array(
 				'id' => 'ds_feet',
