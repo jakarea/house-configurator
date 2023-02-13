@@ -33,7 +33,7 @@ function level_data_action() {
 	);
 
 	// redirect to level page and show message
-	wp_redirect( admin_url('admin.php?page=house_config_levels&message=1') );
+	wp_redirect( admin_url('admin.php?page=house_config_house_part_one&message=1') );
 	exit;
 }
 
@@ -62,7 +62,7 @@ function edit_level_data_action() {
 	);
 
 	// redirect to level page and show message
-	wp_redirect( admin_url('admin.php?page=house_config_levels&message=update') );
+	wp_redirect( admin_url('admin.php?page=house_config_house_part_one&message=update') );
 	exit;
 }
 
@@ -85,7 +85,7 @@ function delete_level_data_action() {
 	);
 
 	// redirect to level page and show message
-	wp_redirect( admin_url('admin.php?page=house_config_levels&message=delete') );
+	wp_redirect( admin_url('admin.php?page=house_config_house_part_one&message=delete') );
 	exit;
 }
 
@@ -106,17 +106,23 @@ function create_feature_action() {
 	// store data in wp table name [wp_house_configurator_feature] with prefix
 	global $wpdb;
 	$table_name = $wpdb->prefix . 'house_configurator_feature';
-	$wpdb->insert(
+	if (!$feature_level || empty($feature_level)) {
+		$feature_level = 0;
+	  } else {
+		$feature_level = implode(',', $feature_level);
+	  }
+	  
+	  $wpdb->insert(
 		$table_name,
 		array(
-			'name' => $feature_name,
-			'price' => $feature_price,
-			'type_id' => implode(',', $feature_level)
+		  'name' => $feature_name,
+		  'price' => $feature_price,
+		  'type_id' => $feature_level
 		)
-	);
+	  );
 
 	// redirect to level page and show message
-	wp_redirect( admin_url('admin.php?page=house_config_features&message=success') );
+	wp_redirect( admin_url('admin.php?page=house_config_house_part_one&message=success') );
 	exit;
 }
 
@@ -136,18 +142,23 @@ function edit_feature_action() {
 	// store data in wp table name [wp_house_configurator_feature] with prefix
 	global $wpdb;
 	$table_name = $wpdb->prefix . 'house_configurator_feature';
-	$wpdb->update(
+	if (!$feature_level || empty($feature_level)) {
+		$feature_level = 0;
+	  } else {
+		$feature_level = implode(',', $feature_level);
+	  }
+	  
+	  $wpdb->insert(
 		$table_name,
 		array(
-			'name' => $feature_name,
-			'price' => $feature_price,
-			'type_id' => implode(',', $feature_level)
-		),
-		array('id' => $feature_id)
-	);
+		  'name' => $feature_name,
+		  'price' => $feature_price,
+		  'type_id' => $feature_level
+		)
+	  );
 
 	// redirect to level page and show message
-	wp_redirect( admin_url('admin.php?page=house_config_features&message=update') );
+	wp_redirect( admin_url('admin.php?page=house_config_house_part_one&message=update') );
 	exit;
 }
 
@@ -170,6 +181,6 @@ function delete_feature_data_action() {
 	);
 
 	// redirect to level page and show message
-	wp_redirect( admin_url('admin.php?page=house_config_features&message=delete') );
+	wp_redirect( admin_url('admin.php?page=house_config_house_part_one&message=delete') );
 	exit;
 }

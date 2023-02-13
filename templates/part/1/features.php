@@ -3,24 +3,9 @@
  * @package  HouseConfigurator
  */
 ?>
-<div class="wrap">
+<div class="wrap mt-5">
     <h1>Features Manage</h1>
     <?php settings_errors(); ?>
-    <?php if (isset($_GET['message']) && $_GET['message'] == 1) : ?>
-		<div class="notice notice-success is-dismissible">
-			<p><?php _e('Feature added successfully!', 'house-configurator'); ?></p>
-		</div>
-	<?php endif; ?>
-	<?php if (isset($_GET['message']) && $_GET['message'] == 'update') : ?>
-		<div class="notice notice-success is-dismissible">
-			<p><?php _e('Feature Updated successfully!', 'house-configurator'); ?></p>
-		</div>
-	<?php endif; ?>
-	<?php if (isset($_GET['message']) && $_GET['message'] == 'delete') : ?>
-		<div class="notice notice-success is-dismissible">
-			<p><?php _e('Feature Deleted successfully!', 'house-configurator'); ?></p>
-		</div>
-	<?php endif; ?>
     <ul class="nav nav-tabs">
         <li class="active"><a href="#tab-1">Features</a></li>
         <li><a href="#tab-2">Create Feature</a></li>
@@ -57,9 +42,15 @@
                                             $house_levels = $wpdb->prefix . 'house_configurator_type';
                                             // take array from type_id and show name
                                             $type_id = explode(',', $feature->type_id);
-                                            foreach ($type_id as $key => $id) {
-                                                $level = $wpdb->get_row("SELECT * FROM $house_levels WHERE id = $id");
-                                                echo '<strong>' . $level->name . '</strong>'. ', ';
+                                            // if type_id is equal 0 then no level
+                                            if( $type_id[0] == 0 ) {
+                                                echo 'No Level';
+                                            }
+                                            else {
+                                                foreach ($type_id as $key => $id) {
+                                                    $level = $wpdb->get_row("SELECT * FROM $house_levels WHERE id = $id");
+                                                    echo $level->name . ', ';
+                                                }
                                             }
                                         ?>
                                     </td>
