@@ -29,27 +29,6 @@ class AdminCallbacks extends BaseController
 		return require_once( "$this->plugin_path/templates/part/1/features.php" );
 	}
 
-	// part - 02
-	public function adminPartTwo()
-	{
-		return require_once( "$this->plugin_path/templates/part/2/index.php" );
-	}
-
-	public function adminConstructionChoice()
-	{
-		return require_once( "$this->plugin_path/templates/part/2/construction-choice.php" );
-	}
-
-	public function adminConstructionContact()
-	{
-		return require_once( "$this->plugin_path/templates/part/2/construction-contact.php" );
-	}
-
-	public function adminConstructionChoice_2()
-	{
-		return require_once( "$this->plugin_path/templates/part/2/construction-choice-2.php" );
-	}
-
 	public function alecadddOptionsGroup( $input )
 	{
 		return $input;
