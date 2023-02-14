@@ -2,6 +2,19 @@
 /**
  * @package  HouseConfigurator
  */
+global $wpdb;
+//  btw_list list from database [wp_house_configurator_part_2] where name = 'btw_list'
+$btw_list_table = $wpdb->prefix . 'house_configurator_part_2';
+$btw_list = $wpdb->get_var("SELECT value FROM $btw_list_table WHERE name = 'btw_list'");
+$btw_list = json_decode($btw_list, true);
+//  aff_list list from database [wp_house_configurator_part_2] where name = 'afplakken_list'
+$aff_list_table = $wpdb->prefix . 'house_configurator_part_2';
+$aff_list = $wpdb->get_var("SELECT value FROM $aff_list_table WHERE name = 'afplakken_list'");
+$aff_list = json_decode($aff_list, true);
+// contact list
+$contact_list_table = $wpdb->prefix . 'house_configurator_part_2';
+$contact_list = $wpdb->get_var("SELECT value FROM $contact_list_table WHERE name = 'contact_list'");
+$contact_list = json_decode($contact_list, true);
 ?>
 
 <div class="row">
@@ -22,26 +35,26 @@
                     <h6 class="m-0"><strong>ONLINE OFFERTE - AIRLESS LATEX SPUITEN</strong> | <small>Terug naar de website</small></h6>
                 </div>
                 <hr />
-                <form action="#" class="h__form_body">
+                <form class="h__form_body" method="GET">
                     <div class="form-group row">
                         <label class="col-3" for="number"><h4>01.</h4></label>
                         <div class="col-9">
-                            <select name="" class="form-control form-select bg-light">
+                            <select name="btw__list" class="form-control form-select bg-light">
                                 <option value="">Selecter</option>
-                                <option value="">Option 1</option>
-                                <option value="">Option 2</option>
-                                <option value="">Option 3</option>
+                                <?php foreach($btw_list as $data) : ?>
+                                    <option value="<?php echo $data['value']; ?>"  <?php if(isset($_GET['btw__list']) && $_GET['btw__list'] === $data['value']) echo 'selected'; ?>> <?php echo $data['name']; ?> </option>
+                                <?php endforeach; ?>
                             </select>
                         </div>
                     </div>
                     <div class="form-group row">
                         <label class="col-3" for="number"><h4>02.</h4></label>
                         <div class="col-9">
-                            <select name="" class="form-control form-select bg-light">
+                            <select name="aff__list" class="form-control form-select bg-light">
                                 <option value="">Selecter</option>
-                                <option value="">Option 1</option>
-                                <option value="">Option 2</option>
-                                <option value="">Option 3</option>
+                                <?php foreach($aff_list as $data) : ?>
+                                    <option value="<?php echo $data['value']; ?>" <?php if(isset($_GET['aff__list']) && $_GET['aff__list'] === $data['value']) echo 'selected'; ?>> <?php echo $data['name']; ?> </option>
+                                <?php endforeach; ?>
                             </select>
                             <small>- Links vierkante meters in wit - Rechts vierkante meters in kleur</small><br />
                             <small>- Geen kleurcodes invoeren	</small>
@@ -53,10 +66,10 @@
                         <div class="col-9">
                             <div class="row">
                                 <div class="col-5 col-sm-6 col-md-5 col-lg-5">
-                                    <input type="number" class="form-control bg-light" placeholder="Wit">
+                                    <input type="number" class="form-control bg-light" name="wit" placeholder="Wit" value="<?php echo isset($_GET['wit']) ? $_GET['wit'] : ''; ?>">
                                 </div>
                                 <div class="col-5 col-sm-6 col-md-5 col-lg-5">
-                                    <input type="number" class="form-control bg-light" placeholder="Kleur">
+                                    <input type="number" class="form-control bg-light" name="kleur" placeholder="Kleur" value="<?php echo isset($_GET['kleur']) ? $_GET['kleur'] : ''; ?>">
                                 </div>
                                 <div class="col-2 d-sm-none d-md-block">
                                     <h4>M2</h4>
@@ -68,11 +81,11 @@
                     <div class="form-group row">
                         <label class="col-3" for="number"><h4>04.</h4></label>
                         <div class="col-9">
-                            <select name="" class="form-control form-select bg-light">
+                            <select name="c__list" class="form-control form-select bg-light">
                                 <option value="">Selecter</option>
-                                <option value="">Option 1</option>
-                                <option value="">Option 2</option>
-                                <option value="">Option 3</option>
+                            <?php foreach($contact_list as $key => $data) : ?>
+                                <option value="<?php echo $key + 1; ?>"> <?php echo $data; ?> </option>
+                            <?php endforeach; ?>
                             </select>
                         </div>
                     </div>
@@ -80,29 +93,53 @@
                     <div class="form-group row">
                         <label class="col-3" for="number"></label>
                         <div class="col-9">
-                            <input type="submit" class="btn btn-warning" value="Berekenen">
+                            <input type="submit" class="btn btn-warning" value="Calculate">
+                            <!-- reset -->
+                            <input type="reset" class="btn btn-danger" value="Reset">
                         </div>
                     </div>
                 </form>
                 <hr />
                 <!-- calculation result with bootstrap tabkle -->
                 <div class="result">
-                    <table class="table table-bordered">
-                        <tbody>
-                            <tr>
-                                <td>Werkzaamheden</td>
-                                <td>€ 0,00</td>
-                            </tr>
-                            <tr>
-                                <td>Werkzaamheden</td>
-                                <td>€ 0,00</td>
-                            </tr>
-                            <tr>
-                                <td>Werkzaamheden</td>
-                                <td>€ 0,00</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <?php
+                        // if server request method is post then calculate
+                        if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+                            // get value from form
+                            $total = 0;
+                            $discount = 0;
+                            $subtotal = 0;
+                            $btw = isset($_GET['btw__list']) ? $_GET['btw__list'] : '';
+                            $aff = isset($_GET['aff__list']) ? $_GET['aff__list'] : '';
+                            $wit = isset($_GET['wit']) ? $_GET['wit'] : '';
+                            $kleur = isset($_GET['kleur']) ? $_GET['kleur'] : '';
+                            $c__list = isset($_GET['c__list']) ? $_GET['c__list'] : '';
+                            // calculate and before convert to int
+                            $total = (int)$btw * (int)$aff + (int)$wit + (int)$kleur;
+                           if( $total > 0 ) {
+                                $discount = 100;
+                                $subtotal = $total - $discount;
+                           }                            
+                            // show result
+                            echo '<h4 class="text-center my-4">Uw totaal bedrag is: € '. $total .'</h4>';
+                            echo '<table class="table table-bordered">
+                                    <tbody>
+                                        <tr>
+                                            <td>SUBTOTAAL: (incl. btw)</td>
+                                            <td><h5>€ '. $total. '('. (int)$wit + (int)$kleur.' M2)'.'</h5></td>
+                                        </tr>
+                                        <tr>
+                                            <td>KORTING:</td>
+                                            <td><h5>€ '. $discount.'</h5></td>
+                                        </tr>
+                                        <tr>
+                                            <td>TOTAAL:</td>
+                                            <td><h5>€ '. $subtotal.'</h5></td>
+                                        </tr>
+                                    </tbody>
+                                </table>';
+                        }
+                    ?>
                 </div>
             </div>
         </div>

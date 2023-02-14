@@ -445,3 +445,113 @@ function btw_data_delete_action() {
     wp_redirect(admin_url('admin.php?page=house_config_house_part_two&message=delete'));
     exit;
 }
+
+/**
+ * The code that runs during add house_part_two into json array [afplakken_data_action].
+ */
+add_action('admin_post_afplakken_data_action', 'afplakken_data_action');
+add_action('admin_post_nopriv_afplakken_data_action', 'afplakken_data_action');
+
+function afplakken_data_action() {
+	// Get the btw name from the form
+	$af_name = $_POST['afplakken_name'];
+	$af_price = $_POST['afplakken_price'];
+
+	// Connect to the database and retrieve the current btw list (if it exists)
+	global $wpdb;
+	$table_name = $wpdb->prefix . 'house_configurator_part_2';
+	$af_list = $wpdb->get_var("SELECT value FROM $table_name WHERE name = 'afplakken_list'");
+
+	// If there is no existing btw list, create a new one and insert it into the database
+	if (!$af_list) {
+		$af_list = array(array('name' => $af_name, 'value' => $af_price));
+		$wpdb->insert(
+			$table_name,
+			array(
+				'name' => 'afplakken_list',
+				'value' => json_encode($af_list),
+				'created_at' => current_time('mysql'),
+				'updated_at' => current_time('mysql')
+			),
+			array('%s', '%s', '%s', '%s')
+		);
+	} else {
+		// If the btw list exists, decode it from JSON
+		$af_list = json_decode($af_list, true);
+
+		// Add the new btw to the list
+		array_push($af_list, array('name' => $af_name, 'value' => $af_price));
+
+		// Encode the btw list as JSON
+		$af_list = json_encode($af_list);
+
+		// Update the btw list in the database
+		$wpdb->update(
+			$table_name,
+			array(
+				'value' => $af_list,
+				'updated_at' => current_time('mysql')
+			),
+			array('name' => 'afplakken_list'),
+			array('%s', '%s'),
+			array('%s')
+		);
+	}
+
+	// Redirect the user back to the page with a success message
+	wp_redirect(admin_url('admin.php?page=house_config_house_part_two&message=success'));
+	exit;
+}
+
+/**
+ * The code that runs during update house_part_two into json array [btw_data_update_action].
+ */
+add_action('admin_post_afplakken_data_update_action', 'afplakken_data_update_action');
+add_action('admin_post_nopriv_afplakken_data_update_action', 'afplakken_data_update_action');
+
+function afplakken_data_update_action() {
+	// Get the btw name from the form
+	$af_old_name = $_POST['aff_name_update'];
+	$af_name = $_POST['afplakken_name'];
+	$af_price = $_POST['afplakken_price'];
+
+	// Connect to the database and retrieve the current btw list (if it exists)
+	global $wpdb;
+	$table_name = $wpdb->prefix . 'house_configurator_part_2';
+	$af_list = $wpdb->get_var("SELECT value FROM $table_name WHERE name = 'afplakken_list'");
+
+	// If there is no existing btw list, return an error message
+	if (!$af_list) {
+		wp_redirect(admin_url('admin.php?page=house_config_house_part_two&message=error'));
+		exit;
+	} else {
+		// If the btw list exists, decode it from JSON
+		$af_list = json_decode($af_list, true);
+	}
+
+	// Find the index of the btw name in the btw list
+	$index = array_search($af_old_name, array_column($af_list, 'name'));
+
+	// Update the name and price of the btw list
+	$af_list[$index]['name'] = $af_name;
+	$af_list[$index]['value'] = $af_price;
+
+	// Encode the btw list as JSON
+	$af_list = json_encode($af_list);
+
+	// Update the btw list in the database
+	$wpdb->update(
+		$table_name,
+		array(
+			'value' => $af_list,
+			'updated_at' => current_time('mysql')
+		),
+		array('name' => 'afplakken_list'),
+		array('%s', '%s'),
+		array('%s')
+	);
+
+	// Redirect the user back to the page with a success message
+	wp_redirect(admin_url('admin.php?page=house_config_house_part_two&message=update'));
+	exit;
+}
