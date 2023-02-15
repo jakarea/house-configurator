@@ -17,10 +17,32 @@ class Enqueue extends BaseController
 	}
 	
 	function enqueue() {
-		// enqueue all our scripts
-		wp_enqueue_style( 'mypluginstyle', $this->plugin_url . 'assets/mystyle.css' );
-		wp_enqueue_script( 'mypluginscript', $this->plugin_url . 'assets/myscript.js' );
+		// Get the current screen object
+		$screen = get_current_screen();
+		// Check if the current screen is a plugin dashboard page
+		if ( strpos( $screen->id, 'house-configurator' ) !== false ) {
+		  // enqueue backend scripts
+		  wp_enqueue_style( 'backend-css', $this->plugin_url . 'assets/backend.css' );
+		  wp_enqueue_script( 'backend-js', $this->plugin_url . 'assets/backend.js' );
+
+		  if ( ! wp_script_is( 'jquery', 'enqueued' ) ) {
+			wp_enqueue_script( 'jquery' );
+		  }
+		//   enqueue cookie script
+			wp_enqueue_script( 'jquery-cookie', $this->plugin_url . 'assets/vendor/cookies/cookie.js', array('jquery'), '1.0', true );
+		  if ( ! wp_style_is( 'bootstrap', 'enqueued' ) ) {
+			wp_enqueue_style( 'bootstrap-css', $this->plugin_url . 'assets/vendor/bootstrap/css/bootstrap.min.css' );
+		  }
+		  if ( ! wp_script_is( 'bootstrap', 'enqueued' ) ) {
+			wp_enqueue_script( 'bootstrap-js', $this->plugin_url . 'assets/vendor/bootstrap/js/bootstrap.min.js', array( 'jquery' ), '4.6.0', true );
+		  }
+		}
+		else {
+			wp_enqueue_style( 'mypluginstyle', $this->plugin_url . 'assets/mystyle.css' );
+			wp_enqueue_script( 'mypluginscript', $this->plugin_url . 'assets/myscript.js' );
+		}
 	}
+	  
 
 	// enqueue scripts frontend
 	function enqueue_frontend() {
