@@ -50,6 +50,12 @@ class AdminCallbacks extends BaseController
 		return require_once( "$this->plugin_path/templates/part/2/construction-choice-2.php" );
 	}
 
+	// part - 03
+	public function adminPartThree()
+	{
+		return require_once( "$this->plugin_path/templates/part/3/index.php" );
+	}
+
 	public function alecadddOptionsGroup( $input )
 	{
 		return $input;
@@ -97,6 +103,12 @@ class AdminCallbacks extends BaseController
 			echo '<input type="text" class="regular-text" name="' . $key . '" value="' . $val . '" placeholder="Write ' . $key . ' Here!">';
 		}		
 		
+	}
+
+	public function houseConfigure_square_feet_price()
+	{
+		$value = esc_attr( get_option( 'house_config_house_part_two_price' ) );
+		echo '<input type="text" class="regular-text" name="house_config_house_part_two_price" value="' . $value . '" placeholder="Write Price Here!">';
 	}
  
 }

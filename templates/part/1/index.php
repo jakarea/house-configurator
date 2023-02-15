@@ -53,7 +53,10 @@ if ( isset( $_GET['message'] ) && $_GET['message'] == 1 ) {
                     <div class="col-md-2 mb-3">
                         <ul class="nav nav-pills flex-column" id="h__tabs-level" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link active" id="h__tabs-levels-tab" data-toggle="tab" href="#h__tabs-levels" role="tab" aria-controls="h__tabs-levels" aria-selected="true">Manage Levels</a>
+                                <a class="nav-link active" id="h__tabs-price-tab" data-toggle="tab" href="#h__tabs-price" role="tab" aria-controls="h__tabs-price" aria-selected="true">Manage Price</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="h__tabs-levels-tab" data-toggle="tab" href="#h__tabs-levels" role="tab" aria-controls="h__tabs-levels" aria-selected="true">Manage Levels</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="h__tabs-features-tab" data-toggle="tab" href="#h__tabs-features" role="tab" aria-controls="h__tabs-features" aria-selected="false">Manage Feature</a>
@@ -62,6 +65,10 @@ if ( isset( $_GET['message'] ) && $_GET['message'] == 1 ) {
                     </div>
                     <div class="col-md-10">
                         <div class="tab-content" id="h__tabs-levelContent">
+                            <?php
+                                // include price 
+                                require_once 'price.php';
+                            ?>
                             <?php
                                 // include level template
                                 require_once 'levels.php';

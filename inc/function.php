@@ -555,3 +555,72 @@ function afplakken_data_update_action() {
 	wp_redirect(admin_url('admin.php?page=house_config_house_part_two&message=update'));
 	exit;
 }
+
+/*
+	================================================================================================
+		END OF HOUSE PART TWO
+	================================================================================================
+*/
+
+/*
+	================================================================================================
+		HOUSE PART THREE
+	================================================================================================
+*/
+
+/**
+ * The code that runs during store level house_part_three into house_configurator_part_3_level [part_3_level_data_action].
+*/
+add_action('admin_post_part_3_level_data_action', 'part_3_level_data_action');
+add_action('admin_post_nopriv_part_3_level_data_action', 'part_3_level_data_action');
+
+// validation for level after upload icon and image and check if directory not have then create directory and finally upload file and store data into database
+
+// upload plugin directory path [assets/images/level_icon/] and [assets/images/level_image/] if not have then create directory
+function upload_file($file, $directory) {
+	$upload_dir = wp_upload_dir();
+	$upload_dir = $upload_dir['basedir'] . '/house-configurator/' . $directory . '/';
+	if (!file_exists($upload_dir)) {
+		mkdir($upload_dir, 0777, true);
+	}
+	$upload_file = $upload_dir . basename($file['name']);
+	if (move_uploaded_file($file['tmp_name'], $upload_file)) {
+		return $upload_file;
+	}
+}
+function part_3_level_data_action() {
+	if (empty($_FILES['level_icon']['name']) || empty($_FILES['level_image']['name'])) {
+		wp_redirect(admin_url('admin.php?page=house_config_house_part_three&message=error'));
+		exit;
+	}
+	// once check file is not empty then upload file and check if directory not have then create directory
+	$level_icon = upload_file($_FILES['level_icon'], 'level_icon');
+	$level_image = upload_file($_FILES['level_image'], 'level_image');
+	
+	// Get the level name from the form
+	$level_name = $_POST['level_name'];
+	$level_price = $_POST['level_price'];
+
+	// Connect to the database and retrieve the current level list (if it exists)
+	global $wpdb;
+	$table_name = $wpdb->prefix . 'house_configurator_part_3_level';
+	
+	// insert data into database
+	$wpdb->insert(
+		$table_name,
+		array(
+			'name' => $level_name,
+			'price' => $level_price,
+			'icon' => $level_icon,
+			'image' => $level_image,
+			'created_at' => current_time('mysql'),
+			'updated_at' => current_time('mysql')
+		),
+		array('%s', '%s', '%s', '%s', '%s', '%s')
+	);
+
+	// Redirect the user back to the page with a success message
+	wp_redirect(admin_url('admin.php?page=house_config_house_part_three&message=success'));
+	exit;
+
+}

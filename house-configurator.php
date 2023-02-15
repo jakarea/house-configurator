@@ -56,6 +56,23 @@ function house_configurator_install() {
 	) $charset_collate;";
 	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 	dbDelta( $sql );
+
+	// create level table for part 3 with icon and image
+	$table_name = $wpdb->prefix . 'house_configurator_part_3_level';
+	$charset_collate = $wpdb->get_charset_collate();
+	$sql = "CREATE TABLE $table_name (
+		id mediumint(9) NOT NULL AUTO_INCREMENT,
+		name tinytext NOT NULL,
+		price tinytext NOT NULL,
+		icon tinytext NOT NULL,
+		image tinytext NOT NULL,
+		created_at datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
+		updated_at datetime DEFAULT '0000-00-00 00:00:00' NOT NULL,
+		UNIQUE KEY id (id)
+	) $charset_collate;";
+	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+	dbDelta( $sql );
+
 }
 register_activation_hook( __FILE__, 'house_configurator_install' );
 

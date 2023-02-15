@@ -1,4 +1,4 @@
-<div class="tab-pane fade show active" id="h__tabs-levels" role="tabpanel" aria-labelledby="h__tabs-levels-tab">
+<div class="tab-pane fade" id="h__tabs-levels" role="tabpanel" aria-labelledby="h__tabs-levels-tab">
 	<div class="table-header d-flex justify-content-between mb-3">
 		<h4><?php echo esc_html('Manage Levels / Add Levels', 'house-configurator'); ?></h4>
 		<button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addLevelModal">Add New</button>

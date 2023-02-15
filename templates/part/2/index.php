@@ -34,22 +34,6 @@ if ( isset( $_GET['message'] ) && $_GET['message'] == 'success' ) {
             <p>Something went wrong!</p>
         </div>';
 }
-
-/**
-* Import Where you hear us template
-*/
-// require_once 'construction-contact.php';
-
-/**
- * Import BTW template
- */
-// require_once 'construction-choice.php';
-
-/**
- * Import afplakken template
- */
-// require_once 'construction-choice-2.php';
-
 ?>
 <div class="wrap">
     <h1><?php echo esc_html('Part Two Manage All Settings', 'house-configurator'); ?></h1>
@@ -62,7 +46,10 @@ if ( isset( $_GET['message'] ) && $_GET['message'] == 'success' ) {
                     <div class="col-md-2 mb-3">
                         <ul class="nav nav-pills flex-column" id="h__tabs-level" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link active" id="h__tabs-contact-tab" data-toggle="tab" href="#h__tabs-contact" role="tab" aria-controls="h__tabs-contact" aria-selected="true">Manage Contact</a>
+                                <a class="nav-link active" id="h__tabs-price-tab" data-toggle="tab" href="#h__tabs-price" role="tab" aria-controls="h__tabs-price" aria-selected="true">Manage Price</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="h__tabs-contact-tab" data-toggle="tab" href="#h__tabs-contact" role="tab" aria-controls="h__tabs-contact" aria-selected="true">Manage Contact</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="h__tabs-btw-tab" data-toggle="tab" href="#h__tabs-btw" role="tab" aria-controls="h__tabs-btw" aria-selected="true">Manage BTW</a>
@@ -74,7 +61,12 @@ if ( isset( $_GET['message'] ) && $_GET['message'] == 'success' ) {
                     </div>
                     <div class="col-md-10">
                         <div class="tab-content" id="h__tabs-btwContent">
-                            <div class="tab-pane fade show active" id="h__tabs-contact" role="tabpanel" aria-labelledby="h__tabs-contact-tab">
+                            <div class="tab-pane fade show active" id="h__tabs-price" role="tabpanel" aria-labelledby="h__tabs-price-tab">
+                                <?php 
+                                    require_once 'construction-price.php';
+                                ?>
+                            </div>
+                            <div class="tab-pane fade" id="h__tabs-contact" role="tabpanel" aria-labelledby="h__tabs-contact-tab">
                                 <?php 
                                     require_once 'construction-contact.php';
                                 ?>

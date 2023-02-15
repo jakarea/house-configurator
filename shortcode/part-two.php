@@ -15,6 +15,8 @@ $aff_list = json_decode($aff_list, true);
 $contact_list_table = $wpdb->prefix . 'house_configurator_part_2';
 $contact_list = $wpdb->get_var("SELECT value FROM $contact_list_table WHERE name = 'contact_list'");
 $contact_list = json_decode($contact_list, true);
+
+$price = esc_attr( get_option( 'house_config_house_part_two_price' ) );
 ?>
 
 <div class="row">
@@ -115,9 +117,9 @@ $contact_list = json_decode($contact_list, true);
                             $kleur = isset($_GET['kleur']) ? $_GET['kleur'] : '';
                             $c__list = isset($_GET['c__list']) ? $_GET['c__list'] : '';
                             // calculate and before convert to int
-                            $total = (int)$btw * (int)$aff + (int)$wit + (int)$kleur;
+                            $total = ((int)$wit + (int)$kleur) * (int)$price + (int)$btw;
                            if( $total > 0 ) {
-                                $discount = 100;
+                                $discount = 15;
                                 $subtotal = $total - $discount;
                            }                            
                             // show result

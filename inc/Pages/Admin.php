@@ -114,6 +114,15 @@ class Admin extends BaseController
 				'menu_slug' => 'house_config_roof_contact', 
 				'callback' => array( $this->callbacks, 'adminConstructionContact' )
 			),
+			// part - 03
+			array(
+				'parent_slug' => 'house_configurator', 
+				'page_title' => 'Part 03 Settings', 
+				'menu_title' => 'Part 03 Settings', 
+				'capability' => 'manage_options', 
+				'menu_slug' => 'house_config_house_part_three', 
+				'callback' => array( $this->callbacks, 'adminPartThree' )
+			),
 			// End
 
 		);
@@ -136,6 +145,11 @@ class Admin extends BaseController
 			array(
 				'option_group' => 'house_configurator_options_group',
 				'option_name' => 'house_configure_description',
+				'callback' => array( $this->callbacks, 'alecadddOptionsGroup' )
+			),
+			array(
+				'option_group' => 'house_configurator_options_group',
+				'option_name' => 'house_config_house_part_two_price',
 				'callback' => array( $this->callbacks, 'alecadddOptionsGroup' )
 			)
 		);
@@ -163,7 +177,7 @@ class Admin extends BaseController
 		$args = array(
 			array(
 				'id' => 'ds_feet',
-				'title' => 'Default Square Feet',
+				'title' => 'Part-01 Default Square Feet',
 				'callback' => array( $this->callbacks, 'houseConfigure_ds_feet' ),
 				'page' => 'house_configurator',
 				'section' => 'alecaddd_admin_index',
@@ -174,12 +188,23 @@ class Admin extends BaseController
 			),
 			array(
 				'id' => 'house_configure_price',
-				'title' => 'Per Square Feet Price',
+				'title' => 'Price For Part-01 Square Feet',
 				'callback' => array( $this->callbacks, 'houseConfigure_price' ),
 				'page' => 'house_configurator',
 				'section' => 'alecaddd_admin_index',
 				'args' => array(
 					'label_for' => 'house_configure_price',
+					'class' => 'example-class'
+				)
+			),
+			array(
+				'id' => 'house_config_house_part_two_price',
+				'title' => 'Price For Part-02 Square Feet',
+				'callback' => array( $this->callbacks, 'houseConfigure_square_feet_price' ),
+				'page' => 'house_configurator',
+				'section' => 'alecaddd_admin_index',
+				'args' => array(
+					'label_for' => 'house_config_house_part_two_price',
 					'class' => 'example-class'
 				)
 			),
