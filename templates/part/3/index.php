@@ -44,9 +44,15 @@ if ( isset( $_GET['message'] ) && $_GET['message'] == 'success' ) {
 			<div class="col-md-12">
                 <div class="row">
                     <div class="col-md-2 mb-3">
-                        <ul class="nav nav-pills flex-column" id="h__tabs-levels" role="tablist">
+                        <ul class="nav nav-pills flex-column" id="h__tabs-level" role="tablist">
                             <li class="nav-item">
                                 <a class="nav-link active" id="h__tabs-levels-part3-tab" data-toggle="tab" href="#h__tabs-levels-part3" role="tab" aria-controls="h__tabs-levels-part3" aria-selected="true">Manage Level</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="h__tabs-options-part3-tab" data-toggle="tab" href="#h__tabs-options-part3" role="tab" aria-controls="h__tabs-options-part3" aria-selected="true">Manage Option</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="h__tabs-house-part3-tab" data-toggle="tab" href="#h__tabs-house-part3" role="tab" aria-controls="h__tabs-house-part3" aria-selected="true">Manage House</a>
                             </li>
                         </ul>
                     </div>
@@ -55,6 +61,16 @@ if ( isset( $_GET['message'] ) && $_GET['message'] == 'success' ) {
                             <div class="tab-pane fade show active" id="h__tabs-levels-part3" role="tabpanel" aria-labelledby="h__tabs-levels-part3-tab">
                                 <?php 
                                     require_once 'levels.php';
+                                ?>
+                            </div>
+                            <div class="tab-pane fade" id="h__tabs-options-part3" role="tabpanel" aria-labelledby="h__tabs-options-part3-tab">
+                                <?php 
+                                    require_once 'options.php';
+                                ?>
+                            </div>
+                            <div class="tab-pane fade" id="h__tabs-house-part3" role="tabpanel" aria-labelledby="h__tabs-house-part3-tab">
+                                <?php 
+                                    require_once 'house.php';
                                 ?>
                             </div>
                         </div>

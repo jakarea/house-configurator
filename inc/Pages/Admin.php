@@ -48,7 +48,7 @@ class Admin extends BaseController
 				'menu_slug' => 'house_configurator', 
 				'callback' => array( $this->callbacks, 'adminDashboard' ), 
 				'icon_url' => 'dashicons-store', 
-				'position' => 110
+				'position' => 80
 			)
 		);
 	}
@@ -135,22 +135,22 @@ class Admin extends BaseController
 			array(
 				'option_group' => 'house_configurator_options_group',
 				'option_name' => 'ds_feet',
-				'callback' => array( $this->callbacks, 'alecadddOptionsGroup' )
+				'callback' => array( $this->callbacks, 'hcOptionsGroup' )
 			),
 			array(
 				'option_group' => 'house_configurator_options_group',
 				'option_name' => 'house_configure_price',
-				'callback' => array( $this->callbacks, 'alecadddOptionsGroup' )
+				'callback' => array( $this->callbacks, 'hcOptionsGroup' )
 			),
 			array(
 				'option_group' => 'house_configurator_options_group',
 				'option_name' => 'house_configure_description',
-				'callback' => array( $this->callbacks, 'alecadddOptionsGroup' )
+				'callback' => array( $this->callbacks, 'hcOptionsGroup' )
 			),
 			array(
 				'option_group' => 'house_configurator_options_group',
 				'option_name' => 'house_config_house_part_two_price',
-				'callback' => array( $this->callbacks, 'alecadddOptionsGroup' )
+				'callback' => array( $this->callbacks, 'hcOptionsGroup' )
 			)
 		);
 
@@ -161,11 +161,18 @@ class Admin extends BaseController
 	{
 		$args = array(
 			array(
-				'id' => 'alecaddd_admin_index',
+				'id' => 'hc_admin_index',
 				'title' => 'Settings',
-				'callback' => array( $this->callbacks, 'alecadddAdminSection' ),
+				'callback' => array( $this->callbacks, 'hcAdminSection' ),
 				'page' => 'house_configurator'
-			)
+			),
+			// part-01
+			array(
+				'id' => 'hc_admin_part_one',
+				'title' => '',
+				'callback' => array( $this->callbacks, 'hcAdminSectionPartOne' ),
+				'page' => 'house_config_house_part_one'
+			),
 		);
 
 		$this->settings->setSections( $args );
@@ -179,8 +186,8 @@ class Admin extends BaseController
 				'id' => 'ds_feet',
 				'title' => 'Part-01 Default Square Feet',
 				'callback' => array( $this->callbacks, 'houseConfigure_ds_feet' ),
-				'page' => 'house_configurator',
-				'section' => 'alecaddd_admin_index',
+				'page' => 'house_config_house_part_one',
+				'section' => 'hc_admin_part_one',
 				'args' => array(
 					'label_for' => 'ds_feet',
 					'class' => 'example-class'
@@ -190,8 +197,8 @@ class Admin extends BaseController
 				'id' => 'house_configure_price',
 				'title' => 'Price For Part-01 Square Feet',
 				'callback' => array( $this->callbacks, 'houseConfigure_price' ),
-				'page' => 'house_configurator',
-				'section' => 'alecaddd_admin_index',
+				'page' => 'house_config_house_part_one',
+				'section' => 'hc_admin_part_one',
 				'args' => array(
 					'label_for' => 'house_configure_price',
 					'class' => 'example-class'
@@ -202,7 +209,7 @@ class Admin extends BaseController
 				'title' => 'Price For Part-02 Square Feet',
 				'callback' => array( $this->callbacks, 'houseConfigure_square_feet_price' ),
 				'page' => 'house_configurator',
-				'section' => 'alecaddd_admin_index',
+				'section' => 'hc_admin_index',
 				'args' => array(
 					'label_for' => 'house_config_house_part_two_price',
 					'class' => 'example-class'
@@ -213,7 +220,7 @@ class Admin extends BaseController
 				'title' => 'Description',
 				'callback' => array( $this->callbacks, 'houseConfigure_description' ),
 				'page' => 'house_configurator',
-				'section' => 'alecaddd_admin_index',
+				'section' => 'hc_admin_index',
 				'args' => array(
 					'label_for' => 'house_configure_description',
 					'class' => 'example-class'

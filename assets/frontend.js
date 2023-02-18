@@ -3,7 +3,9 @@
     "use strict";
     var total_price = 0;
     
-    // calculate_01 onchange send all form data to server
+    /**
+     * House Configurator part 1 js
+     */
     $(document).ready(function() {
         $('select[name="levels"]').on('change', function() {
             var levels = $(this).find(':selected').attr('data-id');
@@ -44,6 +46,75 @@
                 $('.cal__result').html(total_price);
             }
         });
+    });
+
+    /**
+     * House Configurator part 3 js
+     */
+    $(document).ready(function() {
+
+            $('.options_data input[type="checkbox"]').on('change', function() {
+            var total = parseInt($('#calculate_total_part3').text().replace('€ ', ''));
+
+            if ($(this).prop('checked')) {
+                total += parseInt($(this).attr('data-price'));
+            }
+            else {
+                total -= parseInt($(this).attr('data-price'));
+            }
+
+            $('#calculate_total_part3').html('€ ' + total);
+
+        });
+                
+        $('tr#levels_type td, .model_level input[type="radio"]').on('click', function() {
+
+            var id = $(this).attr('data-id');
+            var total = $('#calculate_total_part3').attr('data-price');
+            $('tr#levels_type td a').removeClass('p__active');
+            $(this).find('a').addClass('p__active');
+            
+            $('.model_level input[type="radio"]').change(function() {
+
+                var selectedId = $(this).attr('data-id');
+
+                if ($(this).attr('data-id') == id) {
+                    $(this).prop('checked', true);
+                }  
+                $('tr#levels_type td a').removeClass('p__active');
+                $('tr#levels_type td[data-id="' + selectedId + '"] a').addClass('p__active');
+
+            });
+            $.ajax({
+                url: ajax_url.ajax_url,
+                type: 'POST',
+                data: {
+                    action: 'get_level_taxonomies',
+                    id: id
+                },
+                success: function(response) {
+                    var obj = $.parseJSON(response);
+                    console.log(obj);
+                    $('#feature_img').attr('src', obj[0].feature_img);
+                    $('.model_level input[type="radio"]').each(function() {
+                        if ($(this).attr('data-id') == id) {
+                            $(this).prop('checked', true);
+                            $('tr#levels_type td a').each(function() {
+                                if ($(this).attr('data-id') == id) {
+                                    $(this).addClass('p__active');
+                                }
+                            });
+                        }
+                    });
+                    console.log(total);
+                    total = parseInt(total) + parseInt(obj[0].price);
+                    $('#calculate_total_part3').html('€ ' +total);
+                },
+                error: function(xhr, status, error) {
+                    console.log(error);
+                }
+            });
+        });        
     });
       
       

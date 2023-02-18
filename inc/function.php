@@ -567,60 +567,27 @@ function afplakken_data_update_action() {
 		HOUSE PART THREE
 	================================================================================================
 */
+add_action( 'wp_ajax_get_level_taxonomies', 'get_level_taxonomies_callback' );
+add_action( 'wp_ajax_nopriv_get_level_taxonomies', 'get_level_taxonomies_callback' );
 
-/**
- * The code that runs during store level house_part_three into house_configurator_part_3_level [part_3_level_data_action].
-*/
-add_action('admin_post_part_3_level_data_action', 'part_3_level_data_action');
-add_action('admin_post_nopriv_part_3_level_data_action', 'part_3_level_data_action');
+function get_level_taxonomies_callback() {
+    // Get the level ID from the AJAX request
+    $id = $_POST['id'];
 
-// validation for level after upload icon and image and check if directory not have then create directory and finally upload file and store data into database
+    // Get the level taxonomy data based on the level ID
+	$level_taxonomies = get_terms(array(
+		'taxonomy' => 'level',
+		'hide_empty' => false,
+		'term_taxonomy_id' => $id,
+	));
+	// get get_term_meta feature_image_id url from level taxonomy data
+	$level_taxonomies[0]->feature_img = get_term_meta($level_taxonomies[0]->term_id, 'feature_image_id', true);
+	$level_taxonomies[0]->feature_img = wp_get_attachment_image_src($level_taxonomies[0]->feature_img, 'full')[0];
+	$level_taxonomies[0]->price = get_term_meta($level_taxonomies[0]->term_id, '_house_configurator_price', true);
 
-// upload plugin directory path [assets/images/level_icon/] and [assets/images/level_image/] if not have then create directory
-function upload_file($file, $directory) {
-	$upload_dir = wp_upload_dir();
-	$upload_dir = $upload_dir['basedir'] . '/house-configurator/' . $directory . '/';
-	if (!file_exists($upload_dir)) {
-		mkdir($upload_dir, 0777, true);
-	}
-	$upload_file = $upload_dir . basename($file['name']);
-	if (move_uploaded_file($file['tmp_name'], $upload_file)) {
-		return $upload_file;
-	}
+	// Return the level taxonomy data as JSON
+	echo json_encode($level_taxonomies);
+    
+    wp_die();
 }
-function part_3_level_data_action() {
-	if (empty($_FILES['level_icon']['name']) || empty($_FILES['level_image']['name'])) {
-		wp_redirect(admin_url('admin.php?page=house_config_house_part_three&message=error'));
-		exit;
-	}
-	// once check file is not empty then upload file and check if directory not have then create directory
-	$level_icon = upload_file($_FILES['level_icon'], 'level_icon');
-	$level_image = upload_file($_FILES['level_image'], 'level_image');
-	
-	// Get the level name from the form
-	$level_name = $_POST['level_name'];
-	$level_price = $_POST['level_price'];
 
-	// Connect to the database and retrieve the current level list (if it exists)
-	global $wpdb;
-	$table_name = $wpdb->prefix . 'house_configurator_part_3_level';
-	
-	// insert data into database
-	$wpdb->insert(
-		$table_name,
-		array(
-			'name' => $level_name,
-			'price' => $level_price,
-			'icon' => $level_icon,
-			'image' => $level_image,
-			'created_at' => current_time('mysql'),
-			'updated_at' => current_time('mysql')
-		),
-		array('%s', '%s', '%s', '%s', '%s', '%s')
-	);
-
-	// Redirect the user back to the page with a success message
-	wp_redirect(admin_url('admin.php?page=house_config_house_part_three&message=success'));
-	exit;
-
-}

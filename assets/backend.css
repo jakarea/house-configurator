@@ -1,3 +1,9 @@
 #wpwrap, #wpbody, #wpbody-content, #wpfooter, #wpcontent{
     background-color: #F0F0F1 !important;
 }
+.level-featured-image-preview img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin-top: 10px;
+}

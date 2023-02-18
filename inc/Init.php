@@ -14,11 +14,10 @@ final class Init
 	{
 		return [
 			Pages\Admin::class,
-			Pages\Levels::class,
-			Pages\Features::class,
 			Base\Enqueue::class,
 			Base\SettingsLinks::class,
 			Base\ShortcodeController::class,
+			Base\CustomCPT::class,
 		];
 	}
 

@@ -8,6 +8,8 @@
             <th>ID</th>
             <th>Level Name</th>
             <th>Level Price</th>
+			<th>Level Icon</th>
+			<th>Level Image</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -15,7 +17,7 @@
         <!-- get wp_house_configurator_type data and foreach after set edit page and delete button -->
         <?php
             global $wpdb;
-            $house_levels = $wpdb->prefix . 'house_configurator_type';
+            $house_levels = $wpdb->prefix . 'house_configurator_part_3_level';
             $levels = $wpdb->get_results("SELECT * FROM $house_levels");
             if( $levels ) {
                 foreach ($levels as $key => $level) {
@@ -24,9 +26,29 @@
                         <td><?php echo $key+1; ?></td>
                         <td><?php echo $level->name; ?></td>
                         <td><?php echo '€ '.$level->price; ?></td>
+						<td>
+							<!-- get directory of wp-content -->
+							<?php
+								$upload_dir = wp_upload_dir();
+								$upload_dir = $upload_dir['baseurl'];
+								$upload_dir = $upload_dir . '/house-configurator/level_icon/';
+								$upload_dir_icon = $upload_dir . $level->icon;
+							?>
+							<img src="<?php echo ''. $upload_dir_icon; ?>" alt="<?php echo $level->name; ?>" width="20" height="20">
+						</td>
+						<td>
+							<!-- get directory of wp-content -->
+							<?php
+								$upload_dir = wp_upload_dir();
+								$upload_dir = $upload_dir['baseurl'];
+								$upload_dir = $upload_dir . '/house-configurator/level_image/';
+								$upload_dir_image = $upload_dir . $level->image;
+							?>
+							<img src="<?php echo ''. $upload_dir_image; ?>" alt="<?php echo $level->name; ?>" width="20" height="20">
+						</td>
                         <td>
-                            <a href="<?php echo admin_url('admin.php?page=house_config_house_part_one&edit_level=' . $level->id); ?>" class="button button-primary">Edit</a>
-                            <a href="<?php echo admin_url('admin.php?page=house_config_house_part_one&delete_level=' . $level->id); ?>" class="button button-primary">Delete</a>
+                            <a href="<?php echo admin_url('admin.php?page=house_config_house_part_three&edit_level=' . $level->id); ?>" class="button button-primary">Edit</a>
+                            <a href="<?php echo admin_url('admin.php?page=house_config_house_part_three&delete_level=' . $level->id); ?>" class="button button-primary">Delete</a>
                         </td>
                     </tr>
                     <?php
@@ -83,11 +105,11 @@ function createFormforLevel() {
                             <input type="file" name="level_image" id="level_image" class="form-control" placeholder="Enter Level Image" onchange="document.getElementById('hc__preview_image').src = window.URL.createObjectURL(this.files[0])" required>
                             <img src="https://via.placeholder.com/100" alt="img" class="img-fluid mt-2" id="hc__preview_image">
                         </div>
-						<div class="form-group">
-							<button type="submit" class="btn btn-primary">Add Level</button>
-						</div>
-					</form>
 				</div>
+				<div class="card-footer d-flex justify-content-between">
+						<button type="submit" class="btn btn-primary btn-block">Submit</button>
+					</div>
+				</form>
 			</div>
 		</div>
 	</div>
@@ -150,7 +172,7 @@ function deleteLevel() {
 				if (r == true) {
 					window.location.href = "<?php echo admin_url('admin-post.php?action=delete_level_data_action&level_id=' . $_GET['delete_level']); ?>";
 				} else {
-					window.location.href = "<?php echo admin_url('admin.php?page=house_config_levels'); ?>";
+					window.location.href = "<?php echo admin_url('admin.php?page=house_config_house_part_three'); ?>";
 				}
 			</script>
 		<?php

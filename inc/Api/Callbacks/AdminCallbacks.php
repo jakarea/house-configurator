@@ -53,15 +53,26 @@ class AdminCallbacks extends BaseController
 	// part - 03
 	public function adminPartThree()
 	{
-		return require_once( "$this->plugin_path/templates/part/3/index.php" );
+		ob_clean();
+		// redirec to the post-new.php?post_type=house-configurator page using script
+		echo '<script>window.location.href = "edit.php?post_type=house-configurator";</script>';
+
+		ob_end_flush();
 	}
 
-	public function alecadddOptionsGroup( $input )
+	public function hcOptionsGroup( $input )
 	{
 		return $input;
 	}
 
-	public function alecadddAdminSection()
+	public function hcAdminSection()
+	{
+		// give some instruction to admin
+		echo 'House Configurator Plugin is a plugin that allows you to configure your house. You can add your house details here.';
+	}
+
+	// hcAdminSectionPartOne
+	public function hcAdminSectionPartOne()
 	{
 		// give some instruction to admin
 		echo 'House Configurator Plugin is a plugin that allows you to configure your house. You can add your house details here.';

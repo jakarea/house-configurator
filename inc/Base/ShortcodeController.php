@@ -14,12 +14,12 @@ class ShortcodeController extends BaseController
 {
     public function register() 
     {
-        add_shortcode( 'house_configurator', array( $this, 'houseConfiguratorShortcode' ) );
-        add_shortcode( 'house_configurator_two', array( $this, 'houseConfiguratorShortcodeTwo' ) );
-        add_shortcode( 'house_configurator_three', array( $this, 'houseConfiguratorShortcodeThree' ) );
+        add_shortcode( 'house_configurator_part_one', array( $this, 'houseConfiguratorShortcodeOne' ) );
+        add_shortcode( 'house_configurator_part_two', array( $this, 'houseConfiguratorShortcodeTwo' ) );
+        add_shortcode( 'house_configurator_part_three', array( $this, 'houseConfiguratorShortcodeThree' ) );
     }
 
-    public function houseConfiguratorShortcode() 
+    public function houseConfiguratorShortcodeOne() 
     {
         ob_start();
         require_once( "$this->plugin_path/shortcode/part-one.php" );

@@ -51,6 +51,8 @@ class Enqueue extends BaseController
 		wp_enqueue_script( 'jquery' );
 		// enqueue script
 		wp_enqueue_script( 'frontend_scripts', $this->plugin_url . 'assets/frontend.js', array( 'jquery' ), '1.0.0', true );
+		wp_localize_script( 'frontend_scripts', 'ajax_url', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
+
 		// enqueue style
 		wp_enqueue_style( 'frontend_style', $this->plugin_url . 'assets/frontend.css' );
 		// add bootstrap
