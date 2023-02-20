@@ -17,6 +17,7 @@ class ShortcodeController extends BaseController
         add_shortcode( 'house_configurator_part_one', array( $this, 'houseConfiguratorShortcodeOne' ) );
         add_shortcode( 'house_configurator_part_two', array( $this, 'houseConfiguratorShortcodeTwo' ) );
         add_shortcode( 'house_configurator_part_three', array( $this, 'houseConfiguratorShortcodeThree' ) );
+        add_shortcode( 'house_configurator_part_four', array( $this, 'houseConfiguratorShortcodeFour' ) );
     }
 
     public function houseConfiguratorShortcodeOne() 
@@ -37,6 +38,13 @@ class ShortcodeController extends BaseController
     {
         ob_start();
         require_once( "$this->plugin_path/shortcode/part-three.php" );
+        return ob_get_clean();
+    }
+
+    public function houseConfiguratorShortcodeFour() 
+    {
+        ob_start();
+        require_once( "$this->plugin_path/shortcode/part-four.php" );
         return ob_get_clean();
     }
 

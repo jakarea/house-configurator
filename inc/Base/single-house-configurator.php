@@ -88,7 +88,7 @@ $house_id = get_the_ID();
                             <a href="<?php echo $post_permalink; ?>" class="<?php echo $post_id == $house_id ? 'p__active' : ''; ?>"><img src="<?php echo $post_thumbnail; ?>" class="img-fluid w-100" alt="Responsive image"></a>
                         </td>
                         <?php
-                        if ( $i % 2 == 1 ) {
+                        if ( ($i+1) % 2 == 0 || ($i+1) == count($posts)) {
                             echo '</tr>';
                         }
                         $i++;

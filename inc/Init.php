@@ -18,6 +18,8 @@ final class Init
 			Base\SettingsLinks::class,
 			Base\ShortcodeController::class,
 			Base\CustomCPT::class,
+			// Base\CustomTaxonomy::class,
+			Base\HouseModelCPT::class,
 		];
 	}
 

@@ -39,6 +39,10 @@
 			<h3>Part 03 Shortcode</h3>
 			<p>Use this shortcode to activate the House Configurator plugin inside a Page or a Post</p>
 			<p><code>[house_configurator_part_three]</code></p>
+			<!-- Part Four Shortcode -->
+			<h3>Part 04 Shortcode</h3>
+			<p>Use this shortcode to activate the House Configurator plugin inside a Page or a Post</p>
+			<p><code>[house_configurator_part_four]</code></p>
 			
 		</div>
 
@@ -64,7 +68,13 @@
 						</li>
 					</ul>
 				</li>
-				<li>Version 1.0.2</li>
+				<li>Version 1.0.2
+					<ul>
+						<li>
+							<code>1.0.2 We have added the shortcode for the plugin. We have also fixing other bugs on that step. We have registerd custom post for manage part three settings.</code>
+						</li>
+					</ul>
+				</li>
 			</ul>
 
 		</div>
