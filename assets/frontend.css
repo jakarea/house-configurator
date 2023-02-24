@@ -140,3 +140,46 @@ input:disabled, select:disabled, textarea:disabled, :checked:disabled {
 #post__house_photo td a:hover::after {
     opacity: 0;
 }
+
+/*
+==================== Part 4 ====================
+*/
+/*inner_taxo_item ul li label image should be check when input is checked*/
+.image-checkbox {
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+.image-checkbox img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+.image-checkbox input[type="checkbox"] {
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+.image-checkbox .fa-check {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: #fff;
+    background-color: rgba(0, 192, 51, 0.488);
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    line-height: 50px;
+    z-index: 1;
+}
+.image-checkbox input[type="checkbox"]:checked+.fa-check {
+    display: block;
+}
+.image-checkbox input[type="checkbox"]:checked+.fa-check+.img-responsive {
+    border: 3px solid #007bff;
+}

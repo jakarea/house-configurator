@@ -112,58 +112,38 @@ $house_model = new WP_Query(array(
                         <span aria-hidden="true">&times;</span>
                     </button>
                     <div class="modal-body">
-                        <div class="row">
-                            <div class="col-12 justify-content-center">
-                                <div class="body-head-text d-flex justify-content-between">
-                                    <h4 class="m-0"><?php echo get_the_title(); ?></h4>
-                                    <?php the_post_thumbnail('full', array('class' => 'text-right', 'width' => '30px')); ?>
+                        <form method="get" action="<?php echo esc_url(get_permalink()); ?>?form_submitted=true">
+                            <div class="row">
+                                <div class="col-12 justify-content-center">
+                                    <div class="body-head-text d-flex justify-content-between">
+                                        <h4 class="m-0"><?php echo get_the_title(); ?></h4>
+                                        <?php the_post_thumbnail('full', array('class' => 'text-right', 'width' => '30px')); ?>
+                                    </div>
+                                </div>
+
+                                <div class="form-group mt-3 col-12 row">
+                                    <label for="Dimension A" class="col-4 col-form-label">Dimension A</label>
+                                    <div class="col-8">
+                                        <input type="number" name="dimensionA" class="form-control form-control-sm" id="dimension" placeholder="In centimeters" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group mt-3 col-12 row">
+                                    <label for="Dimension A" class="col-4 col-form-label">Dimension B</label>
+                                    <div class="col-8">
+                                        <input type="number" name="dimensionB" class="form-control form-control-sm" id="dimension" placeholder="In centimeters" />
+                                    </div>
                                 </div>
                             </div>
-
-                            <div class="form-group mt-3 col-12 row">
-                                <label for="Dimension A" class="col-4 col-form-label">Dimension A</label>
-                                <div class="col-8">
-                                    <input type="number" class="form-control form-control-sm" id="dimension" placeholder="In centimeters" >
-                                </div>
-                            </div>
-
-                            <div class="form-group mt-3 col-12 row">
-                                <label for="Dimension A" class="col-4 col-form-label">Dimension B</label>
-                                <div class="col-8">
-                                    <input type="number" class="form-control form-control-sm" id="dimension" placeholder="In centimeters" >
-                                </div>
-                            </div>
-
-                        </div>
+                        
                     </div>
                     <div class="modal-footer d-flex justify-content-between">
                         <a href="#">Use standard dimensions</a>
-                        <!-- post permalink with set custom attribute -->
-                        <a href="<?php echo get_permalink(); ?>" class="btn btn-info btn-sm" data-post-id="<?php echo get_the_ID(); ?>">Use Dimension</a>
+                        <button type="submit" class="btn btn-info btn-sm">Use Dimension</button>
                     </div>
+                    </form>
                 </div>
             </div>
         </div>
    <?php endwhile; ?>
-    <!-- <div class="col-4">
-        <div class="card text-center card-hover py-3">
-            <a href="#" data-toggle="modal" data-target="#exampleModal">
-                <img src="https://s.brugman.nl/_processed_/5/5/csm_rechthoekopstelling_58184d6bc3.jpg" class="text-center m-auto" width="180px" alt="...">
-            </a>
-        </div>
-    </div> -->
-    <!-- <div class="col-4">
-        <div class="card text-center card-hover py-3">
-            <a href="#" data-toggle="modal" data-target="#exampleModal">
-                <img src="https://s.brugman.nl/_processed_/1/a/csm_Brugman%20rechthoekige%20keuken_c893739822.jpg" class="text-center m-auto" width="180px" alt="...">
-            </a>
-        </div>
-    </div>
-    <div class="col-4">
-        <div class="card text-center card-hover py-3">
-            <a href="#" data-toggle="modal" data-target="#exampleModal">
-                <img src="https://s.brugman.nl/_processed_/0/a/csm_Hoekopstelling%20%281%29_dc235f0ba0.jpg" class="text-center m-auto" width="180px" alt="...">
-            </a>
-        </div>
-    </div> -->
 </div>
