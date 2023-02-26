@@ -11,7 +11,7 @@ use Inc\Api\Callbacks\AdminCallbacks;
 /**
 * 
 */
-class Admin extends BaseController
+class Admin
 {
 	public $settings;
 
@@ -123,6 +123,15 @@ class Admin extends BaseController
 				'menu_slug' => 'house_config_house_part_three', 
 				'callback' => array( $this->callbacks, 'adminPartThree' )
 			),
+			// part - 04
+			array(
+				'parent_slug' => 'house_configurator', 
+				'page_title' => 'Part 04 Settings', 
+				'menu_title' => 'Part 04 Settings', 
+				'capability' => 'manage_options', 
+				'menu_slug' => 'house_config_house_part_four', 
+				'callback' => array( $this->callbacks, 'adminPartFour' )
+			),
 			// End
 
 		);
@@ -151,7 +160,12 @@ class Admin extends BaseController
 				'option_group' => 'house_configurator_options_group',
 				'option_name' => 'house_config_house_part_two_price',
 				'callback' => array( $this->callbacks, 'hcOptionsGroup' )
-			)
+			),
+			array(
+				'option_group' => 'house_configurator_options_group',
+				'option_name' => 'house_config_house_part_four_price',
+				'callback' => array( $this->callbacks, 'hcOptionsGroup' )
+			),
 		);
 
 		$this->settings->setSettings( $args );
@@ -172,6 +186,13 @@ class Admin extends BaseController
 				'title' => '',
 				'callback' => array( $this->callbacks, 'hcAdminSectionPartOne' ),
 				'page' => 'house_config_house_part_one'
+			),
+			// part-04
+			array(
+				'id' => 'hc_admin_part_four',
+				'title' => '',
+				'callback' => array( $this->callbacks, 'hcAdminSectionPartFour' ),
+				'page' => 'house_config_house_part_four'
 			),
 		);
 
@@ -225,7 +246,19 @@ class Admin extends BaseController
 					'label_for' => 'house_configure_description',
 					'class' => 'example-class'
 				)
-			)
+			),
+			array(
+				'id' => 'house_config_house_part_four_price',
+				'title' => 'Price For Dimension',
+				'callback' => array( $this->callbacks, 'houseConfigure_dimension_price' ),
+				'page' => 'house_config_house_part_four',
+				'section' => 'hc_admin_part_four',
+				'args' => array(
+					'label_for' => 'house_config_house_part_four_price',
+					'class' => 'example-class'
+				)
+			),
+			
 		);
 
 		$this->settings->setFields( $args );

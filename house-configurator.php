@@ -60,7 +60,9 @@ function house_configurator_install() {
 register_activation_hook( __FILE__, 'house_configurator_install' );
 
 
-// include_once function.php
+/*
+* register function for all custom action.
+*/
 include_once( 'inc/function.php' );
 
 /**

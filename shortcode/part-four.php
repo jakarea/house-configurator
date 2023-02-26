@@ -138,12 +138,20 @@ $house_model = new WP_Query(array(
                         
                     </div>
                     <div class="modal-footer d-flex justify-content-between">
-                        <a href="#">Use standard dimensions</a>
+                        <a href="#" id="user_dimension">Use standard dimensions</a>
                         <button type="submit" class="btn btn-info btn-sm">Use Dimension</button>
                     </div>
                     </form>
                 </div>
             </div>
         </div>
+        <script>
+            jQuery(document).ready(function($) {
+                $('#user_dimension').click(function() {
+                    $('input[name="dimensionA"]').val('250');
+                    $('input[name="dimensionB"]').val('150');
+                });
+            });
+        </script>
    <?php endwhile; ?>
 </div>

@@ -60,6 +60,16 @@ class AdminCallbacks extends BaseController
 		ob_end_flush();
 	}
 
+	// part - 04
+	public function hcAdminSectionPartFour() {
+		// give some instruction to admin
+		echo 'House Configurator Plugin is a plugin that allows you to configure your house. You can add your house details here.';
+	}
+	public function adminPartFour()
+	{
+		return require_once( "$this->plugin_path/templates/part/4/index.php" );
+	}
+
 	public function hcOptionsGroup( $input )
 	{
 		return $input;
@@ -120,6 +130,12 @@ class AdminCallbacks extends BaseController
 	{
 		$value = esc_attr( get_option( 'house_config_house_part_two_price' ) );
 		echo '<input type="text" class="regular-text" name="house_config_house_part_two_price" value="' . $value . '" placeholder="Write Price Here!">';
+	}
+
+	public function houseConfigure_dimension_price()
+	{
+		$value = esc_attr( get_option( 'house_config_house_part_four_price' ) );
+		echo '<input type="text" class="regular-text" name="house_config_house_part_four_price" value="' . $value . '" placeholder="Write Price Here!">';
 	}
  
 }

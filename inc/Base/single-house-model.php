@@ -9,7 +9,7 @@
 get_header();
 // Get the house ID
 $house_id = get_the_ID();
-
+$dimensionPrice = esc_attr( get_option( 'house_config_house_part_four_price' ) );
 /**
  * ========================= floor tile =========================
  */
@@ -263,7 +263,7 @@ if (isset($_GET['dimensionA']) && isset($_GET['dimensionB'])) {
                 <div class="tab-content">
                     <div id="step-1" class="tab-pane" role="tabpanel" aria-labelledby="step-1">
                         <!-- card item --> 
-                        <form action="#" id="form-1">
+                        <form action="#" id="form-1" name="Floor Tiles">
                         <?php foreach($floor_tile_terms as $term) : ?>
                             <div class="card my-3">
                                 <div class="card-body">
@@ -291,7 +291,6 @@ if (isset($_GET['dimensionA']) && isset($_GET['dimensionB'])) {
                                                         </ul>
                                                     </div>
                                                 </li>
-                                                <!-- <li><h5>+ <?php echo '€ '. $child->price; ?></h5></li> -->
                                             </ul>
                                         </div>
                                     </div>
@@ -303,7 +302,7 @@ if (isset($_GET['dimensionA']) && isset($_GET['dimensionB'])) {
                     </div>
                     <div id="step-2" class="tab-pane" role="tabpanel" aria-labelledby="step-2">
                         <!-- card item --> 
-                        <form action="#" id="form-2">
+                        <form action="#" id="form-2" name="Sanitary">
                         <?php foreach($sanitaries as $term) : ?>
                             <div class="card my-3">
                                 <div class="card-body">
@@ -340,7 +339,7 @@ if (isset($_GET['dimensionA']) && isset($_GET['dimensionB'])) {
                     </div>
                     <div id="step-3" class="tab-pane" role="tabpanel" aria-labelledby="step-3">
                         <!-- card item --> 
-                        <form action="#" id="form-3">
+                        <form action="#" id="form-3" name="Bath Furniture">
                         <?php foreach($bathroom_furniture as $term) : ?>
                             <div class="card my-3">
                                 <div class="card-body">
@@ -377,7 +376,7 @@ if (isset($_GET['dimensionA']) && isset($_GET['dimensionB'])) {
                     </div>
                     <div id="step-4" class="tab-pane" role="tabpanel" aria-labelledby="step-4">
                         <!-- card item --> 
-                        <form action="#" id="form-4">
+                        <form action="#" id="form-4" name="Accessories">
                         <?php foreach($accesories as $term) : ?>
                             <div class="card my-3">
                                 <div class="card-body">
@@ -414,7 +413,7 @@ if (isset($_GET['dimensionA']) && isset($_GET['dimensionB'])) {
                     </div>
                     <div id="step-5" class="tab-pane" role="tabpanel" aria-labelledby="step-5">
                         <!-- card item --> 
-                        <form action="#" id="form-4">
+                        <form action="#" id="form-4" name="Installation">
                         <?php foreach($installation as $term) : ?>
                             <div class="card my-3">
                                 <div class="card-body">
@@ -453,22 +452,17 @@ if (isset($_GET['dimensionA']) && isset($_GET['dimensionB'])) {
                         <div class="card mb-3">
                             <img class="img-responsive card-header-top" src="https://s.brugman.nl/_processed_/4/d/csm_002%20Vierkante%20badkamer.jpg_1391e51b85.jpg" />
                         </div>
-                        <div class="card mb-3 total-ammount-ofselected card-shadow d-flex justify-content-between">
-                            <h4 class="m-0 mb-2">Total</h4>
-                            <h4 class="m-0 bg-primary p-1 text-white rounded">€ 0</h4>
+                        <div class="card mb-3 total-ammount-ofselected card-shadow p-3">
+                            <ul class="list-unstyled m-0 total-ammount-ofselected d-flex justify-content-between">
+                                <li class="text-mute"> <h6>Total</h6> </li>
+                                <li class="total_ammount_overview"> <strong>€ 0</strong> </li>
+                            </ul>
                         </div>
-
                         <div class="card card-summery-of-all mb-3">
                             <div class="card-body">
-                                <h6 class="text-primary"><strong>Bathroom furniture extra options</strong></h6>
-                                <ul class="list-unstyled m-0 d-flex justify-content-between">
-                                    <li class="d-flex clearfix align-item-center">
-                                        <h6 class="text-mute">Single basin</h6>
-                                    </li>
-                                    <li>
-                                        <h6>+ € 250</h6>
-                                    </li>
-                                </ul>
+                                <div id="total_summary">
+                                    <!-- get all the forms select data -->
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -491,7 +485,16 @@ if (isset($_GET['dimensionA']) && isset($_GET['dimensionB'])) {
                 <div class="all-item mt-3">
                     <ul class="list-unstyled m-0 d-flex justify-content-between">
                         <li class="text-mute"> <span class="d__l"><?php echo $dimensionA. 'cm'; ?></span> x <span class="l__2"><?php echo $dimensionB. 'cm'; ?></span></li>
-                        <li class="dimension_price"> <strong>€ 800</strong> </li>
+                        <li class="dimension_price"> <strong>
+                            <?php 
+                                if($dimensionA && $dimensionB) {
+                                    $dimension = $dimensionA + $dimensionB;
+                                    echo '€ '. $dimension * $dimensionPrice;
+                                } else {
+                                    echo '€ 0';
+                                }
+                            ?>
+                        </strong> </li>
                     </ul>
                 </div>
                 <hr />
@@ -531,6 +534,34 @@ get_footer();
             backButtonSupport: true, // Enable the back button support
         });
 
+        function showConfirm() {
+            $('#smartwizard').smartWizard('showMessage', 'Finish Clicked');
+            // Set state as finished
+            $('#smartwizard').smartWizard('setFinishStep', 3);
+        }
+
+        // get data of all form selected data and show in the total summary
+        $('form').on('change', function() {
+        var total = 0;
+        var html = '';
+            $('form').each(function() {
+                var form = $(this);
+                var data = form.serializeArray();
+                var label = form.attr('name');
+                $.each(data, function(index, value) {
+                var name = value.name;
+                var price = value.value;
+                if (price) {
+                    total += parseInt(price);
+                    html += '<ul class="list-unstyled m-0 d-flex justify-content-between"><li class="d-flex clearfix align-item-center"><h6 class="text-mute">' + label + '</h6></li><li><h6>€ ' + price + '</h6></li></ul>';
+                }
+                });
+            });
+            $('#total_summary').html(html);
+        });
+
+
+
         // input checkbox check only one and calculate total price
         var total_sum = 0;
 
@@ -567,11 +598,12 @@ get_footer();
             $(this).data('prev-value', card_sum);
             $('.extra_total strong').html('€ ' + total_sum);
             $('.result-total h4').html('€ ' + (total_sum + parseInt($('.dimension_price strong').html().replace('€ ', ''))));
-
+            $('.total_ammount_overview').html('€ ' + (total_sum + parseInt($('.dimension_price strong').html().replace('€ ', ''))));
         });
 
         // dimension_price price and extra_total sum to result-total after sum all price
         $('.result-total h4').html('€ ' + (total_sum + parseInt($('.dimension_price strong').html().replace('€ ', ''))));
+        $('.total_ammount_overview').html('€ ' + (total_sum + parseInt($('.dimension_price strong').html().replace('€ ', ''))));
 
     });
 </script>
