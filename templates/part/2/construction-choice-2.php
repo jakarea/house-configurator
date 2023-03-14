@@ -1,15 +1,15 @@
 <div class="table-header d-flex justify-content-between mb-3">
     <h4><?php echo esc_html('Manage AF / Add AF', 'house-configurator'); ?></h4>
-    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addAFModal">Add New</button>
+    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addAFModal"><?php echo esc_html('Add New', 'house-configurator'); ?></button>
 </div>
 <!-- table for contact list -->
 <table class="table table-hover house_configurator_table">
     <thead>
         <tr>
-            <th>ID</th>
-            <th>Afplakken Name</th>
-            <th>Afplakken Price</th>
-            <th>Actions</th>
+            <th><?php echo esc_html('ID', 'house-configurator'); ?></th>
+            <th><?php echo esc_html('Afplakken Name', 'house-configurator'); ?></th>
+            <th><?php echo esc_html('Afplakken Price', 'house-configurator'); ?></th>
+            <th><?php echo esc_html('Actions', 'house-configurator'); ?></th>
         </tr>
     </thead>
     <tbody>
@@ -28,8 +28,8 @@
                      <td><?php echo $value['name']; ?></td>
                      <td><?php echo '€ '.$value['value']; ?></td>
                      <td>
-                         <a href="<?php echo admin_url('admin.php?page=house_config_house_part_two&edit_a_f=' . $value['name']); ?>" class="button button-primary">Edit</a>
-                         <a href="<?php echo admin_url('admin.php?page=house_config_house_part_two&delet_a_f=' . $value['name']); ?>" class="button button-primary">Delete</a>
+                         <a href="<?php echo admin_url('admin.php?page=house_config_house_part_two&edit_a_f=' . $value['name']); ?>" class="button button-primary"><?php echo esc_html('Edit', 'house-configurator'); ?></a>
+                         <a href="<?php echo admin_url('admin.php?page=house_config_house_part_two&delet_a_f=' . $value['name']); ?>" class="button button-primary"><?php echo esc_html('Delete', 'house-configurator'); ?></a>
                      </td>
                  </tr>
             <?php
@@ -38,7 +38,7 @@
         else {
             ?>
             <tr>
-                <td colspan="5">No AF Found</td>
+                <td colspan="5"><?php echo esc_html('No AF Found', 'house-configurator'); ?></td>
             </tr>
             <?php
         }
@@ -60,7 +60,7 @@ function createFormforAF() {
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="addAFModalLabel">Add New AF</h5>
+					<h5 class="modal-title" id="addAFModalLabel"><?php echo esc_html('Add New AF', 'house-configurator'); ?></h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -69,15 +69,15 @@ function createFormforAF() {
 					<form action="<?php echo esc_attr('admin-post.php'); ?>" method="post">
                         <input type="hidden" name="action" value="afplakken_data_action" />
 						<div class="form-group">
-							<label for="afplakken_name">Afplakken Name</label>
+							<label for="afplakken_name"><?php echo esc_html('Afplakken Name', 'house-configurator'); ?></label>
 							<input type="text" name="afplakken_name" id="afplakken_name" class="form-control" placeholder="Enter Name">
 						</div>
 						<div class="form-group">
-							<label for="afplakken_price">Afplakken Price</label>
+							<label for="afplakken_price"><?php echo esc_html('Afplakken Price', 'house-configurator'); ?></label>
 							<input type="number" name="afplakken_price" id="afplakken_price" class="form-control" placeholder="Enter Price">
 						</div>
 						<div class="form-group">
-							<button type="submit" class="btn btn-primary">Add Level</button>
+							<button type="submit" class="btn btn-primary"><?php echo esc_html('Afplakken Price', 'house-configurator'); ?></button>
 						</div>
 					</form>
 				</div>
@@ -113,11 +113,11 @@ function updateFormForAF() {
             <input type="hidden" name="aff_name_update" value="<?php echo $af_name; ?>" />
             <table class="form-table">
                 <tr class="example-class">
-                    <th scope="row">Afplakken Name</th>
+                    <th scope="row"><?php echo esc_html('Afplakken Name', 'house-configurator'); ?></th>
                     <td><input type="text" name="afplakken_name" value="<?php echo $selected_af['name']; ?>" class="regular-text" /></td>
                 </tr>
                 <tr class="example-class">
-                    <th scope="row">Afplakken Price</th>
+                    <th scope="row"><?php echo esc_html('Afplakken Price', 'house-configurator'); ?></th>
                     <td><input type="text" name="afplakken_price" value="<?php echo $selected_af['value']; ?>" class="regular-text" /></td>
                 </tr>
             </table>

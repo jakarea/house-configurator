@@ -46,13 +46,13 @@ if ( isset( $_GET['message'] ) && $_GET['message'] == 'success' ) {
                     <div class="col-md-2 mb-3">
                         <ul class="nav nav-pills flex-column" id="h__tabs-level" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link active" id="h__tabs-levels-part3-tab" data-toggle="tab" href="#h__tabs-levels-part3" role="tab" aria-controls="h__tabs-levels-part3" aria-selected="true">Manage Level</a>
+                                <a class="nav-link active" id="h__tabs-levels-part3-tab" data-toggle="tab" href="#h__tabs-levels-part3" role="tab" aria-controls="h__tabs-levels-part3" aria-selected="true"><?php echo esc_html('Manage Level', 'house-configurator'); ?></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="h__tabs-options-part3-tab" data-toggle="tab" href="#h__tabs-options-part3" role="tab" aria-controls="h__tabs-options-part3" aria-selected="true">Manage Option</a>
+                                <a class="nav-link" id="h__tabs-options-part3-tab" data-toggle="tab" href="#h__tabs-options-part3" role="tab" aria-controls="h__tabs-options-part3" aria-selected="true"><?php echo esc_html('Manage Option', 'house-configurator'); ?></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="h__tabs-house-part3-tab" data-toggle="tab" href="#h__tabs-house-part3" role="tab" aria-controls="h__tabs-house-part3" aria-selected="true">Manage House</a>
+                                <a class="nav-link" id="h__tabs-house-part3-tab" data-toggle="tab" href="#h__tabs-house-part3" role="tab" aria-controls="h__tabs-house-part3" aria-selected="true"><?php echo esc_html('Manage House', 'house-configurator'); ?></a>
                             </li>
                         </ul>
                     </div>

@@ -26,7 +26,7 @@
                     <div class="col-md-2 mb-3">
                         <ul class="nav nav-pills flex-column" id="ht__tabs-index" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link active" id="ht__tabs-index-tab" data-toggle="tab" href="#ht__tabs-index" role="tab" aria-controls="ht__tabs-index" aria-selected="true">Manage Settings</a>
+                                <a class="nav-link active" id="ht__tabs-index-tab" data-toggle="tab" href="#ht__tabs-index" role="tab" aria-controls="ht__tabs-index" aria-selected="true"><?php echo esc_html('Manage Settings', 'house-configurator'); ?></a>
                             </li>
                         </ul>
                     </div>

@@ -18,12 +18,12 @@ $house_model = new WP_Query(array(
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="m-0">Start your kitchen calculation here. AB</h3>
+                <h3 class="m-0"><?php echo esc_html('Start your kitchen calculation here. AB', 'house-configurator'); ?></h3>
             </div>
             <div class="card-body">
                 <!-- heading name and icon, it can be user icon for wordpress -->
                 <div class="heading-form justify-content-center">
-                    <h6 class="m-0"><span class="dashicons dashicons-admin-users bg-light rounded"> </span> Whose is this budget plan?</h6>
+                    <h6 class="m-0"><span class="dashicons dashicons-admin-users bg-light rounded"> </span> <?php echo esc_html('Whose is this budget plan?', 'house-configurator'); ?></h6>
                 </div>
                 <hr class="my-2" />
                 <!-- form with two column -->
@@ -31,42 +31,42 @@ $house_model = new WP_Query(array(
                     <div class="col-6">
                         <div class="form-group">
                             <input type="radio" name="mr" id="mr">
-                            <label for="mr">Mr.</label>
+                            <label for="mr"><?php echo esc_html('Mr.', 'house-configurator'); ?></label>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group">
                             <input type="radio" name="mr" id="mrs">
-                            <label for="mrs">Mrs.</label>
+                            <label for="mrs"><?php echo esc_html('Mrs.', 'house-configurator'); ?></label>
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="name">Name</label>
+                            <label for="name"><?php echo esc_html('Name', 'house-configurator'); ?></label>
                             <input type="text" name="name" id="name" class="form-control form-control-sm">
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="lastname">Lastname</label>
+                            <label for="lastname"><?php echo esc_html('Last Name', 'house-configurator'); ?></label>
                             <input type="text" name="lastname" id="lastname" class="form-control form-control-sm">
                         </div>
                     </div>
                     <div class="col-12">
                         <div class="heading-form justify-content-center">
-                            <h6 class="m-0"><span class="dashicons dashicons-phone bg-light rounded"> </span> Wat zijn je contactgegevens?</h6>
+                            <h6 class="m-0"><span class="dashicons dashicons-phone bg-light rounded"> </span> <?php echo esc_html('Wat zijn je contactgegevens?', 'house-configurator'); ?></h6>
                         </div>
                         <hr class="my-2" />
                     </div>
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="email">Email</label>
+                            <label for="email"><?php echo esc_html('Email', 'house-configurator'); ?></label>
                             <input type="email" name="email" id="email" class="form-control form-control-sm">
                         </div>
                     </div>
                     <div class="col-6">
                         <div class="form-group">
-                            <label for="phone">Phone</label>
+                            <label for="phone"><?php echo esc_html('Phone', 'house-configurator'); ?></label>
                             <input type="text" name="phone" id="phone" class="form-control form-control-sm">
                         </div>
                     </div>
@@ -74,18 +74,18 @@ $house_model = new WP_Query(array(
                     <div class="col-12">
                         <div class="form-group">
                             <input type="checkbox" name="agree" id="agree">
-                            <label for="agree">Brugman may approach me for offers that may be of interest to me. (By e-mail, telephone and/or by post). You can unsubscribe from this at any time.</label>
+                            <label for="agree"><?php echo esc_html('Brugman may approach me for offers that may be of interest to me. (By e-mail, telephone and/or by post). You can unsubscribe from this at any time.', 'house-configurator'); ?></label>
                         </div>
                     </div>
                     <!-- button submit -->
                     <div class="col-12">
                         <div class="form-group">
-                            <button type="submit" class="btn btn-info">Start the budget planner</button>
+                            <button type="submit" class="btn btn-info"><?php echo esc_html('Start the budget planner', 'house-configurator'); ?></button>
                         </div>
                     </div>
                     <div class="col-12">
                         <div class="form-group">
-                            <p>We process your personal data in accordance with our privacy policy. You can find this policy here . If you continue to fill out the form, we assume that you have read our policy.</p>
+                            <p><?php echo esc_html('We process your personal data in accordance with our privacy policy. You can find this policy here . If you continue to fill out the form, we assume that you have read our policy.', 'house-configurator'); ?></p>
                         </div>
                     </div>
                 </div>
@@ -122,14 +122,14 @@ $house_model = new WP_Query(array(
                                 </div>
 
                                 <div class="form-group mt-3 col-12 row">
-                                    <label for="Dimension A" class="col-4 col-form-label">Dimension A</label>
+                                    <label for="Dimension A" class="col-4 col-form-label"><?php echo esc_html('Dimension A', 'house-configurator'); ?></label>
                                     <div class="col-8">
                                         <input type="number" name="dimensionA" class="form-control form-control-sm" id="dimension" placeholder="In centimeters" />
                                     </div>
                                 </div>
 
                                 <div class="form-group mt-3 col-12 row">
-                                    <label for="Dimension A" class="col-4 col-form-label">Dimension B</label>
+                                    <label for="Dimension A" class="col-4 col-form-label"><?php echo esc_html('Dimension B', 'house-configurator'); ?></label>
                                     <div class="col-8">
                                         <input type="number" name="dimensionB" class="form-control form-control-sm" id="dimension" placeholder="In centimeters" />
                                     </div>
@@ -138,8 +138,8 @@ $house_model = new WP_Query(array(
                         
                     </div>
                     <div class="modal-footer d-flex justify-content-between">
-                        <a href="#" id="user_dimension">Use standard dimensions</a>
-                        <button type="submit" class="btn btn-info btn-sm">Use Dimension</button>
+                        <a href="#" id="user_dimension"><?php echo esc_html('Use standard dimensions', 'house-configurator'); ?></a>
+                        <button type="submit" class="btn btn-info btn-sm"><?php echo esc_html('Use Dimension', 'house-configurator'); ?></button>
                     </div>
                     </form>
                 </div>

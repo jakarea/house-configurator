@@ -1,16 +1,16 @@
 <div class="table-header d-flex justify-content-between mb-3">
     <h4><?php echo esc_html('Manage Levels / Add Levels', 'house-configurator'); ?></h4>
-    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addLevelModal">Add New</button>
+    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addLevelModal"><?php echo esc_html('Add New', 'house-configurator'); ?></button>
 </div>
 <table class="table table-hover house_configurator_table">
     <thead>
         <tr>
-            <th>ID</th>
-            <th>Level Name</th>
-            <th>Level Price</th>
-			<th>Level Icon</th>
-			<th>Level Image</th>
-            <th>Actions</th>
+            <th><?php echo esc_html('ID', 'house-configurator'); ?></th>
+            <th><?php echo esc_html('Level Name', 'house-configurator'); ?></th>
+            <th><?php echo esc_html('Level Price', 'house-configurator'); ?></th>
+			<th><?php echo esc_html('Level Icon', 'house-configurator'); ?></th>
+			<th><?php echo esc_html('Level Image', 'house-configurator'); ?></th>
+            <th><?php echo esc_html('Actions', 'house-configurator'); ?></th>
         </tr>
     </thead>
     <tbody>
@@ -47,8 +47,8 @@
 							<img src="<?php echo ''. $upload_dir_image; ?>" alt="<?php echo $level->name; ?>" width="20" height="20">
 						</td>
                         <td>
-                            <a href="<?php echo admin_url('admin.php?page=house_config_house_part_three&edit_level=' . $level->id); ?>" class="button button-primary">Edit</a>
-                            <a href="<?php echo admin_url('admin.php?page=house_config_house_part_three&delete_level=' . $level->id); ?>" class="button button-primary">Delete</a>
+                            <a href="<?php echo admin_url('admin.php?page=house_config_house_part_three&edit_level=' . $level->id); ?>" class="button button-primary"><?php echo esc_html('Edit', 'house-configurator'); ?></a>
+                            <a href="<?php echo admin_url('admin.php?page=house_config_house_part_three&delete_level=' . $level->id); ?>" class="button button-primary"><?php echo esc_html('Delete', 'house-configurator'); ?></a>
                         </td>
                     </tr>
                     <?php
@@ -57,7 +57,7 @@
             else {
                 ?>
                 <tr>
-                    <td colspan="4">No Levels Found</td>
+                    <td colspan="4"><?php echo esc_html('No Levels Found', 'house-configurator'); ?></td>
                 </tr>
                 <?php
             }
@@ -79,7 +79,7 @@ function createFormforLevel() {
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="addLevelModalLabel">Add New Level</h5>
+					<h5 class="modal-title" id="addLevelModalLabel"><?php echo esc_html('Add New Level', 'house-configurator'); ?></h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -88,26 +88,26 @@ function createFormforLevel() {
 					<form action="<?php echo esc_attr('admin-post.php'); ?>" method="post" enctype="multipart/form-data">
 						<input type="hidden" name="action" value="part_3_level_data_action" />
 						<div class="form-group">
-							<label for="level_name">Level Name</label>
+							<label for="level_name"><?php echo esc_html('Level Name', 'house-configurator'); ?></label>
 							<input type="text" name="level_name" id="level_name" class="form-control" placeholder="Enter Level Name">
 						</div>
 						<div class="form-group">
-							<label for="level_price">Level Price</label>
+							<label for="level_price"><?php echo esc_html('Level Price', 'house-configurator'); ?></label>
 							<input type="number" name="level_price" id="level_price" class="form-control" placeholder="Enter Level Price">
 						</div>
                         <div class="form-group">
-                            <label for="level_image">Level Icon</label>
+                            <label for="level_image"><?php echo esc_html('Level Icon', 'house-configurator'); ?></label>
                             <input type="file" name="level_icon" id="level_icon" class="form-control" placeholder="Enter Level Icon" onchange="document.getElementById('hc__preview_thumbs').src = window.URL.createObjectURL(this.files[0])" required>
                             <img src="https://via.placeholder.com/100" alt="img" class="img-fluid mt-2" id="hc__preview_thumbs">
                         </div>
                         <div class="form-group">
-                            <label for="level_image">Level House Image</label>
+                            <label for="level_image"><?php echo esc_html('Level House Image', 'house-configurator'); ?></label>
                             <input type="file" name="level_image" id="level_image" class="form-control" placeholder="Enter Level Image" onchange="document.getElementById('hc__preview_image').src = window.URL.createObjectURL(this.files[0])" required>
                             <img src="https://via.placeholder.com/100" alt="img" class="img-fluid mt-2" id="hc__preview_image">
                         </div>
 				</div>
 				<div class="card-footer d-flex justify-content-between">
-						<button type="submit" class="btn btn-primary btn-block">Submit</button>
+						<button type="submit" class="btn btn-primary btn-block"><?php echo esc_html('Submit', 'house-configurator'); ?></button>
 					</div>
 				</form>
 			</div>
@@ -132,7 +132,7 @@ function updateLevel() {
 				<table class="form-table">
 					<tr class="example-class">
 						<td>
-							<label for="level_name">Level Name</label>
+							<label for="level_name"><?php echo esc_html('Level Name', 'house-configurator'); ?></label>
 						</td>
 						<td>
 							<input type="text" name="level_name" id="level_name" value="<?php echo $level->name; ?>" class="regular-text" placeholder="Enter Name">
@@ -140,7 +140,7 @@ function updateLevel() {
 					</tr>
 					<tr class="example-class">
 						<td>
-							<label for="level_price">Level Price</label>
+							<label for="level_price"><?php echo esc_html('Level Price', 'house-configurator'); ?></label>
 						</td>
 						<td>
 							<input type="text" name="level_price" id="level_price" value="<?php echo $level->price; ?>" class="regular-text" placeholder="Enter Price">

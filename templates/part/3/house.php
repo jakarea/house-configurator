@@ -1,16 +1,16 @@
 <div class="table-header d-flex justify-content-between mb-3">
     <h4><?php echo esc_html('Manage Houses / Add Levels', 'house-configurator'); ?></h4>
-    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addHouseModal">Add New</button>
+    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addHouseModal"><?php echo esc_html('Add New', 'house-configurator'); ?></button>
 </div>
 <table class="table table-hover house_configurator_table">
     <thead>
         <tr>
-            <th>ID</th>
-            <th>House Name</th>
-            <th>House Description</th>
-            <th>House Price</th>
-			<th>House Image</th>
-            <th>Actions</th>
+            <th><?php echo esc_html('ID', 'house-configurator'); ?></th>
+            <th><?php echo esc_html('House Name', 'house-configurator'); ?></th>
+            <th><?php echo esc_html('House Description', 'house-configurator'); ?></th>
+            <th><?php echo esc_html('House Price', 'house-configurator'); ?></th>
+			<th><?php echo esc_html('House Image', 'house-configurator'); ?></th>
+            <th><?php echo esc_html('Actions', 'house-configurator'); ?></th>
         </tr>
     </thead>
     <tbody>
@@ -43,8 +43,8 @@
                             <img src="<?php echo ''. $upload_dir_image; ?>" alt="<?php echo $house->name; ?>" width="20" height="20">
                         </td>
                         <td>
-                            <a href="<?php echo admin_url('admin.php?page=house_config_house_part_three&edit_house=' . $house->id); ?>" class="button button-primary">Edit</a>
-                            <a href="<?php echo admin_url('admin.php?page=house_config_house_part_three&delete_house=' . $house->id); ?>" class="button button-primary">Delete</a>
+                            <a href="<?php echo admin_url('admin.php?page=house_config_house_part_three&edit_house=' . $house->id); ?>" class="button button-primary"><?php echo esc_html('Edit', 'house-configurator'); ?></a>
+                            <a href="<?php echo admin_url('admin.php?page=house_config_house_part_three&delete_house=' . $house->id); ?>" class="button button-primary"><?php echo esc_html('Delete', 'house-configurator'); ?></a>
                         </td>
                     </tr>
                     <?php
@@ -53,7 +53,7 @@
             else {
                 ?>
                 <tr>
-                    <td colspan="4">No House Found</td>
+                    <td colspan="4"><?php echo esc_html('No House Found', 'house-configurator'); ?></td>
                 </tr>
                 <?php
             }
@@ -80,7 +80,7 @@ function createFormforHouse() {
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="addHouseModalLabel">Add New House</h5>
+					<h5 class="modal-title" id="addHouseModalLabel"><?php echo esc_html('Add New House', 'house-configurator'); ?></h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -89,11 +89,11 @@ function createFormforHouse() {
 					<form action="<?php echo esc_attr('admin-post.php'); ?>" method="post" enctype="multipart/form-data">
 						<input type="hidden" name="action" value="part_3_house_data_action" />
 						<div class="form-group">
-							<label for="house_name">House Name</label>
+							<label for="house_name"><?php echo esc_html('House Name', 'house-configurator'); ?></label>
 							<input type="text" name="house_name" id="house_name" class="form-control" placeholder="Enter House Name">
 						</div>
                         <div class="form-group">
-                            <label for="house_level">House Level</label><br />
+                            <label for="house_level"><?php echo esc_html('House Level', 'house-configurator'); ?></label><br />
                             <?php
                                 foreach(getHouseLevels() as $level)
                                 {
@@ -105,7 +105,7 @@ function createFormforHouse() {
                             ?>
                         </div>
                         <div class="form-group mt-3">
-                            <label for="house_description">House Description</label>
+                            <label for="house_description"><?php echo esc_html('House Description', 'house-configurator'); ?></label>
                             <?php
                                 $content = ''; // Initialize the content variable
 
@@ -117,17 +117,17 @@ function createFormforHouse() {
                             ?>
                         </div>
 						<div class="form-group">
-							<label for="house_price">House Price</label>
+							<label for="house_price"><?php echo esc_html('House Price', 'house-configurator'); ?></label>
 							<input type="number" name="house_price" id="house_price" class="form-control" placeholder="Enter House Price">
 						</div>
                         <div class="form-group">
-                            <label for="house_image">House House Image</label>
+                            <label for="house_image"><?php echo esc_html('House Price', 'house-configurator'); ?></label>
                             <input type="file" name="house_image" id="house_image" class="form-control" placeholder="Enter House Image" onchange="document.getElementById('house__preview_image').src = window.URL.createObjectURL(this.files[0])" required>
                             <img src="https://via.placeholder.com/100" alt="img" class="img-fluid mt-2" id="house__preview_image">
                         </div>
 				</div>
 				<div class="card-footer d-flex justify-content-between">
-						<button type="submit" class="btn btn-primary btn-block">Submit</button>
+						<button type="submit" class="btn btn-primary btn-block"><?php echo esc_html('Submit', 'house-configurator'); ?></button>
 					</div>
 				</form>
 			</div>

@@ -46,16 +46,16 @@ if ( isset( $_GET['message'] ) && $_GET['message'] == 'success' ) {
                     <div class="col-md-2 mb-3">
                         <ul class="nav nav-pills flex-column" id="h__tabs-level" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link active" id="h__tabs-price-tab" data-toggle="tab" href="#h__tabs-price" role="tab" aria-controls="h__tabs-price" aria-selected="true">Manage Price</a>
+                                <a class="nav-link active" id="h__tabs-price-tab" data-toggle="tab" href="#h__tabs-price" role="tab" aria-controls="h__tabs-price" aria-selected="true"><?php echo esc_html('Manage Price', 'house-configurator'); ?></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="h__tabs-contact-tab" data-toggle="tab" href="#h__tabs-contact" role="tab" aria-controls="h__tabs-contact" aria-selected="true">Manage Contact</a>
+                                <a class="nav-link" id="h__tabs-contact-tab" data-toggle="tab" href="#h__tabs-contact" role="tab" aria-controls="h__tabs-contact" aria-selected="true"><?php echo esc_html('Manage Contact', 'house-configurator'); ?></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="h__tabs-btw-tab" data-toggle="tab" href="#h__tabs-btw" role="tab" aria-controls="h__tabs-btw" aria-selected="true">Manage BTW</a>
+                                <a class="nav-link" id="h__tabs-btw-tab" data-toggle="tab" href="#h__tabs-btw" role="tab" aria-controls="h__tabs-btw" aria-selected="true"><?php echo esc_html('Manage BTW', 'house-configurator'); ?></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="h__tabs-af-tab" data-toggle="tab" href="#h__tabs-af" role="tab" aria-controls="h__tabs-af" aria-selected="false">Manage AF</a>
+                                <a class="nav-link" id="h__tabs-af-tab" data-toggle="tab" href="#h__tabs-af" role="tab" aria-controls="h__tabs-af" aria-selected="false"><?php echo esc_html('Manage AF', 'house-configurator'); ?></a>
                             </li>
                         </ul>
                     </div>

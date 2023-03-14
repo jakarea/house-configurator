@@ -1,14 +1,14 @@
 <div class="table-header d-flex justify-content-between mb-3">
     <h4><?php echo esc_html('Manage Options / Add Options', 'house-configurator'); ?></h4>
-    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addOptionsModal">Add New</button>
+    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addOptionsModal"><?php echo esc_html('Add New', 'house-configurator'); ?></button>
 </div>
 <table class="table table-hover house_configurator_table">
     <thead>
         <tr>
-            <th>ID</th>
-            <th>Option Name</th>
-            <th>Option Price</th>
-            <th>Actions</th>
+            <th><?php echo esc_html('ID', 'house-configurator'); ?></th>
+            <th><?php echo esc_html('Option Name', 'house-configurator'); ?></th>
+            <th><?php echo esc_html('Option Price', 'house-configurator'); ?></th>
+            <th><?php echo esc_html('Actions', 'house-configurator'); ?></th>
         </tr>
     </thead>
     <tbody>
@@ -25,8 +25,8 @@
                         <td><?php echo $data->name; ?></td>
                         <td><?php echo '€ '.$data->price; ?></td>
                         <td>
-                            <a href="<?php echo admin_url('admin.php?page=house_config_house_part_three&edit_option=' . $data->id); ?>" class="button button-primary">Edit</a>
-                            <a href="<?php echo admin_url('admin.php?page=house_config_house_part_three&delete_option=' . $data->id); ?>" class="button button-primary">Delete</a>
+                            <a href="<?php echo admin_url('admin.php?page=house_config_house_part_three&edit_option=' . $data->id); ?>" class="button button-primary"><?php echo esc_html('Edit', 'house-configurator'); ?></a>
+                            <a href="<?php echo admin_url('admin.php?page=house_config_house_part_three&delete_option=' . $data->id); ?>" class="button button-primary"><?php echo esc_html('Delete', 'house-configurator'); ?></a>
                         </td>
                     </tr>
                     <?php
@@ -35,7 +35,7 @@
             else {
                 ?>
                 <tr>
-                    <td colspan="4">No Levels Found</td>
+                    <td colspan="4"><?php echo esc_html('No Levels Found', 'house-configurator'); ?></td>
                 </tr>
                 <?php
             }
@@ -59,7 +59,7 @@
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="addOptionsModalLabel">Add New Options</h5>
+					<h5 class="modal-title" id="addOptionsModalLabel"><?php echo esc_html('Add New Options', 'house-configurator'); ?></h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -68,16 +68,16 @@
 					<form action="<?php echo esc_attr('admin-post.php'); ?>" method="post" enctype="multipart/form-data">
 						<input type="hidden" name="action" value="part_3_options_data_create_action" />
 						<div class="form-group">
-							<label for="option_name">Option Name</label>
+							<label for="option_name"><?php echo esc_html('Option Name', 'house-configurator'); ?></label>
 							<input type="text" name="option_name" id="option_name" class="form-control" placeholder="Enter Options Name">
 						</div>
 						<div class="form-group">
-							<label for="option_price">Option Price</label>
+							<label for="option_price"><?php echo esc_html('Option Price', 'house-configurator'); ?></label>
 							<input type="number" name="option_price" id="option_price" class="form-control" placeholder="Enter Options Price">
 						</div>
 				</div>
 				<div class="card-footer d-flex justify-content-between">
-						<button type="submit" class="btn btn-primary btn-block">Submit</button>
+						<button type="submit" class="btn btn-primary btn-block"><?php echo esc_html('Submit', 'house-configurator'); ?></button>
 					</div>
 				</form>
 			</div>
@@ -99,14 +99,14 @@ function UpdateOptions() {
             <input type="hidden" name="action" value="part_3_options_data_update_action" />
             <input type="hidden" name="id" value="<?php echo $option->id; ?>" />
             <div class="form-group">
-                <label for="option_name">Option Name</label>
+                <label for="option_name"><?php echo esc_html('Option Name', 'house-configurator'); ?></label>
                 <input type="text" name="option_name" id="option_name" class="form-control" value="<?php echo $option->name; ?>" placeholder="Enter Options Name">
             </div>
             <div class="form-group">
-                <label for="option_price">Option Price</label>
+                <label for="option_price"><?php echo esc_html('Option Price', 'house-configurator'); ?></label>
                 <input type="number" name="option_price" id="option_price" class="form-control" value="<?php echo $option->price; ?>" placeholder="Enter Options Price">
             </div>
-            <button type="submit" class="btn btn-primary btn-block">Save Changes</button>
+            <button type="submit" class="btn btn-primary btn-block"><?php echo esc_html('Save Changes', 'house-configurator'); ?></button>
         </form>
     <?php
     }

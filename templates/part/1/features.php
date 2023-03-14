@@ -1,16 +1,16 @@
 <div class="tab-pane fade" id="h__tabs-features" role="tabpanel" aria-labelledby="h__tabs-feature-tab">
     <div class="table-header d-flex justify-content-between mb-3">
         <h4><?php echo esc_html('Manage Features / Add Features', 'house-configurator'); ?></h4>
-        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addFeatureModal">Add New</button>
+        <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addFeatureModal"><?php echo esc_html('Add New', 'house-configurator'); ?></button>
     </div>
     <table class="table table-hover house_configurator_table">
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Feature Name</th>
-                <th>Feature Price</th>
-                <th>Level Name</th>
-                <th>Actions</th>
+                <th><?php echo esc_html('ID', 'house-configurator'); ?></th>
+                <th><?php echo esc_html('Feature Name', 'house-configurator'); ?></th>
+                <th><?php echo esc_html('Feature Price', 'house-configurator'); ?></th>
+                <th><?php echo esc_html('Level Name', 'house-configurator'); ?></th>
+                <th><?php echo esc_html('Actions', 'house-configurator'); ?></th>
             </tr>
         </thead>
         <tbody>
@@ -44,8 +44,8 @@
                                 ?>
                             </td>
                             <td>
-                                <a href="<?php echo admin_url('admin.php?page=house_config_house_part_one&edit_feature=' . $feature->id); ?>" class="button button-primary">Edit</a>
-                                <a href="<?php echo admin_url('admin.php?page=house_config_house_part_one&delete_feature=' . $feature->id); ?>" class="button button-primary">Delete</a>
+                                <a href="<?php echo admin_url('admin.php?page=house_config_house_part_one&edit_feature=' . $feature->id); ?>" class="button button-primary"><?php echo esc_html('Edit', 'house-configurator'); ?></a>
+                                <a href="<?php echo admin_url('admin.php?page=house_config_house_part_one&delete_feature=' . $feature->id); ?>" class="button button-primary"><?php echo esc_html('Delete', 'house-configurator'); ?></a>
                             </td>
                         </tr>
                         <?php
@@ -54,7 +54,7 @@
                 else {
                     ?>
                     <tr>
-                        <td colspan="5">No Features Found</td>
+                        <td colspan="5"><?php echo esc_html('No Features Found', 'house-configurator'); ?></td>
                     </tr>
                     <?php
                 }
@@ -77,7 +77,7 @@ function createFeatureForm() {
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addFeatureModalfeature">Add New Feature</h5>
+                    <h5 class="modal-title" id="addFeatureModalfeature"><?php echo esc_html('Add New Feature', 'house-configurator'); ?></h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -86,15 +86,15 @@ function createFeatureForm() {
                     <form action="<?php echo esc_attr('admin-post.php'); ?>" method="post">
                         <input type="hidden" name="action" value="create_feature_action" />
                         <div class="form-group">
-                            <label for="feature_name">Feature Name</label>
+                            <label for="feature_name"><?php echo esc_html('Feature Name', 'house-configurator'); ?></label>
                             <input type="text" name="feature_name" id="feature_name" class="form-control" placeholder="Enter Feature Name">
                         </div>
                         <div class="form-group">
-                            <label for="feature_price">Feature Price</label>
+                            <label for="feature_price"><?php echo esc_html('Feature Price', 'house-configurator'); ?></label>
                             <input type="text" name="feature_price" id="feature_price" class="form-control" placeholder="Enter Feature Price">
                         </div>
                         <div class="form-group">
-                            <label for="Level">Level Type</label><br>
+                            <label for="Level"><?php echo esc_html('Level Type', 'house-configurator'); ?></label><br>
                             <div class="form-check form-check-inline">
                                 <?php
                                     global $wpdb;
@@ -112,8 +112,8 @@ function createFeatureForm() {
                             </div>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="submit" name="submit_feature" class="btn btn-primary">Create Feature</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal"><?php echo esc_html('Close', 'house-configurator'); ?></button>
+                            <button type="submit" name="submit_feature" class="btn btn-primary"><?php echo esc_html('Create Feature', 'house-configurator'); ?></button>
                         </div>
                     </form>
                 </div>
@@ -140,15 +140,15 @@ function ediFeatureForm() {
         <table class="form-table">
             <tbody>
                 <tr>
-                    <th scope="row"><label for="feature_name">Feature Name</label></th>
+                    <th scope="row"><label for="feature_name"><?php echo esc_html('Feature Name', 'house-configurator'); ?></label></th>
                     <td><input name="feature_name" type="text" id="feature_name" value="<?php echo $feature->name; ?>" class="regular-text"></td>
                 </tr>
                 <tr>
-                    <th scope="row"><label for="feature_price">Feature Price</label></th>
+                    <th scope="row"><label for="feature_price"><?php echo esc_html('Feature Price', 'house-configurator'); ?></label></th>
                     <td><input name="feature_price" type="text" id="feature_price" value="<?php echo $feature->price; ?>" class="regular-text"></td>
                 </tr>
                 <tr>
-                    <th scope="row"><label for="feature_level">Feature Level</label></th>
+                    <th scope="row"><label for="feature_level"><?php echo esc_html('Feature Level', 'house-configurator'); ?></label></th>
                     <td>
                         <!-- feature_level[] array with checkbox if id matched then chcecked -->
                         <?php

@@ -20,16 +20,16 @@
     <div class="col-12">
         <div class="card shadow-sm">
             <div class="card-header">
-                <h5 class="card-title">House Configurator</h5>
+                <h5 class="card-title"><?php echo esc_html('House Configurator', 'house-configurator'); ?></h5>
             </div>
             <div class="card-body">
                 <form action="#" method="post" id="calculate_01">
                     <div class="form-group mb-3">
-                        <label for="square_meters">Surface area in square metres</label>
+                        <label for="square_meters"><?php echo esc_html('Surface area in square metres', 'house-configurator'); ?></label>
                         <input type="number" class="form-control" id="square_meters" name="square_meters" placeholder="Enter square meters" value="<?php echo $house_configure_price; ?>" required>
                     </div>
                     <div class="form-group mb-3">
-                        <label for="levels">All Levels</label>
+                        <label for="levels"><?php echo esc_html('All Levels', 'house-configurator'); ?></label>
                         <select class="form-control" id="levels" name="levels" required>
                         <?php
                         foreach ($levels as $level) { 
@@ -58,7 +58,7 @@
         <div class="card mt-5 shadow-sm">
             <div class="card-body text-center">
                 <div class="card-title">
-                    <h4 class="mb-3">Result</h4>
+                    <h4 class="mb-3"><?php echo esc_html('Result', 'house-configurator'); ?></h4>
                 </div>
                 <div class="badge badge-primage bg-success">
                     <h3 class="mb-0 cal__result">0</h3>

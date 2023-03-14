@@ -1,14 +1,14 @@
 <!-- table for contact list -->
 <div class="table-header d-flex justify-content-between mb-3">
     <h4><?php echo esc_html('Manage Contact / Add Contact', 'house-configurator'); ?></h4>
-    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addContactModal">Add New</button>
+    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#addContactModal"><?php echo esc_html('Add New', 'house-configurator'); ?></button>
 </div>
 <table class="table table-hover house_configurator_table">
     <thead>
         <tr>
-            <th>ID</th>
-            <th>Contact Name</th>
-            <th>Actions</th>
+            <th><?php echo esc_html('ID', 'house-configurator'); ?></th>
+            <th><?php echo esc_html('Contact Name', 'house-configurator'); ?></th>
+            <th><?php echo esc_html('Actions', 'house-configurator'); ?></th>
         </tr>
     </thead>
     <tbody>
@@ -25,7 +25,7 @@
                 <td><?php echo $key + 1; ?></td>
                 <td><?php echo $value; ?></td>
                 <td>
-                    <a href="<?php echo admin_url('admin-post.php?action=delete_contact_data_action&contact_name=' . $value); ?>" class="button button-primary">Delete</a>
+                    <a href="<?php echo admin_url('admin-post.php?action=delete_contact_data_action&contact_name=' . $value); ?>" class="button button-primary"><?php echo esc_html('Delete', 'house-configurator'); ?></a>
                 </td>
             </tr>
             <?php
@@ -46,7 +46,7 @@ function createFormforContact() {
 		<div class="modal-dialog modal-dialog-centered" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="addContactModalLabel">Add New Contact</h5>
+					<h5 class="modal-title" id="addContactModalLabel"><?php echo esc_html('Add New Contact', 'house-configurator'); ?></h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -55,11 +55,11 @@ function createFormforContact() {
 					<form action="<?php echo esc_attr('admin-post.php'); ?>" method="post">
                         <input type="hidden" name="action" value="contact_data_action" />
 						<div class="form-group">
-							<label for="contact_name">Level Name</label>
+							<label for="contact_name"><?php echo esc_html('Level Name', 'house-configurator'); ?></label>
 							<input type="text" name="contact_name" id="contact_name" class="form-control" placeholder="Enter Level Name">
 						</div>
 						<div class="form-group">
-							<button type="submit" class="btn btn-primary">Add Level</button>
+							<button type="submit" class="btn btn-primary"><?php echo esc_html('Add Level', 'house-configurator'); ?></button>
 						</div>
 					</form>
 				</div>

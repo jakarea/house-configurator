@@ -53,13 +53,13 @@ if ( isset( $_GET['message'] ) && $_GET['message'] == 1 ) {
                     <div class="col-md-2 mb-3">
                         <ul class="nav nav-pills flex-column" id="h__tabs-level" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link active" id="h__tabs-price-tab" data-toggle="tab" href="#h__tabs-price" role="tab" aria-controls="h__tabs-price" aria-selected="true">Manage Price</a>
+                                <a class="nav-link active" id="h__tabs-price-tab" data-toggle="tab" href="#h__tabs-price" role="tab" aria-controls="h__tabs-price" aria-selected="true"><?php echo esc_html('Manage Price', 'house-configurator'); ?></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="h__tabs-levels-tab" data-toggle="tab" href="#h__tabs-levels" role="tab" aria-controls="h__tabs-levels" aria-selected="true">Manage Levels</a>
+                                <a class="nav-link" id="h__tabs-levels-tab" data-toggle="tab" href="#h__tabs-levels" role="tab" aria-controls="h__tabs-levels" aria-selected="true"><?php echo esc_html('Manage Levels', 'house-configurator'); ?></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" id="h__tabs-features-tab" data-toggle="tab" href="#h__tabs-features" role="tab" aria-controls="h__tabs-features" aria-selected="false">Manage Feature</a>
+                                <a class="nav-link" id="h__tabs-features-tab" data-toggle="tab" href="#h__tabs-features" role="tab" aria-controls="h__tabs-features" aria-selected="false"><?php echo esc_html('Manage Feature', 'house-configurator'); ?></a>
                             </li>
                         </ul>
                     </div>
