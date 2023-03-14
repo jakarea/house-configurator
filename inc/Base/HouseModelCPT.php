@@ -1513,7 +1513,7 @@ class HouseModelCPT
     /*
     ======================================== Single Page Configuration =================================================
     */
-    public function house_model_single_template() {
+    public function house_model_single_template($template) {
         if ( is_singular( 'house_model' ) ) {
             $template = plugin_dir_path( __FILE__ ) . 'single-house-model.php';
         }
