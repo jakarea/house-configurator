@@ -4,7 +4,7 @@
 	</div>
     <form method="post" action="options.php">
         <?php 
-            settings_fields( 'alecaddd_admin_part_one' );
+            settings_fields( 'house_configurator_options_group' );
             do_settings_sections( 'house_config_house_part_one' );
             submit_button();
         ?>
