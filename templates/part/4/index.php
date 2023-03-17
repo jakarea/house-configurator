@@ -37,7 +37,7 @@
                                     <form method="post" action="options.php">
                                         <!-- part-04 -->
                                         <?php
-                                            settings_fields( 'alecaddd_admin_part_four' );
+                                            settings_fields( 'house_configurator_options_group' );
                                             do_settings_sections( 'house_config_house_part_four' );
                                             submit_button();
 

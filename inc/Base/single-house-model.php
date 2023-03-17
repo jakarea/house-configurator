@@ -213,9 +213,6 @@ if (isset($_GET['dimensionA']) && isset($_GET['dimensionB'])) {
     $dimensionB = $_GET['dimensionB'];
 }
 ?>
-<!-- CSS -->
-<link href="https://cdn.jsdelivr.net/npm/smartwizard@6/dist/css/smart_wizard_all.min.css" rel="stylesheet" type="text/css" />
-
 <!-- SmartWizard html -->
 <div class="row py-4">
     <div class="col-9 mb-2">
@@ -522,7 +519,6 @@ if (isset($_GET['dimensionA']) && isset($_GET['dimensionB'])) {
 get_footer();
 ?>
 <!-- JavaScript -->
-<script src="https://cdn.jsdelivr.net/npm/smartwizard@6/dist/js/jquery.smartWizard.min.js" type="text/javascript"></script>
 <script>
     jQuery(function($) {
         // SmartWizard initialize

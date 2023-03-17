@@ -3,8 +3,8 @@
  * @package  HouseConfigurator
  */
 
- /**
- * Plugin Name:       House Configurator
+/**
+* Plugin Name:       House Configurator
 * Plugin URI:		http://giopio.com
 * Description:       House Configurator is helping for making house estimate in a minutes.
 * Version:           1.0.0
