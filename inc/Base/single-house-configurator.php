@@ -127,7 +127,7 @@ $house_id = get_the_ID();
                 <div class="card-body">
                     <div class="model-list">
                         <h6 class="my-2 text-white">Model</h6> <hr />
-                        <form action="#">
+                        <form action="#" id="calculate_03">
                             <?php
                             // get the level taxonomy
                             $levels = get_the_terms( $house_id, 'level' );
@@ -201,10 +201,75 @@ $house_id = get_the_ID();
                     </h5>
                 </div>
             </div>
+            <div class="mt-3">
+                <a href="javascript:void(0)" class="btn btn-primary btn-block" id="generate_pdf">Generate PDF</a>
+            </div>
         </div>
     </div>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/0.9.0rc1/jspdf.min.js"></script>
+<script>
 
+    function generatePDF() {
+        var doc = new jsPDF();
+        var form = document.getElementById('calculate_03');
+        var formData = new FormData(form);
+
+        // Add website logo
+        // doc.addImage("https://sample-videos.com/img/Sample-jpg-image-50kb.jpg", "JPG", 15, 40, 180, 180);
+
+        // Add website name
+        doc.setFontSize(20);
+        var websiteName = 'Bouwspecialist.nl';
+        var websiteNameWidth = doc.getStringUnitWidth(websiteName) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+        var x = (doc.internal.pageSize.width - websiteNameWidth) / 2;
+        doc.text(x, 20, websiteName).setFontSize(14);
+
+        var websiteUrl = 'https://bouwspecialist.nl/';
+        var websiteUrlWidth = doc.getStringUnitWidth(websiteUrl) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+        x = (doc.internal.pageSize.width - websiteUrlWidth) / 2;
+        doc.text(x, 30, websiteUrl);
+
+        var url = window.location.href;
+        var urlWidth = doc.getStringUnitWidth(url) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+        x = (doc.internal.pageSize.width - urlWidth) / 2;
+        doc.text(x, 40, url);
+
+        // Add date and time of PDF generation
+        var currentDate = new Date();
+        var dateString = 'Generated on: ' + currentDate.toLocaleDateString() + ' ' + currentDate.toLocaleTimeString();
+        doc.setFontSize(12);
+        doc.text(20, 50, dateString);
+
+        // Iterate through form data and add to PDF
+        doc.setFontSize(14);
+        var y = 70;
+        var cal__result = document.getElementById('calculate_total_part3').innerHTML;
+        for (var pair of formData.entries()) {
+            var label = '';
+            var input = document.querySelector('[name="' + pair[0] + '"]');
+            if (input.type === 'checkbox') {
+                var inputId = input.getAttribute('id');
+                label = document.querySelector('label[for="' + inputId + '"]').textContent;
+            } else if (input.type === 'select-one') {
+                var select = document.querySelector('[name="' + pair[0] + '"]');
+                label = select.options[select.selectedIndex].textContent;
+            } else {
+                label = pair[0];
+            }
+            doc.text(20, y, label + ': ' + pair[1]);
+            y += 10;
+        }
+
+
+        doc.text(20, y, 'Total Price: ' + cal__result);
+
+        doc.save('part-01.pdf');
+    }
+
+    document.getElementById('generate_pdf').addEventListener('click', generatePDF);
+
+</script>
 <?php
 get_footer();
 ?>

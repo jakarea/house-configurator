@@ -37,7 +37,7 @@ $price = esc_attr( get_option( 'house_config_house_part_two_price' ) );
                     <h6 class="m-0"><strong><?php echo esc_html('ONLINE OFFERTE - AIRLESS LATEX SPUITEN', 'house-configurator'); ?></strong> | <small><?php echo esc_html('Terug naar de website', 'house-configurator'); ?></small></h6>
                 </div>
                 <hr />
-                <form class="h__form_body" method="GET">
+                <form class="h__form_body" method="GET" id="calculator_02">
                     <div class="form-group row">
                         <label class="col-3" for="number"><h4><?php echo esc_html('Terug naar de website', 'house-configurator'); ?>01.</h4></label>
                         <div class="col-9">
@@ -103,7 +103,7 @@ $price = esc_attr( get_option( 'house_config_house_part_two_price' ) );
                 </form>
                 <hr />
                 <!-- calculation result with bootstrap tabkle -->
-                <div class="result">
+                <div class="result cal__result">
                     <?php
                         // if server request method is post then calculate
                         if ($_SERVER['REQUEST_METHOD'] === 'GET') {
@@ -140,6 +140,10 @@ $price = esc_attr( get_option( 'house_config_house_part_two_price' ) );
                                         </tr>
                                     </tbody>
                                 </table>';
+
+                            echo '<div class="text-center">
+                                    <button class="btn btn-success" onclick="generatePDF()">Download PDF</button>
+                                </div>';
                         }
                     ?>
                 </div>
@@ -147,3 +151,70 @@ $price = esc_attr( get_option( 'house_config_house_part_two_price' ) );
         </div>
     </div>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/0.9.0rc1/jspdf.min.js"></script>
+<script>
+
+    function generatePDF() {
+        var doc = new jsPDF();
+        var form = document.getElementById('calculator_02');
+        var formData = new FormData(form);
+
+        // Add website logo
+        // doc.addImage("https://sample-videos.com/img/Sample-jpg-image-50kb.jpg", "JPG", 15, 40, 180, 180);
+
+        // Add website name
+        doc.setFontSize(20);
+        var websiteName = 'Bouwspecialist.nl';
+        var websiteNameWidth = doc.getStringUnitWidth(websiteName) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+        var x = (doc.internal.pageSize.width - websiteNameWidth) / 2;
+        doc.text(x, 20, websiteName).setFontSize(14);
+
+        var websiteUrl = 'https://bouwspecialist.nl/';
+        var websiteUrlWidth = doc.getStringUnitWidth(websiteUrl) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+        x = (doc.internal.pageSize.width - websiteUrlWidth) / 2;
+        doc.text(x, 30, websiteUrl);
+
+        var url = window.location.href;
+        var urlWidth = doc.getStringUnitWidth(url) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+        x = (doc.internal.pageSize.width - urlWidth) / 2;
+        doc.text(x, 40, url);
+
+        // Add date and time of PDF generation
+        var currentDate = new Date();
+        var dateString = 'Generated on: ' + currentDate.toLocaleDateString() + ' ' + currentDate.toLocaleTimeString();
+        doc.setFontSize(12);
+        doc.text(20, 50, dateString);
+
+        // Iterate through form data and add to PDF
+        doc.setFontSize(14);
+        var y = 70;
+        // get result from calculation
+        var sub_total = document.querySelector('.cal__result table tbody tr:nth-child(1) td:nth-child(2) h5').textContent;
+        var vat = document.querySelector('.cal__result table tbody tr:nth-child(2) td:nth-child(2) h5').textContent;
+        var total = document.querySelector('.cal__result h4').textContent;
+        for (var pair of formData.entries()) {
+            var label = '';
+            var input = document.querySelector('[name="' + pair[0] + '"]');
+            if (input.type === 'checkbox') {
+                var inputId = input.getAttribute('id');
+                label = document.querySelector('label[for="' + inputId + '"]').textContent;
+            } else if (input.type === 'select-one') {
+                var select = document.querySelector('[name="' + pair[0] + '"]');
+                label = select.options[select.selectedIndex].textContent;
+            } else {
+                label = pair[0];
+            }
+            doc.text(20, y, label + ': ' + pair[1]);
+            y += 10;
+        }
+
+        // Add sub total
+        doc.text(20, y, 'Sub Total: ' + sub_total);
+        // Add vat
+        doc.text(20, y + 10, 'VAT: ' + vat);
+        // Add total
+        doc.text(20, y + 20, 'Total: ' + total);
+        
+        doc.save('part-01.pdf');
+    }
+</script>
