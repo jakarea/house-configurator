@@ -61,5 +61,8 @@ class Enqueue extends BaseController
 		// add https://cdn.jsdelivr.net/npm/smartwizard@6/dist/css/smart_wizard_all.min.css
 		wp_enqueue_style( 'smartwizard', 'https://cdn.jsdelivr.net/npm/smartwizard@6/dist/css/smart_wizard_all.min.css' );
 		wp_enqueue_script( 'smartwizard', 'https://cdn.jsdelivr.net/npm/smartwizard@6/dist/js/jquery.smartWizard.min.js', array( 'jquery' ), '6.0.0', true );
+
+		wp_enqueue_script( 'jspdf', 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.3.1/jspdf.umd.min.js', array(), '2.3.1', true );
+		wp_enqueue_script( 'jspdf-autotable', 'https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.16/jspdf.plugin.autotable.min.js', array('jspdf'), '3.5.16', true );
 	}
 }

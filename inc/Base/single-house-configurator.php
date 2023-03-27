@@ -207,10 +207,71 @@ $house_id = get_the_ID();
         </div>
     </div>
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/0.9.0rc1/jspdf.min.js"></script>
+<?php
+get_footer();
+?>
 <script>
 
-    function generatePDF() {
+// function generatePDF() {
+//     window.jsPDF = window.jspdf.jsPDF;
+//     var doc = new jsPDF();
+//     var form = document.getElementById('calculate_03');
+//     var formData = new FormData(form);
+
+//     // Add website logo
+//     // doc.addImage("https://sample-videos.com/img/Sample-jpg-image-50kb.jpg", "JPG", 15, 40, 180, 180);
+
+//     // Add website name
+//     doc.setFontSize(20);
+//     var websiteName = 'Bouwspecialist.nl';
+//     var websiteNameWidth = doc.getStringUnitWidth(websiteName) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+//     var x = (doc.internal.pageSize.width - websiteNameWidth) / 2;
+//     doc.text(x, 20, websiteName).setFontSize(14);
+
+//     var websiteUrl = 'https://bouwspecialist.nl/';
+//     var websiteUrlWidth = doc.getStringUnitWidth(websiteUrl) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+//     x = (doc.internal.pageSize.width - websiteUrlWidth) / 2;
+//     doc.text(x, 30, websiteUrl);
+
+//     var url = window.location.href;
+//     var urlWidth = doc.getStringUnitWidth(url) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+//     x = (doc.internal.pageSize.width - urlWidth) / 2;
+//     doc.text(x, 40, url);
+
+//     // Add date and time of PDF generation
+//     var currentDate = new Date();
+//     var dateString = 'Generated on: ' + currentDate.toLocaleDateString() + ' ' + currentDate.toLocaleTimeString();
+//     doc.setFontSize(12);
+//     doc.text(20, 50, dateString);
+
+//     // Iterate through form data and add to PDF
+//     doc.setFontSize(14);
+//     var y = 70;
+//     var cal__result = document.getElementById('calculate_total_part3').innerHTML;
+//     for (var pair of formData.entries()) {
+//         var label = '';
+//         var input = document.querySelector('[name="' + pair[0] + '"]');
+//         if (input.type === 'checkbox') {
+//             var inputId = input.getAttribute('id');
+//             label = document.querySelector('label[for="' + inputId + '"]').textContent;
+//         } else if (input.type === 'select-one') {
+//             var select = document.querySelector('[name="' + pair[0] + '"]');
+//             label = select.options[select.selectedIndex].textContent;
+//         } else {
+//             label = pair[0];
+//         }
+//         doc.text(20, y, label + ': ' + pair[1]);
+//         y += 10;
+//     }
+
+
+//     doc.text(20, y, 'Total Price: ' + cal__result);
+
+//     doc.save('part-01.pdf');
+// }
+
+function generatePDF() {
+        window.jsPDF = window.jspdf.jsPDF;
         var doc = new jsPDF();
         var form = document.getElementById('calculate_03');
         var formData = new FormData(form);
@@ -233,18 +294,16 @@ $house_id = get_the_ID();
         var url = window.location.href;
         var urlWidth = doc.getStringUnitWidth(url) * doc.internal.getFontSize() / doc.internal.scaleFactor;
         x = (doc.internal.pageSize.width - urlWidth) / 2;
-        doc.text(x, 40, url);
 
         // Add date and time of PDF generation
-        var currentDate = new Date();
-        var dateString = 'Generated on: ' + currentDate.toLocaleDateString() + ' ' + currentDate.toLocaleTimeString();
-        doc.setFontSize(12);
-        doc.text(20, 50, dateString);
+
 
         // Iterate through form data and add to PDF
         doc.setFontSize(14);
         var y = 70;
-        var cal__result = document.getElementById('calculate_total_part3').innerHTML;
+        var total = document.getElementById('calculate_total_part3').innerHTML;
+        // Iterate through form data and create a table
+        var tableData = [];
         for (var pair of formData.entries()) {
             var label = '';
             var input = document.querySelector('[name="' + pair[0] + '"]');
@@ -257,19 +316,61 @@ $house_id = get_the_ID();
             } else {
                 label = pair[0];
             }
-            doc.text(20, y, label + ': ' + pair[1]);
-            y += 10;
+            tableData.push([label, pair[1]]); // modify this line to push an array
         }
 
+        //
+        tableData.push(['Total', total]);
 
-        doc.text(20, y, 'Total Price: ' + cal__result);
+        // Set table column headers and options
+        var tableColumns = ['Items', 'Price'];
+        var tableOptions = {
+            startY: y + 10,
+            margin: {left: 20, right: 20},
+            bodyStyles: {fontSize: 12},
+            headStyles: {fontSize: 14, halign: 'left'},
+            columnStyles: {
+                0: {cellWidth: 'auto', fontStyle: 'bold'},
+                1: {cellWidth: 'auto'}
+            },
+            theme: 'striped',
+        };
 
-        doc.save('part-01.pdf');
+        // Generate the table
+        doc.autoTable(tableColumns, tableData, tableOptions);
+
+
+
+
+        // doc.text(20, y, 'Total Price: ' + cal__result);
+
+
+        // add footer text
+        doc.setFontSize(10);
+        var footerText = "The invoice is created on a computer and is valid without the signature and stamp.";
+        var footerTextWidth = doc.getStringUnitWidth(footerText) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+        x = (doc.internal.pageSize.width - footerTextWidth) / 2;
+        // doc.text(x, 280, footerText);
+
+
+        // add date and current url of PDF generation it should be at the bottom left of the page and same line as date
+        var date = new Date();
+        var dateString = 'Generated on: ' + date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+        var dateStringWidth = doc.getStringUnitWidth(dateString) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+        var dateStringX = 20; // Set the x-coordinate for the date text on the left side
+        var url = window.location.href;
+        var urlWidth = doc.getStringUnitWidth(url) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+        var urlX = doc.internal.pageSize.width - urlWidth - 20; // Set the x-coordinate for the URL text on the right side
+        var textY = doc.internal.pageSize.height - 10; // Set the margin to 10 units from the bottom of the page
+        doc.setFontSize(10);
+        doc.text(dateStringX, textY, dateString);
+        doc.text(urlX, textY, url);
+
+        // Save the PDF
+
+        doc.save('part-03.pdf');
     }
 
-    document.getElementById('generate_pdf').addEventListener('click', generatePDF);
+document.getElementById('generate_pdf').addEventListener('click', generatePDF);
 
 </script>
-<?php
-get_footer();
-?>

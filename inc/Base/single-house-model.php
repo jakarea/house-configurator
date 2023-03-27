@@ -460,6 +460,10 @@ if (isset($_GET['dimensionA']) && isset($_GET['dimensionB'])) {
                                 <div id="total_summary">
                                     <!-- get all the forms select data -->
                                 </div>
+                                <div class="mt-3">
+                                    <!-- generate pdf -->
+                                    <a href="#" class="btn btn-primary btn-block" id="generate_pdf">Generate PDF</a>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -595,11 +599,105 @@ get_footer();
             $('.extra_total strong').html('€ ' + total_sum);
             $('.result-total h4').html('€ ' + (total_sum + parseInt($('.dimension_price strong').html().replace('€ ', ''))));
             $('.total_ammount_overview').html('€ ' + (total_sum + parseInt($('.dimension_price strong').html().replace('€ ', ''))));
+
         });
 
-        // dimension_price price and extra_total sum to result-total after sum all price
-        $('.result-total h4').html('€ ' + (total_sum + parseInt($('.dimension_price strong').html().replace('€ ', ''))));
-        $('.total_ammount_overview').html('€ ' + (total_sum + parseInt($('.dimension_price strong').html().replace('€ ', ''))));
+        $('#generate_pdf').on('click', function() {
+            window.jsPDF = window.jspdf.jsPDF;
+            var doc = new jsPDF();
+            var checkboxes = $('input[type="checkbox"]');
+            var i = 0;
+            var yOffset = 10; // initial vertical offset
+            var tableData = [];
+            // add website name
+            doc.setFontSize(20);
+            var websiteName = 'Bouwspecialist.nl';
+            var websiteNameWidth = doc.getStringUnitWidth(websiteName) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+            var x = (doc.internal.pageSize.width - websiteNameWidth) / 2;
+            doc.text(x, yOffset, websiteName);
+            yOffset += 10; // increment vertical offset
+
+            doc.setFontSize(14);
+            // website url
+            var websiteUrl = 'https://bouwspecialist.nl/';
+            var websiteUrlWidth = doc.getStringUnitWidth(websiteUrl) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+            x = (doc.internal.pageSize.width - websiteUrlWidth) / 2;
+
+            // add current url
+            var url = window.location.href;
+            var urlWidth = doc.getStringUnitWidth(url) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+            x = (doc.internal.pageSize.width - urlWidth) / 2;
+
+            // add current date
+            doc.setFontSize(12);
+            var currentDate = new Date();
+            var dateString = 'Generated on: ' + currentDate.toLocaleDateString() + ' ' + currentDate.toLocaleTimeString();
+            var dateStringWidth = doc.getStringUnitWidth(dateString) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+            x = (doc.internal.pageSize.width - dateStringWidth) / 2;
+            doc.text(x, yOffset, dateString);
+            yOffset += 10; // increment vertical offset
+
+            doc.setFontSize(16);
+            checkboxes.each(function() {
+                if ($(this).is(':checked')) {
+                    var label = $(this).closest('form').attr('name');
+                    var name = $(this).closest('li[data-price]').data('name');
+                    var price = $(this).closest('li[data-price]').data('price');
+                    tableData.push([label, '€ ' + price]);
+                }
+            });
+
+            // total price to push in table
+            var total_price = '€ ' + (total_sum + parseInt($('.dimension_price strong').html().replace('€ ', '')));
+            tableData.push(['Total', total_price, '']);
+
+            // Define table columns and options
+            var tableColumns = [
+                { header: 'Items', dataKey: 'label' },
+                { header: 'Price', dataKey: 'price' }
+            ];
+            var tableOptions = {
+                startY: 50,
+                margin: { top: 50 },
+                styles: {
+                    headerFontStyle: 'bold',
+                    cellPadding: 5
+                },
+                columnStyles: {
+                    item: { columnWidth: 'auto' },
+                    price: { columnWidth: 'auto' },
+                    label: { columnWidth: 'auto' }
+                }
+            };
+
+            // Create the table
+            doc.autoTable(tableColumns, tableData, tableOptions);
+
+            // add footer text
+            doc.setFontSize(10);
+            var footerText = "The invoice is created on a computer and is valid without the signature and stamp.";
+            var footerTextWidth = doc.getStringUnitWidth(footerText) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+            x = (doc.internal.pageSize.width - footerTextWidth) / 2;
+            // doc.text(x, 280, footerText);
+
+
+            // add date and current url of PDF generation it should be at the bottom left of the page and same line as date
+            var date = new Date();
+            var dateString = 'Generated on: ' + date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+            var dateStringWidth = doc.getStringUnitWidth(dateString) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+            var dateStringX = 20; // Set the x-coordinate for the date text on the left side
+            var url = window.location.href;
+            var urlWidth = doc.getStringUnitWidth(url) * doc.internal.getFontSize() / doc.internal.scaleFactor;
+            var urlX = doc.internal.pageSize.width - urlWidth - 20; // Set the x-coordinate for the URL text on the right side
+            var textY = doc.internal.pageSize.height - 10; // Set the margin to 10 units from the bottom of the page
+            doc.setFontSize(10);
+            doc.text(dateStringX, textY, dateString);
+            doc.text(urlX, textY, url);
+
+            // save pdf
+            doc.save('part-04.pdf');
+        });
+
 
     });
 </script>
