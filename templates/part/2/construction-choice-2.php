@@ -28,8 +28,8 @@
                      <td><?php echo $value['name']; ?></td>
                      <td><?php echo '€ '.$value['value']; ?></td>
                      <td>
-                         <a href="<?php echo admin_url('admin.php?page=house_config_house_part_two&edit_a_f=' . $value['name']); ?>" class="button button-primary"><?php echo esc_html('Edit', 'house-configurator'); ?></a>
-                         <a href="<?php echo admin_url('admin.php?page=house_config_house_part_two&delet_a_f=' . $value['name']); ?>" class="button button-primary"><?php echo esc_html('Delete', 'house-configurator'); ?></a>
+                         <a href="<?php echo admin_url('admin.php?page=house_config_house_part_two&edit_a_f=' . $value['slug']); ?>" class="button button-primary"><?php echo esc_html('Edit', 'house-configurator'); ?></a>
+                         <a href="<?php echo admin_url('admin.php?page=house_config_house_part_two&delet_a_f=' . $value['slug']); ?>" class="button button-primary"><?php echo esc_html('Delete', 'house-configurator'); ?></a>
                      </td>
                  </tr>
             <?php
@@ -101,46 +101,54 @@ function updateFormForAF() {
         $aff_list = json_decode($aff_list, true);
 
         foreach($aff_list as $af) {
-            if($af['name'] == $af_name) {
+            if($af['slug'] == $af_name) {
                 $selected_af = $af;
                 break;
             }
         }
+        
+        if (isset($selected_af)) {
+            // display form
+        ?>    <form action="<?php echo esc_attr('admin-post.php'); ?>" method="post">
+                <input type="hidden" name="action" value="afplakken_data_update_action" />
+                <input type="hidden" name="aff_name_update" value="<?php echo $af_name; ?>" />
+                <table class="form-table">
+                    <tr class="example-class">
+                        <th scope="row"><?php echo esc_html('Afplakken Name', 'house-configurator'); ?></th>
+                        <td><input type="text" name="afplakken_name" value="<?php echo $selected_af['name']; ?>" class="regular-text" /></td>
+                    </tr>
+                    <tr class="example-class">
+                        <th scope="row"><?php echo esc_html('Afplakken Price', 'house-configurator'); ?></th>
+                        <td><input type="text" name="afplakken_price" value="<?php echo $selected_af['value']; ?>" class="regular-text" /></td>
+                    </tr>
+                </table>
+                <?php submit_button('Update', 'primary', 'btnSubmit'); ?>
+            </form>
+        <?php
+        } else {
+            echo "Afplakken item not found";
+        }
+        
         ?>
-        <!-- form -->
-        <form action="<?php echo esc_attr('admin-post.php'); ?>" method="post">
-            <input type="hidden" name="action" value="btw_data_update_action" />
-            <input type="hidden" name="aff_name_update" value="<?php echo $af_name; ?>" />
-            <table class="form-table">
-                <tr class="example-class">
-                    <th scope="row"><?php echo esc_html('Afplakken Name', 'house-configurator'); ?></th>
-                    <td><input type="text" name="afplakken_name" value="<?php echo $selected_af['name']; ?>" class="regular-text" /></td>
-                </tr>
-                <tr class="example-class">
-                    <th scope="row"><?php echo esc_html('Afplakken Price', 'house-configurator'); ?></th>
-                    <td><input type="text" name="afplakken_price" value="<?php echo $selected_af['value']; ?>" class="regular-text" /></td>
-                </tr>
-            </table>
-            <?php submit_button('Update', 'primary', 'btnSubmit'); ?>
-        </form>
+
         <?php
     }    
 }
 
 
 /**
- * Delete BTW
+ * Delete AF
  */
 function deleteAF() {
-    // delete the name and price from btw_list json array
+    // delete the name and price from aff_list json array
     if (isset($_GET['delet_a_f'])) {
-        // delete btw_list name with confirm message and set name to $_GET['delet_b_t_w'] then send to function
-        $btw_name = $_GET['delet_a_f'];
+        // delete aff_list name with confirm message and set name to $_GET['delet_b_t_w'] then send to function
+        $aff_name = $_GET['delet_a_f'];
         ?>
         <script>
             var r = confirm("Are you sure you want to delete this?");
             if (r == true) {
-                window.location.href = "<?php echo admin_url('admin-post.php?action=btw_data_delete_action&afplakken_name' . $btw_name); ?>";
+                window.location.href = "<?php echo admin_url('admin-post.php?action=afplakken_data_delete_action&afplakken_name=' . $aff_name); ?>";
             } else {
                 window.location.href = "<?php echo admin_url('admin.php?page=house_config_house_part_two'); ?>";
             }

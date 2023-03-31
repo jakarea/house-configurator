@@ -174,7 +174,7 @@ $house_id = get_the_ID();
                                     ?>
                                     <div class="form-group mb-2 options_data">
                                         <div class="form-check text-light">
-                                            <input class="form-check-input" type="checkbox" name="data-price" id="option_<?php echo $option->term_id; ?>" value="a" data-price="<?php echo $option_price; ?>">
+                                            <input class="form-check-input" type="checkbox" name="data-price" id="option_<?php echo $option->term_id; ?>" value="<?php echo $option_price; ?>" data-price="<?php echo $option_price; ?>">
                                             <label class="form-check-label" for="option_<?php echo $option->term_id; ?>"><?php echo $option->name; ?></label>
                                         </div>
                                     </div>
@@ -212,64 +212,6 @@ get_footer();
 ?>
 <script>
 
-// function generatePDF() {
-//     window.jsPDF = window.jspdf.jsPDF;
-//     var doc = new jsPDF();
-//     var form = document.getElementById('calculate_03');
-//     var formData = new FormData(form);
-
-//     // Add website logo
-//     // doc.addImage("https://sample-videos.com/img/Sample-jpg-image-50kb.jpg", "JPG", 15, 40, 180, 180);
-
-//     // Add website name
-//     doc.setFontSize(20);
-//     var websiteName = 'Bouwspecialist.nl';
-//     var websiteNameWidth = doc.getStringUnitWidth(websiteName) * doc.internal.getFontSize() / doc.internal.scaleFactor;
-//     var x = (doc.internal.pageSize.width - websiteNameWidth) / 2;
-//     doc.text(x, 20, websiteName).setFontSize(14);
-
-//     var websiteUrl = 'https://bouwspecialist.nl/';
-//     var websiteUrlWidth = doc.getStringUnitWidth(websiteUrl) * doc.internal.getFontSize() / doc.internal.scaleFactor;
-//     x = (doc.internal.pageSize.width - websiteUrlWidth) / 2;
-//     doc.text(x, 30, websiteUrl);
-
-//     var url = window.location.href;
-//     var urlWidth = doc.getStringUnitWidth(url) * doc.internal.getFontSize() / doc.internal.scaleFactor;
-//     x = (doc.internal.pageSize.width - urlWidth) / 2;
-//     doc.text(x, 40, url);
-
-//     // Add date and time of PDF generation
-//     var currentDate = new Date();
-//     var dateString = 'Generated on: ' + currentDate.toLocaleDateString() + ' ' + currentDate.toLocaleTimeString();
-//     doc.setFontSize(12);
-//     doc.text(20, 50, dateString);
-
-//     // Iterate through form data and add to PDF
-//     doc.setFontSize(14);
-//     var y = 70;
-//     var cal__result = document.getElementById('calculate_total_part3').innerHTML;
-//     for (var pair of formData.entries()) {
-//         var label = '';
-//         var input = document.querySelector('[name="' + pair[0] + '"]');
-//         if (input.type === 'checkbox') {
-//             var inputId = input.getAttribute('id');
-//             label = document.querySelector('label[for="' + inputId + '"]').textContent;
-//         } else if (input.type === 'select-one') {
-//             var select = document.querySelector('[name="' + pair[0] + '"]');
-//             label = select.options[select.selectedIndex].textContent;
-//         } else {
-//             label = pair[0];
-//         }
-//         doc.text(20, y, label + ': ' + pair[1]);
-//         y += 10;
-//     }
-
-
-//     doc.text(20, y, 'Total Price: ' + cal__result);
-
-//     doc.save('part-01.pdf');
-// }
-
 function generatePDF() {
         window.jsPDF = window.jspdf.jsPDF;
         var doc = new jsPDF();
@@ -302,21 +244,24 @@ function generatePDF() {
         doc.setFontSize(14);
         var y = 70;
         var total = document.getElementById('calculate_total_part3').innerHTML;
+        var i = 0;
         // Iterate through form data and create a table
         var tableData = [];
         for (var pair of formData.entries()) {
             var label = '';
             var input = document.querySelector('[name="' + pair[0] + '"]');
             if (input.type === 'checkbox') {
-                var inputId = input.getAttribute('id');
-                label = document.querySelector('label[for="' + inputId + '"]').textContent;
+                // get all checked checkboxes with i 
+                var inputId = document.querySelectorAll('[name="data-price"]:checked')[i].id;
+                label = document.querySelector('[for="' + inputId + '"]').textContent;
+                i++;
             } else if (input.type === 'select-one') {
                 var select = document.querySelector('[name="' + pair[0] + '"]');
                 label = select.options[select.selectedIndex].textContent;
             } else {
                 label = pair[0];
             }
-            tableData.push([label, pair[1]]); // modify this line to push an array
+            tableData.push([label, '€ ' + pair[1]]); // modify this line to push an array
         }
 
         //

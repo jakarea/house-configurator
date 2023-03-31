@@ -10,6 +10,7 @@ get_header();
 // Get the house ID
 $house_id = get_the_ID();
 $dimensionPrice = esc_attr( get_option( 'house_config_house_part_four_price' ) );
+$dimensionPrice = (int) $dimensionPrice;
 /**
  * ========================= floor tile =========================
  */
@@ -209,11 +210,12 @@ $dimensionB = '0';
 
 // Get the dimensionA and dimensionB from the url
 if (isset($_GET['dimensionA']) && isset($_GET['dimensionB'])) {
-    $dimensionA = $_GET['dimensionA'];
-    $dimensionB = $_GET['dimensionB'];
+    $dimensionA = filter_var($_GET['dimensionA'], FILTER_SANITIZE_NUMBER_INT);
+    $dimensionB = filter_var($_GET['dimensionB'], FILTER_SANITIZE_NUMBER_INT);
 }
 ?>
 <!-- SmartWizard html -->
+<div class="container-fluid">
 <div class="row py-4">
     <div class="col-9 mb-2">
         <div class="card">
@@ -488,9 +490,11 @@ if (isset($_GET['dimensionA']) && isset($_GET['dimensionB'])) {
                         <li class="text-mute"> <span class="d__l"><?php echo $dimensionA. 'cm'; ?></span> x <span class="l__2"><?php echo $dimensionB. 'cm'; ?></span></li>
                         <li class="dimension_price"> <strong>
                             <?php 
-                                if($dimensionA && $dimensionB) {
-                                    $dimension = $dimensionA + $dimensionB;
-                                    echo '€ '. $dimension * $dimensionPrice;
+                                // check dimensionA and dimensionB is not empty and is numeric
+                                if(!empty($dimensionA) && !empty($dimensionB) && is_numeric($dimensionA) && is_numeric($dimensionB)) {
+                                    // calculate the price
+                                    $dimension_price = $dimensionA + $dimensionB;
+                                    echo '€ '. $dimension_price + $dimensionPrice;
                                 } else {
                                     echo '€ 0';
                                 }
@@ -516,6 +520,7 @@ if (isset($_GET['dimensionA']) && isset($_GET['dimensionB'])) {
             </div>
         </div>
     </div>
+</div>
 </div>
 
 

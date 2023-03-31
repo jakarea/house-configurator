@@ -67,7 +67,7 @@
         </div>
 
         <!-- generate pdf-->
-        <div class="card mt-5 shadow-sm">
+        <div class="card mt-5 shadow-sm pdf_result">
             <div class="card-body text-center">
                 <div class="card-title">
                     <h4 class="mb-3"><?php echo esc_html('Generate PDF', 'house-configurator'); ?></h4>
@@ -114,23 +114,30 @@
         var cal__result = document.querySelector('.cal__result').innerHTML;
         // Iterate through form data and create a table
         var tableData = [];
-        for (var pair of formData.entries()) {
+        var i = 0;
+        // run for loop for all features and add to table. feature name should be label and price should be value
+        var features = document.querySelectorAll('[name="feature"]');
+        for ( var pair of formData.entries() ) {
             var label = '';
             var input = document.querySelector('[name="' + pair[0] + '"]');
             if (input.type === 'checkbox') {
-                var inputId = input.getAttribute('id');
+                var feature = features[i];
+                var inputId = feature.getAttribute('id');
                 label = document.querySelector('label[for="' + inputId + '"]').textContent;
+                i++;
             } else if (input.type === 'select-one') {
                 var select = document.querySelector('[name="' + pair[0] + '"]');
                 label = select.options[select.selectedIndex].textContent;
             } else {
                 label = pair[0];
             }
-            tableData.push([label, pair[1]]); // modify this line to push an array
+            tableData.push([label, '€ ' + pair[1]]); // modify this line to push an array
         }
 
+        
+
         // add last row to table with total price
-        tableData.push(['Total Price', cal__result]);
+        tableData.push(['Total Price', '€ ' + cal__result]);
 
         // Set table column headers and options
         var tableColumns = ['Items', 'Price'];

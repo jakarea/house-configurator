@@ -26,8 +26,10 @@
         $('input[name="feature"]').on('change', function() {
             if ($(this).prop('checked')) {
                 total_price = total_price + parseInt($(this).val());
+                $('.pdf_result').show();
             } else {
                 total_price = total_price - parseInt($(this).val());
+                $('.pdf_result').hide();
             }
             $('.cal__result').html(total_price);
         });
@@ -41,9 +43,11 @@
             if ($(this).val() == '' || $(this).val() < 20) {
                 $('input[name="square_meters"]').addClass('error');
                 alert('Please enter square meters more than 20');
+                $('.pdf_result').hide();
             } else {
                 total_price = total_price * parseInt($(this).val());
                 $('.cal__result').html(total_price);
+                $('.pdf_result').show();
             }
         });
     });

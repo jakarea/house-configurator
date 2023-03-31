@@ -86,7 +86,7 @@ $price = esc_attr( get_option( 'house_config_house_part_two_price' ) );
                             <select name="c__list" class="form-control form-select bg-light">
                                 <option value=""><?php echo esc_html('Selecter', 'house-configurator'); ?></option>
                             <?php foreach($contact_list as $key => $data) : ?>
-                                <option value="<?php echo $key + 1; ?>"> <?php echo $data; ?> </option>
+                                <option value="<?php echo $key + 1; ?>" <?php if(isset($_GET['c__list']) && $_GET['c__list'] === $key + 1) echo 'selected'; ?>> <?php echo $data; ?> </option>
                             <?php endforeach; ?>
                             </select>
                         </div>
@@ -269,7 +269,7 @@ $price = esc_attr( get_option( 'house_config_house_part_two_price' ) );
             } else {
                 label = pair[0];
             }
-            tableData.push([label, pair[1]]); // modify this line to push an array
+            tableData.push([label, '€ ' + pair[1]]); // modify this line to push an array
         }
 
         //
