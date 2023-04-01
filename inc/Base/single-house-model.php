@@ -271,7 +271,7 @@ if (isset($_GET['dimensionA']) && isset($_GET['dimensionB'])) {
                                     <div class="inner-item">
                                         <div class="inner__taxonomy">
                                             <ul class="list-unstyled m-0">
-                                                <li data-price="<?php echo $child->price; ?>">
+                                                <li data-price="<?php echo $child->price; ?>" data-name="<?php echo $child->name; ?>">
                                                     <div class="d-flex justify-content-between">
                                                         <h5><?php echo $child->name; ?></h5>
                                                         <h5>+ <?php echo '€ '. $child->price; ?></h5>
@@ -310,7 +310,7 @@ if (isset($_GET['dimensionA']) && isset($_GET['dimensionB'])) {
                                         <div class="inner__taxonomy mb-3 border-bottom">
                                             <h4 class="text-primary mb-3"><strong><?php echo $term->name; ?></strong></h4>
                                             <ul class="list-unstyled m-0">
-                                                <li data-price="<?php echo $child->price; ?>">
+                                                <li data-price="<?php echo $child->price; ?>" data-name="<?php echo $child->name; ?>">
                                                     <ul class="list-unstyled m-0">
                                                         <li>
                                                             <div class="imagenprice d-flex align-item-center justify-content-between">
@@ -347,7 +347,7 @@ if (isset($_GET['dimensionA']) && isset($_GET['dimensionB'])) {
                                         <div class="inner__taxonomy mb-3 border-bottom">
                                             <h4 class="text-primary mb-3"><strong><?php echo $term->name; ?></strong></h4>
                                             <ul class="list-unstyled m-0">
-                                                <li data-price="<?php echo $child->price; ?>">
+                                                <li data-price="<?php echo $child->price; ?>" data-name="<?php echo $child->name; ?>">
                                                     <ul class="list-unstyled m-0">
                                                         <li>
                                                             <div class="imagenprice d-flex align-item-center justify-content-between">
@@ -384,7 +384,7 @@ if (isset($_GET['dimensionA']) && isset($_GET['dimensionB'])) {
                                         <div class="inner__taxonomy mb-3 border-bottom">
                                             <h4 class="text-primary mb-3"><strong><?php echo $term->name; ?></strong></h4>
                                             <ul class="list-unstyled m-0">
-                                                <li data-price="<?php echo $child->price; ?>">
+                                                <li data-price="<?php echo $child->price; ?>" data-name="<?php echo $child->name; ?>">
                                                     <ul class="list-unstyled m-0">
                                                         <li>
                                                             <div class="imagenprice d-flex align-item-center justify-content-between">
@@ -421,7 +421,7 @@ if (isset($_GET['dimensionA']) && isset($_GET['dimensionB'])) {
                                         <div class="inner__taxonomy mb-3 border-bottom">
                                             <h4 class="text-primary mb-3"><strong><?php echo $term->name; ?></strong></h4>
                                             <ul class="list-unstyled m-0">
-                                                <li data-price="<?php echo $child->price; ?>">
+                                                <li data-price="<?php echo $child->price; ?>" data-name="<?php echo $child->name; ?>">
                                                     <ul class="list-unstyled m-0">
                                                         <li>
                                                             <div class="imagenprice d-flex align-item-center justify-content-between">
@@ -547,24 +547,25 @@ get_footer();
 
         // get data of all form selected data and show in the total summary
         $('form').on('change', function() {
-        var total = 0;
-        var html = '';
+            var total = 0;
+            var html = '';
             $('form').each(function() {
                 var form = $(this);
                 var data = form.serializeArray();
                 var label = form.attr('name');
-                $.each(data, function(index, value) {
-                var name = value.name;
-                var price = value.value;
-                if (price) {
+                form.find('input[type="checkbox"]:checked').each(function() {
+                var checkbox = $(this);
+                var price = checkbox.val();
+                var li = checkbox.closest('li[data-name]');
+                if (price && li.length) {
+                    var datName = li.data('name');
                     total += parseInt(price);
-                    html += '<ul class="list-unstyled m-0 d-flex justify-content-between"><li class="d-flex clearfix align-item-center"><h6 class="text-mute">' + label + '</h6></li><li><h6>€ ' + price + '</h6></li></ul>';
+                    html += '<ul class="list-unstyled m-0 d-flex justify-content-between"><li class="d-flex clearfix align-item-center"><h6 class="text-mute"><strong>' + label +'</strong> - '+ datName + '</h6></li><li><h6>€ ' + price + '</h6></li></ul>';
                 }
                 });
             });
             $('#total_summary').html(html);
         });
-
 
 
         // input checkbox check only one and calculate total price
@@ -574,25 +575,25 @@ get_footer();
             var card_sum = 0;
             var checkboxes = $(this).closest('.card').find('input[type="checkbox"]');
 
-            // Check only one checkbox in the card
+            // Checkbox checkonly one in a card and
             checkboxes.not(this).prop('checked', false);
 
             checkboxes.each(function() {
-                if ($(this).is(':checked')) {
                 var price = parseInt($(this).closest('li[data-price]').data('price'));
                 var increment = 1;
-                card_sum += price * increment;
 
-                // Update the checkbox label
-                var $label = $(this).closest('label');
-                var isChecked = $(this).is(':checked');
-                var $span = $label.find('span');
-                $span.text(isChecked ? '- Remove' : '+ Add');
+                if ($(this).is(':checked')) {
+                    card_sum += price * increment;
+
+                    // Update the checkbox label
+                    var $label = $(this).closest('label');
+                    var $span = $label.find('span');
+                    $span.text('- Remove');
                 } else {
-                // Reset the checkbox label
-                var $label = $(this).closest('label');
-                var $span = $label.find('span');
-                $span.text('+ Add');
+                    // Reset the checkbox label
+                    var $label = $(this).closest('label');
+                    var $span = $label.find('span');
+                    $span.text('+ Add');
                 }
             });
 
@@ -604,8 +605,8 @@ get_footer();
             $('.extra_total strong').html('€ ' + total_sum);
             $('.result-total h4').html('€ ' + (total_sum + parseInt($('.dimension_price strong').html().replace('€ ', ''))));
             $('.total_ammount_overview').html('€ ' + (total_sum + parseInt($('.dimension_price strong').html().replace('€ ', ''))));
-
         });
+
 
         $('#generate_pdf').on('click', function() {
             window.jsPDF = window.jspdf.jsPDF;
@@ -646,9 +647,9 @@ get_footer();
             checkboxes.each(function() {
                 if ($(this).is(':checked')) {
                     var label = $(this).closest('form').attr('name');
-                    var name = $(this).closest('li[data-price]').data('name');
+                    var datName = $(this).closest('li[data-name]').data('name');
                     var price = $(this).closest('li[data-price]').data('price');
-                    tableData.push([label, '€ ' + price]);
+                    tableData.push([label +'- '+ datName, '€ ' + price]);
                 }
             });
 
@@ -700,7 +701,7 @@ get_footer();
             doc.text(urlX, textY, url);
 
             // save pdf
-            doc.save('part-04.pdf');
+            doc.save('texen-budgetplanner.pdf');
         });
 
 

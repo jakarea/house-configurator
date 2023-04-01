@@ -323,7 +323,7 @@ $price = esc_attr( get_option( 'house_config_house_part_two_price' ) );
 
         // Save the PDF
 
-        doc.save('part-02.pdf');
+        doc.save('texen-budgetplanner.pdf');
     }
 
 </script>

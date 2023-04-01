@@ -401,50 +401,50 @@ add_action('admin_post_btw_data_delete_action', 'btw_data_delete_action');
 add_action('admin_post_nopriv_btw_data_delete_action', 'btw_data_delete_action');
 
 function btw_data_delete_action() {
-    // Get the btw name from the URL
-    $btw_name = $_GET['btw_name'];
+    // Get the slug from the form
+    $contact_name = $_GET['btw_name'];
 
-    // Connect to the database and retrieve the current btw list (if it exists)
+    // Connect to the database and retrieve the current contact list (if it exists)
     global $wpdb;
     $table_name = $wpdb->prefix . 'house_configurator_part_2';
-    $btw_list = $wpdb->get_var("SELECT value FROM $table_name WHERE name = 'btw_list'");
+    $contact_list_json = $wpdb->get_var("SELECT value FROM $table_name WHERE name = 'btw_list'");
 
-    // If there is no existing btw list, return an error message
-    if (!$btw_list) {
-        wp_redirect(admin_url('admin.php?page=house_config_house_part_two&message=error'));
-        exit;
-    } else {
-        // If the btw list exists, decode it from JSON
-        $btw_list = json_decode($btw_list, true);
+    if ($contact_list_json) {
+        // Decode the JSON string into an array
+        $contact_list = json_decode($contact_list_json, true);
+
+        // Find the index of the item with the matching slug
+        $index = array_search($contact_name, array_column($contact_list, 'slug'));
+
+        if ($index !== false) {
+            // Remove the item from the array
+            unset($contact_list[$index]);
+
+            // Reindex the array
+            $contact_list = array_values($contact_list);
+
+            // Encode the array back into JSON
+            $contact_list_json = json_encode($contact_list);
+
+            // Update the contact list in the database
+            $wpdb->update(
+                $table_name,
+                array(
+                    'value' => $contact_list_json,
+                    'updated_at' => current_time('mysql')
+                ),
+                array('name' => 'btw_list'),
+                array('%s', '%s'),
+                array('%s')
+            );
+        }
     }
-
-    // Find the index of the btw name in the btw list
-    $index = array_search($btw_name, array_column($btw_list, 'name'));
-
-    // If the btw name is found, unset it from the list
-    if ($index !== false) {
-        unset($btw_list[$index]);
-    }
-
-    // Encode the btw list as JSON
-    $btw_list = json_encode(array_values($btw_list));
-
-    // Update the btw list in the database
-    $wpdb->update(
-        $table_name,
-        array(
-            'value' => $btw_list,
-            'updated_at' => current_time('mysql')
-        ),
-        array('name' => 'btw_list'),
-        array('%s', '%s'),
-        array('%s')
-    );
 
     // Redirect the user back to the page with a success message
     wp_redirect(admin_url('admin.php?page=house_config_house_part_two&message=delete'));
     exit;
 }
+
 
 /**
  * The code that runs during add house_part_two into json array [afplakken_data_action].
@@ -566,55 +566,48 @@ add_action('admin_post_afplakken_data_delete_action', 'afplakken_data_delete_act
 add_action('admin_post_nopriv_afplakken_data_delete_action', 'afplakken_data_delete_action');
 
 function afplakken_data_delete_action() {
-	// Get the slug from the form
-	$slug = sanitize_title($_POST['afplakken_name']);
+    // Get the slug from the form
+    $contact_name = $_GET['afplakken_name'];
 
-	// Connect to the database and get the afplakken list from json
-	global $wpdb;
-	$table_name = $wpdb->prefix . 'house_configurator_part_2';
-	$af_list = $wpdb->get_var($wpdb->prepare("SELECT value FROM $table_name WHERE name = 'afplakken_list'"));
+    // Connect to the database and retrieve the current contact list (if it exists)
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'house_configurator_part_2';
+    $contact_list_json = $wpdb->get_var("SELECT value FROM $table_name WHERE name = 'afplakken_list'");
 
-	// If the afplakken list exists, decode it from JSON
-	if ($af_list) {
-		$af_list = json_decode($af_list, true);
+    if ($contact_list_json) {
+        // Decode the JSON string into an array
+        $contact_list = json_decode($contact_list_json, true);
 
-		// Find the index of the afplakken slug in the afplakken list
-		$index = array_search($slug, array_column($af_list, 'slug'));
+        // Find the index of the item with the matching slug
+        $index = array_search($contact_name, array_column($contact_list, 'slug'));
 
-		// If the afplakken slug is found, delete it from the list
-		if ($index !== false) {
-			unset($af_list[$index]);
+        if ($index !== false) {
+            // Remove the item from the array
+            unset($contact_list[$index]);
 
-			// Re-index the array
-			$af_list = array_values($af_list);
+            // Reindex the array
+            $contact_list = array_values($contact_list);
 
-			// Encode the afplakken list as JSON
-			$af_list_json = json_encode($af_list);
+            // Encode the array back into JSON
+            $contact_list_json = json_encode($contact_list);
 
-			// Update the afplakken list in the database
-			$result = $wpdb->update(
-				$table_name,
-				array(
-					'value' => $af_list_json,
-					'updated_at' => current_time('mysql')
-				),
-				array('name' => 'afplakken_list'),
-				array('%s', '%s'),
-				array('%s')
-			);
+            // Update the contact list in the database
+            $wpdb->update(
+                $table_name,
+                array(
+                    'value' => $contact_list_json,
+                    'updated_at' => current_time('mysql')
+                ),
+                array('name' => 'afplakken_list'),
+                array('%s', '%s'),
+                array('%s')
+            );
+        }
+    }
 
-			// Check if the update was successful
-			if ($result === false) {
-				// Redirect the user back to the page with an error message
-				wp_redirect(admin_url('admin.php?page=house_config_house_part_two&message=error'));
-				exit;
-			}
-		}
-	}
-
-	// Redirect the user back to the page with a success message
-	wp_redirect(admin_url('admin.php?page=house_config_house_part_two&message=delete'));
-	exit;
+    // Redirect the user back to the page with a success message
+    wp_redirect(admin_url('admin.php?page=house_config_house_part_two&message=delete'));
+    exit;
 }
 
 

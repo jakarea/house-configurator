@@ -29,7 +29,10 @@
                      <td><?php echo '€ '.$value['value']; ?></td>
                      <td>
                          <a href="<?php echo admin_url('admin.php?page=house_config_house_part_two&edit_a_f=' . $value['slug']); ?>" class="button button-primary"><?php echo esc_html('Edit', 'house-configurator'); ?></a>
-                         <a href="<?php echo admin_url('admin.php?page=house_config_house_part_two&delet_a_f=' . $value['slug']); ?>" class="button button-primary"><?php echo esc_html('Delete', 'house-configurator'); ?></a>
+                         <!-- <a href="<?php echo admin_url('admin.php?page=house_config_house_part_two&delet_a_f=' . $value['slug']); ?>" class="button button-primary"><?php echo esc_html('Delete', 'house-configurator'); ?></a> -->
+
+                         <a href="<?php echo admin_url('admin-post.php?action=afplakken_data_delete_action&afplakken_name=' . $value['slug']); ?>" class="button button-primary"><?php echo esc_html('Delete', 'house-configurator'); ?></a>
+
                      </td>
                  </tr>
             <?php

@@ -185,7 +185,7 @@
 
         // Save the PDF
 
-        doc.save('part-01.pdf');
+        doc.save('texen-budgetplanner.pdf');
     }
 
     document.getElementById('generate_pdf').addEventListener('click', generatePDF);
