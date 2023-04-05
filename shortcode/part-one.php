@@ -10,7 +10,7 @@
 
     // get all features from database
     $h_feature = $wpdb->prefix . 'house_configurator_feature';
-    $features = $wpdb->get_results("SELECT * FROM $h_feature");
+    $features = $wpdb->get_results("SELECT * FROM $h_feature WHERE type_id != 0");
 
     $house_configure_price = esc_attr( get_option( 'house_configure_price' ) );
 

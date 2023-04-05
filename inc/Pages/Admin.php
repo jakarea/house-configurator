@@ -152,17 +152,17 @@ class Admin
 				'callback' => array( $this->callbacks, 'hcOptionsGroup' )
 			),
 			array(
-				'option_group' => 'house_configurator_options_group',
+				'option_group' => 'house_configurator_options_group_part_two',
 				'option_name' => 'house_configure_description',
 				'callback' => array( $this->callbacks, 'hcOptionsGroup' )
 			),
 			array(
-				'option_group' => 'house_configurator_options_group',
+				'option_group' => 'house_configurator_options_group_part_two',
 				'option_name' => 'house_config_house_part_two_price',
 				'callback' => array( $this->callbacks, 'hcOptionsGroup' )
 			),
 			array(
-				'option_group' => 'house_configurator_options_group',
+				'option_group' => 'house_configurator_options_group_part_four',
 				'option_name' => 'house_config_house_part_four_price',
 				'callback' => array( $this->callbacks, 'hcOptionsGroup' )
 			),

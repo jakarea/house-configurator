@@ -12,6 +12,7 @@ $houses = get_posts( array(
 <!-- add bootstrap card first 8 then last 4 in row -->
 <div class="container">
     <div class="row">
+        <?php if ( count($houses) > 0 ) : ?>
         <?php foreach ($houses as $house) : ?>
             <div class="col-4">
                 <div class="card">
@@ -23,5 +24,8 @@ $houses = get_posts( array(
                 </div>
             </div>
         <?php endforeach; ?>
+        <?php else :
+            echo 'No House Found!';
+        endif; ?>
     </div>
 </div>

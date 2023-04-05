@@ -50,14 +50,27 @@
                 $('.pdf_result').show();
             }
         });
+
+        // $('select[name="format_width"]').on('change', function() {
+        //     var format_width = parseInt($(this).val());
+        //     total_price = total_price + format_width;
+        //     console.log(format_width + total_price);
+        // });
+        
+        // $('select[name="format_depth"]').on('change', function() {
+        //     total_price = total_price + parseInt($(this).val());
+        // });
     });
 
     /**
      * House Configurator part 3 js
      */
     $(document).ready(function() {
+        var prev_format_width = 0;
+        var prev_format_depth = 0;
+        var total = parseInt($('#calculate_total_part3').text().replace('€ ', ''));
 
-            $('.options_data input[type="checkbox"]').on('change', function() {
+        $('.options_data input[type="checkbox"]').on('change', function() {
             var total = parseInt($('#calculate_total_part3').text().replace('€ ', ''));
 
             if ($(this).prop('checked')) {
@@ -69,6 +82,20 @@
 
             $('#calculate_total_part3').html('€ ' + total);
 
+        });
+
+        $('select[name="format_width"]').on('change', function() {
+            var format_width = parseInt($(this).val());
+            total = total - prev_format_width + format_width;
+            prev_format_width = format_width;
+            $('#calculate_total_part3').html('€ ' + total);
+        });
+
+        $('select[name="format_depth"]').on('change', function() {
+            var format_depth = parseInt($(this).val());
+            total = total - prev_format_depth + format_depth;
+            prev_format_depth = format_depth;
+            $('#calculate_total_part3').html('€ ' + total);
         });
                 
         $('tr#levels_type td, .model_level input[type="radio"]').on('click', function() {
@@ -109,6 +136,10 @@
                                 }
                             });
                         }
+                    });
+                    // all checked checkbox feature set unchecked
+                    $('.options_data input[type="checkbox"]').each(function() {
+                        $(this).prop('checked', false);
                     });
                     console.log(total);
                     total = parseInt(total) + parseInt(obj[0].price);

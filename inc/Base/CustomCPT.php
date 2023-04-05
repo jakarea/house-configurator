@@ -37,6 +37,26 @@ class CustomCPT extends BaseController
         add_action( 'create_option', array( $this, 'saveCustomFieldsToOption' ), 10, 2 );
         add_action( 'option_edit_form_fields', array( $this, 'editCustomFieldsToOption' ) );
         add_action( 'edited_option', array( $this, 'updateCustomFieldsToOption' ), 10, 2 );
+        /*===============================================================
+        /* fwidth Taxonomy Custom Columns and fields
+        */
+        add_filter( 'manage_edit-fwidth_columns', array( $this, 'addCustomColumnsToFwidthHeader' ) );
+        add_filter( 'manage_fwidth_custom_column', array( $this, 'addCustomColumnsToFwidth' ), 10, 3 );
+        
+        add_action( 'fwidth_add_form_fields', array( $this, 'addCustomFieldsToFwidth' ) );
+        add_action( 'create_fwidth', array( $this, 'saveCustomFieldsToFwidth' ), 10, 2 );
+        add_action( 'fwidth_edit_form_fields', array( $this, 'editCustomFieldsToFwidth' ) );
+        add_action( 'edited_fwidth', array( $this, 'updateCustomFieldsToFwidth' ), 10, 2 );
+        /*===============================================================
+        /* twidth Taxonomy Custom Columns and fields
+        */
+        add_filter( 'manage_edit-twidth_columns', array( $this, 'addCustomColumnsToTwidthHeader' ) );
+        add_filter( 'manage_twidth_custom_column', array( $this, 'addCustomColumnsToTwidth' ), 10, 3 );
+
+        add_action( 'twidth_add_form_fields', array( $this, 'addCustomFieldsToTwidth' ) );
+        add_action( 'create_twidth', array( $this, 'saveCustomFieldsToTwidth' ), 10, 2 );
+        add_action( 'twidth_edit_form_fields', array( $this, 'editCustomFieldsToTwidth' ) );
+        add_action( 'edited_twidth', array( $this, 'updateCustomFieldsToTwidth' ), 10, 2 );
 
         /*===============================================================
         * House Configurator Custom Post Type Single Page Template
@@ -149,6 +169,59 @@ class CustomCPT extends BaseController
         );
 
         register_taxonomy( 'option', array( 'house-configurator' ), $args );
+
+        $fwidth  = array(
+            'name'              => _x( 'Part 03 Width From', 'taxonomy general name', 'house-configurator' ),
+            'singular_name'     => _x( 'Width', 'taxonomy singular name', 'house-configurator' ),
+            'search_items'      => __( 'Search Width', 'house-configurator' ),
+            'all_items'         => __( 'All Width', 'house-configurator' ),
+            'parent_item'       => __( 'Parent Width', 'house-configurator' ),
+            'parent_item_colon' => __( 'Parent Width:', 'house-configurator' ),
+            'edit_item'         => __( 'Edit Width', 'house-configurator' ),
+            'update_item'       => __( 'Update Width', 'house-configurator' ),
+            'add_new_item'      => __( 'Add New Width', 'house-configurator' ),
+            'new_item_name'     => __( 'New Width Name', 'house-configurator' ),
+            'menu_name'         => __( 'Part 03 Width From', 'house-configurator' ),
+        );
+
+        $args = array(
+            'hierarchical'      => true,
+            'labels'            => $fwidth,
+            'show_ui'           => true,
+            'show_admin_column' => true,
+            'query_var'         => true,
+            'rewrite'           => array( 'slug' => 'fwidth' ),
+            'supports'          => array('title', 'editor', 'thumbnail')
+        );
+
+        register_taxonomy( 'fwidth', array( 'house-configurator' ), $args );
+
+        $twidth = array(
+            'name'              => _x( 'Part 03 Width To', 'taxonomy general name', 'house-configurator' ),
+            'singular_name'     => _x( 'Width', 'taxonomy singular name', 'house-configurator' ),
+            'search_items'      => __( 'Search Width', 'house-configurator' ),
+            'all_items'         => __( 'All Width', 'house-configurator' ),
+            'parent_item'       => __( 'Parent Width', 'house-configurator' ),
+            'parent_item_colon' => __( 'Parent Width:', 'house-configurator' ),
+            'edit_item'         => __( 'Edit Width', 'house-configurator' ),
+            'update_item'       => __( 'Update Width', 'house-configurator' ),
+            'add_new_item'      => __( 'Add New Width', 'house-configurator' ),
+            'new_item_name'     => __( 'New Width Name', 'house-configurator' ),
+            'menu_name'         => __( 'Part 03 Width To', 'house-configurator' ),
+        );
+
+        $args = array(
+            'hierarchical'      => true,
+            'labels'            => $twidth,
+            'show_ui'           => true,
+            'show_admin_column' => true,
+            'query_var'         => true,
+            'rewrite'           => array( 'slug' => 'twidth' ),
+            'supports'          => array('title', 'editor', 'thumbnail')
+        );
+
+        register_taxonomy( 'twidth', array( 'house-configurator' ), $args );
+
     }
 
     public function addCustomMetaBox() 
@@ -683,6 +756,131 @@ class CustomCPT extends BaseController
     }
 
     /*=====  End of Add custom columns to Option taxonomy  ======*/
+
+    /*===== Start of addCustomColumnsToFwidthHeader  ======*/
+    public function addCustomColumnsToFwidthHeader( $columns ) {
+        $columns['fwidth_price'] = __( 'Price', 'house-configurator' );
+        $columns = array_slice( $columns, 0, 2, true ) + array( 'fwidth_price' => __( 'Price', 'house-configurator' ) ) + array_slice( $columns, 2, count( $columns ) - 1, true );
+        
+        return $columns;
+        
+    }
+
+    public function addCustomColumnsToFwidth( $content, $column_name, $term_id ) {
+        if ( 'fwidth_price' === $column_name ) {
+            $price = get_term_meta( $term_id, '_house_configurator_price_fwidth', true );
+            $content = $price ? $price : '-';
+        }
+        return $content;
+    }
+
+    public function addCustomFieldsToFwidth( $taxonomy ) 
+    {
+        if ( 'fwidth' !== $taxonomy ) {
+            return;
+        }
+    
+        $term_id = get_queried_object_id();
+        $price = get_term_meta( $term_id, '_house_configurator_price_fwidth', true );
+
+        echo '<div class="form-field term-price-wrap">';
+        echo '<label for="term-price-fwidth">' . __( 'Price', 'house-configurator' ) . '</label>';
+        echo '<input type="text" id="term-price-fwidth" name="term-price-fwidth" value="' . esc_attr( $price ) . '" size="40" />';
+        echo '</div>';
+    }
+
+    public function saveCustomFieldsToFwidth( $term_id ) {
+        if ( isset( $_POST['term-price-fwidth'] ) ) {
+            $price = sanitize_text_field( $_POST['term-price-fwidth'] );
+            update_term_meta( $term_id, '_house_configurator_price_fwidth', $price );
+        } else {
+            delete_term_meta( $term_id, '_house_configurator_price_fwidth' );
+        }
+    }
+
+    public function editCustomFieldsToFwidth( $term ) {
+        
+        $price = get_term_meta( $term->term_id, '_house_configurator_price_fwidth', true );
+    
+        echo '<tr class="form-field term-price-wrap">';
+        echo '<th scope="row"><label for="term-price-fwidth">' . __( 'Price', 'house-configurator' ) . '</label></th>';
+        echo '<td><input type="text" id="term-price-fwidth" name="term-price-fwidth" value="' . esc_attr( $price ) . '" size="40" /></td>';
+        echo '</tr>';
+    }
+
+    public function updateCustomFieldsToFwidth( $term_id ) {
+
+        if ( isset( $_POST['term-price-fwidth'] ) ) {
+            $price = sanitize_text_field( $_POST['term-price-fwidth'] );
+            update_term_meta( $term_id, '_house_configurator_price_fwidth', $price );
+        } else {
+            delete_term_meta( $term_id, '_house_configurator_price_fwidth' );
+        }
+    }
+
+    /*=====  End of addCustomColumnsToFwidthHeader  ======*/
+
+    /*===== Start of addCustomColumnsToTwidthHeader  ======*/
+    public function addCustomColumnsToTwidthHeader( $columns ) {
+        $columns['twidth_price'] = __( 'Price', 'house-configurator' );
+        $columns = array_slice( $columns, 0, 2, true ) + array( 'twidth_price' => __( 'Price', 'house-configurator' ) ) + array_slice( $columns, 2, count( $columns ) - 1, true );
+        
+        return $columns;        
+    }
+
+    public function addCustomColumnsToTwidth( $content, $column_name, $term_id ) {
+        if ( 'twidth_price' === $column_name ) {
+            $price = get_term_meta( $term_id, '_house_configurator_price_twidth', true );
+            $content = $price ? $price : '-';
+        }
+        return $content;
+    }
+
+    public function addCustomFieldsToTwidth( $taxonomy ) 
+    {
+        if ( 'twidth' !== $taxonomy ) {
+            return;
+        }
+    
+        $term_id = get_queried_object_id();
+        $price = get_term_meta( $term_id, '_house_configurator_price_twidth', true );
+
+        echo '<div class="form-field term-price-wrap">';
+        echo '<label for="term-price-twidth">' . __( 'Price', 'house-configurator' ) . '</label>';
+        echo '<input type="text" id="term-price-twidth" name="term-price-twidth" value="' . esc_attr( $price ) . '" size="40" />';
+        echo '</div>';
+    }
+
+    public function saveCustomFieldsToTwidth( $term_id ) {
+        if ( isset( $_POST['term-price-twidth'] ) ) {
+            $price = sanitize_text_field( $_POST['term-price-twidth'] );
+            update_term_meta( $term_id, '_house_configurator_price_twidth', $price );
+        } else {
+            delete_term_meta( $term_id, '_house_configurator_price_twidth' );
+        }
+    }
+
+    public function editCustomFieldsToTwidth( $term ) {
+        
+        $price = get_term_meta( $term->term_id, '_house_configurator_price_twidth', true );
+    
+        echo '<tr class="form-field term-price-wrap">';
+        echo '<th scope="row"><label for="term-price-twidth">' . __( 'Price', 'house-configurator' ) . '</label></th>';
+        echo '<td><input type="text" id="term-price-twidth" name="term-price-twidth" value="' . esc_attr( $price ) . '" size="40" /></td>';
+        echo '</tr>';
+    }
+
+    public function updateCustomFieldsToTwidth( $term_id ) {
+
+        if ( isset( $_POST['term-price-twidth'] ) ) {
+            $price = sanitize_text_field( $_POST['term-price-twidth'] );
+            update_term_meta( $term_id, '_house_configurator_price_twidth', $price );
+        } else {
+            delete_term_meta( $term_id, '_house_configurator_price_twidth' );
+        }
+    }
+
+    /*=====  End of addCustomColumnsToTwidthHeader  ======*/
 
     /*==========================================================================================
     =            Define Single Page            =

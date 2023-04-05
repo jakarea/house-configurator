@@ -571,41 +571,47 @@ get_footer();
         // input checkbox check only one and calculate total price
         var total_sum = 0;
 
-        $('input[type="checkbox"]').on('change', function() {
-            var card_sum = 0;
-            var checkboxes = $(this).closest('.card').find('input[type="checkbox"]');
+$('.inner-item input[type="checkbox"]').on('change', function() {
+    var card_sum = 0;
+    var checkboxes = $(this).closest('.inner-item').find('input[type="checkbox"]');
+    var $card = $(this).closest('.card');
 
-            // Checkbox checkonly one in a card and
-            checkboxes.not(this).prop('checked', false);
+    // $card check only one in a card
+    $card.find('input[type="checkbox"]').not(this).prop('checked', false);
 
-            checkboxes.each(function() {
-                var price = parseInt($(this).closest('li[data-price]').data('price'));
-                var increment = 1;
+    // Initialize card_sum to 0 before the loop
+    card_sum = 0;
 
-                if ($(this).is(':checked')) {
-                    card_sum += price * increment;
+    checkboxes.each(function() {
+        if ($(this).is(':checked')) {
+            // Increment card_sum by 1 for each checked checkbox
+            card_sum += 1;
 
-                    // Update the checkbox label
-                    var $label = $(this).closest('label');
-                    var $span = $label.find('span');
-                    $span.text('- Remove');
-                } else {
-                    // Reset the checkbox label
-                    var $label = $(this).closest('label');
-                    var $span = $label.find('span');
-                    $span.text('+ Add');
-                }
-            });
+            // Update the checkbox label
+            var $label = $(this).closest('label');
+            var $span = $label.find('span');
+            $span.text('- Remove');
+        } else {
+            // Update the checkbox label
+            var $label = $(this).closest('label');
+            var $span = $label.find('span');
+            $span.text('+ Add');
+        }
+    });
 
-            // Update the total_sum
-            var prev_sum = parseInt($(this).data('prev-value'));
-            total_sum += card_sum - prev_sum;
+    // Update the total_sum
+    var prev_sum = parseInt($(this).data('prev-value'));
+    var price = card_sum == 1 ? parseInt($(this).val()) : 0;
+    total_sum += price - prev_sum;
 
-            $(this).data('prev-value', card_sum);
-            $('.extra_total strong').html('€ ' + total_sum);
-            $('.result-total h4').html('€ ' + (total_sum + parseInt($('.dimension_price strong').html().replace('€ ', ''))));
-            $('.total_ammount_overview').html('€ ' + (total_sum + parseInt($('.dimension_price strong').html().replace('€ ', ''))));
-        });
+    $(this).data('prev-value', price);
+    $('.extra_total strong').html('€ ' + total_sum);
+    $('.result-total h4').html('€ ' + (total_sum + parseInt($('.dimension_price strong').html().replace('€ ', ''))));
+    $('.total_ammount_overview').html('€ ' + (total_sum + parseInt($('.dimension_price strong').html().replace('€ ', ''))));
+});
+
+
+
 
 
         $('#generate_pdf').on('click', function() {

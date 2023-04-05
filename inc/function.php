@@ -139,7 +139,7 @@ function edit_feature_action() {
 	$feature_price = $_POST['feature_price'];
 	$feature_level = $_POST['feature_level'];
 
-	// store data in wp table name [wp_house_configurator_feature] with prefix
+	// update data in wp table name [wp_house_configurator_feature] with prefix
 	global $wpdb;
 	$table_name = $wpdb->prefix . 'house_configurator_feature';
 	if (!$feature_level || empty($feature_level)) {
@@ -148,13 +148,14 @@ function edit_feature_action() {
 		$feature_level = implode(',', $feature_level);
 	  }
 	  
-	  $wpdb->insert(
+	  $wpdb->update(
 		$table_name,
 		array(
 		  'name' => $feature_name,
 		  'price' => $feature_price,
 		  'type_id' => $feature_level
-		)
+		),
+		array('id' => $feature_id)
 	  );
 
 	// redirect to level page and show message
@@ -645,4 +646,3 @@ function get_level_taxonomies_callback() {
     
     wp_die();
 }
-

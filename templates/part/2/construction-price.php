@@ -3,7 +3,7 @@
 </div>
 <form method="post" action="options.php">
     <?php 
-        settings_fields( 'house_configurator_options_group' );
+        settings_fields( 'house_configurator_options_group_part_two' );
         do_settings_sections( 'house_configurator' );
         submit_button();
     ?>
