@@ -1,24 +1,14 @@
 <?php
 /**
- * The plugin bootstrap file
- *
- * This file is read by WordPress to generate the plugin information in the plugin
- * admin area. This file also includes all of the dependencies used by the plugin,
- * registers the activation and deactivation functions, and defines a function
- * that starts the plugin.
- *
- * @link              https://giopio.com
- * @since             1.0.0
- * @package           House Configurator
- *
- * @wordpress-plugin
  * Plugin Name:       House Configurator
  * Plugin URI:        https://giopio.com
  * Description:       This is a house configurator plugin for calculating the price of a house.
  * Version:           1.0.0
+ * Requires at least: 5.2
+ * Requires PHP:      7.2
  * Author:            GioPio
  * Author URI:        https://giopio.com
- * License:           GPL-2.0+
+ * License:           GPL v2 or later
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain:       house-configurator
  * Domain Path:       /languages
@@ -27,14 +17,41 @@
 /* If this file is called firectly, abort!!! */
 defined( 'ABSPATH' ) or die( 'Hey, what are you doing here? You silly human!' );
 
-/* Require once the Composer Autoload */
-if ( file_exists( dirname( __FILE__ ) . '/vendor/autoload.php' ) ) {
-	require_once dirname( __FILE__ ) . '/vendor/autoload.php';
-}
-
 use Inc\Base\Activate;
 use Inc\Base\Deactivate;
 use Inc\Init;
+
+/**
+ * Initialize all the core classes of the plugin
+ */
+if ( class_exists( 'Inc\\Init' ) ) {
+	Init::register_services();
+}
+
+/**
+ * The code that runs during plugin activation
+ */
+function activate_plugin_name() {
+	require_once plugin_dir_path( __FILE__ ) . 'inc/Base/Activate.php';
+	Activate::activate();
+}
+
+/**
+ * The code that runs during plugin deactivation
+ */
+function deactivate_house_configurator() {
+	require_once plugin_dir_path( __FILE__ ) . 'inc/Base/Deactivate.php';
+	Deactivate::deactivate();
+}
+register_deactivation_hook( __FILE__, 'deactivate_house_configurator' );
+
+/**
+ * Text Domain
+ */
+function house_configurator_load_textdomain() {
+	load_plugin_textdomain( 'house-configurator', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+}
+add_action( 'plugins_loaded', 'house_configurator_load_textdomain' );
 
 /**
  * Create table when plugin is activated
@@ -87,34 +104,3 @@ register_activation_hook( __FILE__, 'house_configurator_install' );
 * register function for all custom action.
 */
 include_once( 'inc/function.php' );
-
-/**
- * The code that runs during plugin activation
- */
-function activate_house_configurator() {
-	Activate::activate();
-}
-register_activation_hook( plugin_dir_path( __FILE__ ), 'activate_house_configurator' );
-
-/**
- * The code that runs during plugin deactivation
- */
-function deactivate_house_configurator() {
-	Deactivate::deactivate();
-}
-register_deactivation_hook( __FILE__, 'deactivate_house_configurator' );
-
-/**
- * Initialize all the core classes of the plugin
- */
-if ( class_exists( 'Inc\\Init' ) ) {
-	Init::register_services();
-}
-
-/**
- * Text Domain
- */
-function house_configurator_load_textdomain() {
-	load_plugin_textdomain( 'house-configurator', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
-}
-add_action( 'plugins_loaded', 'house_configurator_load_textdomain' );
