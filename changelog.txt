@@ -1,3 +1,0 @@
-// changelog for 1.0.0
-+// changelog for 1.0.0
-
